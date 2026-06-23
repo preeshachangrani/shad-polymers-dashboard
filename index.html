@@ -150,6 +150,7 @@
   <button class="tab-btn active" onclick="switchTab('pipeline', this)">📦 Pipeline</button>
   <button class="tab-btn" onclick="switchTab('nigeria', this)">🇳🇬 Nigeria</button>
   <button class="tab-btn" onclick="switchTab('srilanka', this)">🇱🇰 Sri Lanka</button>
+  <button class="tab-btn" onclick="switchTab('customer', this)">👥 Customer</button>
   <button class="tab-btn" onclick="switchTab('market', this)">📊 Market Intelligence</button>
 </div>
 
@@ -1185,20 +1186,10 @@
   <div id="tab-nigeria" class="tab-content">
     <h2 class="section-title">Nigeria — Active Prices (source: prices 9jun26.xlsx)</h2>
   <div class="kpi-grid">
-    <div class="kpi-card accent">
-      <div class="label">Active Customer Quotes</div>
-      <div class="value">6</div>
-      <div class="sub">offers with a named customer</div>
-    </div>
-    <div class="kpi-card accent-green">
-      <div class="label">Total Estimated Margin</div>
-      <div class="value">$382</div>
-      <div class="sub">sum of offer − buy price across quotes</div>
-    </div>
     <div class="kpi-card accent-blue">
       <div class="label">Active Price Lines</div>
       <div class="value">22</div>
-      <div class="sub">supplier offers without a customer yet</div>
+      <div class="sub">supplier offers, no customer quoted yet</div>
     </div>
   </div>
 
@@ -1230,23 +1221,6 @@
         <tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1830</td><td>Lotte</td><td></td><td>11-Jun</td><td>Cash</td></tr>
         <tr><td>PVC</td><td>China</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
         <tr><td>LDPE</td><td>shrink</td><td>FE8000</td><td>0.8</td><td>$1520</td><td>Snetor</td><td>total</td><td>21-June</td><td>credit</td></tr>
-      </tbody>
-    </table>
-    </div>
-
-    <h2 class="section-title">Customer Quotes</h2>
-    <div class="table-wrap">
-    <table class="price-table">
-      <thead>
-        <tr><th>Customer</th><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Buy Price $/MT</th><th>Offer Price $/MT</th><th>Margin $/MT</th><th>Supplier</th><th>Date</th><th>Payment</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Polybag</td><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1840</td><td>$1950</td><td>$110</td><td>Tricon</td><td>9-Jun</td><td>Credit</td></tr>
-        <tr><td>sonhart</td><td>PP</td><td>Homopolymer</td><td>1100N</td><td>12</td><td>$1430</td><td>$1500</td><td>$70</td><td>Emeraude</td><td>28-May</td><td>Credit</td></tr>
-        <tr><td>Hart</td><td>HDPE</td><td>Blow</td><td>50100</td><td>10</td><td>$1630</td><td>$1740</td><td>$110</td><td>Snetor</td><td>9-Jun</td><td>Credit</td></tr>
-        <tr><td>STARPOINT</td><td>PPCP</td><td>INJECTION</td><td>B350F</td><td>9</td><td>$1550</td><td>$1580</td><td>$30</td><td>SK GLOBAL</td><td>17 Jun</td><td>CASH</td></tr>
-        <tr><td>STARPOINT</td><td>PET</td><td>BOTTLE GRADE</td><td>CZ302</td><td>0.8</td><td>$1290</td><td>$1320</td><td>$30</td><td>ELAINE</td><td>17 Jun</td><td>CASH</td></tr>
-        <tr><td>STARPOINT</td><td>PET</td><td>BOTTLE GRADE</td><td>CR8816</td><td>0.8</td><td>$1198</td><td>$1230</td><td>$32</td><td>CRC</td><td>18 Jun</td><td>CASH</td></tr>
       </tbody>
     </table>
     </div>
@@ -1887,6 +1861,39 @@
       <div class="label">No data yet</div>
       <div class="value" style="font-size:15px;">Sri Lanka subfolder is currently empty</div>
       <div class="sub">Add price files to the "Sri Lanka" subfolder inside Drive &gt; prices, and they will appear here automatically on the next refresh.</div>
+    </div>
+  </div>
+
+  <div id="tab-customer" class="tab-content">
+    <h2 class="section-title">Customer — All Quoted Orders Across Countries</h2>
+    <p style="font-size:12.5px;color:#5a6b66;margin:-6px 0 14px;">Every row from any country's active price sheet where a customer name and offer price were entered, consolidated here with the country specified. Sourced from each country's price sheet (see that country's tab for full supplier price lists).</p>
+  <div class="kpi-grid">
+    <div class="kpi-card accent">
+      <div class="label">Total Customer Quotes</div>
+      <div class="value">6</div>
+      <div class="sub">rows with a named customer + offer price</div>
+    </div>
+    <div class="kpi-card accent-green">
+      <div class="label">Total Estimated Margin</div>
+      <div class="value">$382</div>
+      <div class="sub">sum of offer − buy price across all quotes</div>
+    </div>
+    <div class="kpi-card accent-blue">
+      <div class="label">Countries Represented</div>
+      <div class="value">1</div>
+      <div class="sub">Nigeria (Sri Lanka has no customer quotes yet)</div>
+    </div>
+  </div>
+
+    <div class="table-wrap">
+    <table class="price-table">
+      <thead>
+        <tr><th>Country</th><th>Customer</th><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Buy Price $/MT</th><th>Offer Price $/MT</th><th>Margin $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Nigeria</td><td>Polybag</td><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1840</td><td>$1950</td><td>$110</td><td>Tricon</td><td>Lotte</td><td>9-Jun</td><td>Credit</td></tr><tr><td>Nigeria</td><td>sonhart</td><td>PP</td><td>Homopolymer</td><td>1100N</td><td>12</td><td>$1430</td><td>$1500</td><td>$70</td><td>Emeraude</td><td></td><td>28-May</td><td>Credit</td></tr><tr><td>Nigeria</td><td>Hart</td><td>HDPE</td><td>Blow</td><td>50100</td><td>10</td><td>$1630</td><td>$1740</td><td>$110</td><td>Snetor</td><td></td><td>9-Jun</td><td>Credit</td></tr><tr><td>Nigeria</td><td>STARPOINT</td><td>PPCP</td><td>INJECTION</td><td>B350F</td><td>9</td><td>$1550</td><td>$1580</td><td>$30</td><td>SK GLOBAL</td><td></td><td>17 Jun</td><td>CASH</td></tr><tr><td>Nigeria</td><td>STARPOINT</td><td>PET</td><td>BOTTLE GRADE</td><td>CZ302</td><td>0.8</td><td>$1290</td><td>$1320</td><td>$30</td><td>ELAINE</td><td></td><td>17 Jun</td><td>CASH</td></tr><tr><td>Nigeria</td><td>STARPOINT</td><td>PET</td><td>BOTTLE GRADE</td><td>CR8816</td><td>0.8</td><td>$1198</td><td>$1230</td><td>$32</td><td>CRC</td><td></td><td>18 Jun</td><td>CASH</td></tr>
+      </tbody>
+    </table>
     </div>
   </div>
 
