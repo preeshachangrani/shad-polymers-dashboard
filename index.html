@@ -2,398 +2,329 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shad Polymers Dashboard — June 2026</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-  :root {
-    --navy: #12593b;
-    --navy-mid: #0a3d28;
-    --navy-light: #1a7550;
-    --teal: #c49a3c;
-    --teal-light: #e0b050;
-    --red: #e53e3e;
-    --amber: #f59e0b;
-    --blue: #3182ce;
-    --green: #38a169;
-    --gold: #f5d06a;
-    --bg: #f0f4f1;
-    --card-bg: #ffffff;
-    --text: #1a2e22;
-    --text-light: #4a6358;
-    --border: #d1e0d6;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; }
+    :root {
+      --navy: #12593b; --navy-mid: #0a3d28; --navy-light: #1a7550;
+      --teal: #c49a3c; --teal-light: #e0b050; --red: #e53e3e;
+      --amber: #f59e0b; --blue: #3182ce; --green: #38a169; --gold: #f5d06a;
+      --bg: #f0f4f1; --card-bg: #ffffff; --text: #1a2e22; --text-light: #4a6358; --border: #d1e0d6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); }
+    #auth-overlay {
+      position: fixed; inset: 0; background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+      display: flex; align-items: center; justify-content: center; z-index: 999;
+    }
+    .auth-box { background: var(--card-bg); border-radius: 12px; padding: 40px; width: 320px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,.3); }
+    .auth-box h2 { color: var(--navy); margin-bottom: 8px; }
+    .auth-box p { color: var(--text-light); font-size: 13px; margin-bottom: 20px; }
+    .auth-box input { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 14px; margin-bottom: 12px; }
+    .auth-box button { width: 100%; padding: 10px; background: var(--navy); color: #fff; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; }
+    .auth-box button:hover { background: var(--navy-light); }
+    #pw-error { color: var(--red); font-size: 12px; margin-top: 8px; display: none; }
+    header { background: linear-gradient(135deg, var(--navy), var(--navy-mid)); color: #fff; padding: 20px 28px; }
+    header h1 { font-size: 22px; }
+    header .sub { font-size: 13px; opacity: .85; margin-top: 4px; }
+    .tab-bar { display: flex; background: var(--navy-mid); padding: 0 28px; }
+    .tab-btn { background: none; border: none; color: rgba(255,255,255,.7); padding: 14px 22px; font-size: 14px; cursor: pointer; border-bottom: 3px solid transparent; }
+    .tab-btn.active { color: #fff; border-bottom-color: var(--teal-light); font-weight: 600; }
+    .tab-btn:hover { color: #fff; }
+    main { padding: 24px 28px 60px; max-width: 1400px; margin: 0 auto; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    h2.section-title { font-size: 16px; color: var(--navy); margin: 28px 0 12px; text-transform: uppercase; letter-spacing: .04em; }
+    h2.section-title:first-child { margin-top: 0; }
 
-  /* PASSWORD OVERLAY */
-  #auth-overlay {
-    position: fixed; inset: 0; background: #082d1e; z-index: 9999;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .auth-box {
-    background: #0a3d28; border: 1px solid #1a7550; border-radius: 12px;
-    padding: 40px 48px; text-align: center; width: 360px;
-  }
-  .auth-box .logo { font-size: 36px; font-weight: 800; color: var(--gold); margin-bottom: 8px; }
-  .auth-box h2 { color: #fff; font-size: 18px; margin-bottom: 6px; }
-  .auth-box p { color: #8db89e; font-size: 13px; margin-bottom: 28px; }
-  .auth-box input {
-    width: 100%; padding: 12px 16px; background: #082d1e; border: 1px solid #1a7550;
-    border-radius: 8px; color: #fff; font-size: 16px; letter-spacing: 4px;
-    text-align: center; outline: none; margin-bottom: 16px;
-  }
-  .auth-box input:focus { border-color: var(--gold); }
-  .auth-box button {
-    width: 100%; padding: 12px; background: var(--teal); border: none;
-    border-radius: 8px; color: #fff; font-size: 15px; font-weight: 600;
-    cursor: pointer; transition: background 0.2s;
-  }
-  .auth-box button:hover { background: var(--teal-light); }
-  .auth-error { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
+    .urgent-banner { background: #fff5f5; border: 1px solid #fed7d7; border-radius: 10px; padding: 14px 18px; margin-bottom: 20px; }
+    .urgent-banner-title { font-weight: 700; color: var(--red); font-size: 13px; margin-bottom: 10px; text-transform: uppercase; }
+    .urgent-item { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; padding: 6px 0; border-top: 1px solid #fed7d7; }
+    .urgent-item:first-child { border-top: none; }
+    .urgent-badge { background: var(--red); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+    .urgent-badge.amber { background: var(--amber); }
 
-  /* HEADER */
-  .header {
-    background: #082d1e; padding: 14px 24px; display: flex;
-    align-items: center; gap: 16px;
-  }
-  .logo-dot { background: var(--gold); color: #082d1e; font-weight: 800; font-size: 18px; width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .header-title { flex: 1; }
-  .header-title h1 { color: #fff; font-size: 20px; font-weight: 700; }
-  .header-title p { color: #8db89e; font-size: 12px; }
-  .header-refresh { text-align: right; }
-  .header-refresh .label { color: #8db89e; font-size: 11px; }
-  .header-refresh .date { color: var(--gold); font-size: 13px; font-weight: 600; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .kpi-card { background: var(--card-bg); border-radius: 10px; padding: 16px 18px; border: 1px solid var(--border); border-left: 4px solid var(--navy); }
+    .kpi-card.accent { border-left-color: var(--navy); }
+    .kpi-card.accent-gold { border-left-color: var(--teal); }
+    .kpi-card.accent-green { border-left-color: var(--green); }
+    .kpi-card.accent-amber { border-left-color: var(--amber); }
+    .kpi-card.accent-blue { border-left-color: var(--blue); }
+    .kpi-card .label { font-size: 11px; color: var(--text-light); text-transform: uppercase; letter-spacing: .03em; }
+    .kpi-card .value { font-size: 24px; font-weight: 700; color: var(--navy); margin: 4px 0; }
+    .kpi-card .sub { font-size: 11px; color: var(--text-light); }
 
-  /* TABS */
-  .tab-bar { background: #0a3d28; display: flex; gap: 4px; padding: 0 20px; border-bottom: 1px solid #1a7550; }
-  .tab-btn {
-    padding: 12px 20px; color: #8db89e; background: transparent; border: none;
-    cursor: pointer; font-size: 14px; font-weight: 500; border-bottom: 3px solid transparent;
-    transition: all 0.2s; display: flex; align-items: center; gap: 6px;
-  }
-  .tab-btn:hover { color: #fff; }
-  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .funnel-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+    .funnel-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; border-top: 3px solid var(--navy); }
+    .funnel-card.s1 { border-top-color: #8c98a4; } .funnel-card.s2 { border-top-color: var(--blue); }
+    .funnel-card.s3 { border-top-color: var(--teal); } .funnel-card.s4 { border-top-color: var(--amber); }
+    .funnel-card.s5 { border-top-color: var(--red); } .funnel-card.s6 { border-top-color: var(--green); }
+    .funnel-card .stage-num { font-size: 10px; color: var(--text-light); text-transform: uppercase; }
+    .funnel-card .stage-name { font-size: 11px; font-weight: 600; margin: 4px 0 8px; min-height: 28px; }
+    .funnel-card .count { font-size: 22px; font-weight: 700; color: var(--navy); }
+    .funnel-card .fval { font-size: 11px; color: var(--text-light); }
 
-  /* CONTENT */
-  .tab-content { display: none; padding: 20px; max-width: 1400px; margin: 0 auto; }
-  .tab-content.active { display: block; }
+    .chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .chart-box { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+    .chart-box h3 { font-size: 13px; color: var(--navy); margin-bottom: 10px; }
 
-  /* URGENT BANNER */
-  .urgent-banner {
-    background: #fff5f5; border-left: 4px solid var(--red); border-radius: 6px;
-    padding: 12px 16px; margin-bottom: 20px;
-  }
-  .urgent-banner h3 { color: var(--red); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-  .urgent-item { display: flex; align-items: flex-start; gap: 10px; padding: 4px 0; font-size: 13px; }
-  .urgent-badge { background: var(--red); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; flex-shrink: 0; white-space: nowrap; }
-  .urgent-badge.amber { background: var(--amber); }
-  .urgent-badge.blue { background: var(--blue); }
+    .pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill { font-size: 12px; padding: 5px 12px; border-radius: 14px; background: #eef3ef; border: 1px solid var(--border); }
+    .pill.pp { background: #e6f4ea; color: #1a7550; border-color: #b9e0c6; }
+    .pill.pe { background: #e9f0fb; color: #2c5fa8; border-color: #c3d8f2; }
+    .pill.pvc { background: #fdf1e0; color: #a3711f; border-color: #f3dba8; }
+    .pill.pet { background: #f3e9fb; color: #6b3fa0; border-color: #ddc3f2; }
 
-  /* KPI CARDS */
-  .kpi-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 20px; }
-  .kpi-grid-4 { grid-template-columns: repeat(4, 1fr); }
-  .kpi-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
-  .kpi-card .label { font-size: 11px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-  .kpi-card .value { font-size: 22px; font-weight: 700; color: var(--navy); }
-  .kpi-card .sub { font-size: 11px; color: var(--text-light); margin-top: 4px; }
-  .kpi-card.accent { border-left: 4px solid var(--navy); }
-  .kpi-card.accent-gold { border-left: 4px solid var(--gold); }
-  .kpi-card.accent-green { border-left: 4px solid var(--green); }
-  .kpi-card.accent-amber { border-left: 4px solid var(--amber); }
-  .kpi-card.accent-blue { border-left: 4px solid var(--blue); }
+    .terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px,1fr)); gap: 10px; }
+    .term-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
+    .term-name { font-size: 12px; font-weight: 600; color: var(--navy); }
+    .term-count { font-size: 20px; font-weight: 700; margin: 4px 0; }
+    .term-label { font-size: 10px; color: var(--text-light); }
 
-  /* SECTION TITLE */
-  .section-title { font-size: 13px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+    .action-list { display: flex; flex-direction: column; gap: 8px; }
+    .action-item { display: flex; gap: 10px; align-items: flex-start; background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: 13px; }
+    .action-badge { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 4px; white-space: nowrap; color: #fff; }
+    .action-badge.red { background: var(--red); } .action-badge.amber { background: var(--amber); } .action-badge.blue { background: var(--blue); }
+    .action-text { display: flex; flex-direction: column; gap: 2px; }
+    .action-text span { color: var(--text-light); font-size: 12px; }
 
-  /* FUNNEL */
-  .funnel-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; margin-bottom: 20px; }
-  .funnel-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
-  .funnel-card .stage-num { font-size: 10px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-  .funnel-card .stage-name { font-size: 11px; color: var(--navy); font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
-  .funnel-card .count { font-size: 28px; font-weight: 800; color: var(--navy); }
-  .funnel-card .fval { font-size: 12px; color: var(--text-light); margin-top: 4px; }
-  .funnel-card.s1 { border-top: 3px solid #6366f1; }
-  .funnel-card.s2 { border-top: 3px solid var(--blue); }
-  .funnel-card.s3 { border-top: 3px solid var(--amber); }
-  .funnel-card.s4 { border-top: 3px solid var(--teal); }
-  .funnel-card.s5 { border-top: 3px solid var(--red); }
-  .funnel-card.s6 { border-top: 3px solid var(--green); }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; background: var(--card-bg); }
+    th { background: var(--navy); color: #fff; text-align: left; padding: 8px 10px; font-size: 11px; text-transform: uppercase; position: sticky; top: 0; }
+    td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+    tr:nth-child(even) td { background: #f7faf8; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; max-height: 560px; overflow-y: auto; }
+    .margin-high { color: var(--green); font-weight: 700; } .margin-mid { color: var(--amber); font-weight: 700; } .margin-low { color: var(--red); font-weight: 700; }
+    .stage-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; color: #fff; white-space: nowrap; }
+    .stage-badge.stage-1 { background: #8c98a4; } .stage-badge.stage-2 { background: var(--blue); }
+    .stage-badge.stage-3 { background: var(--teal); } .stage-badge.stage-4 { background: var(--amber); } .stage-badge.stage-5 { background: var(--red); }
 
-  /* GRID LAYOUT */
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
-  .chart-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
-  .chart-card canvas { max-height: 240px; }
+    .price-table .family-row td { background: var(--navy); color: #fff; font-weight: 700; font-size: 12px; padding: 8px 10px; }
+    .price-table .family-row.pe td { background: #2c5fa8; } .price-table .family-row.pvc td { background: #a3711f; }
 
-  /* PILLS */
-  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-  .pill { background: #e8f0eb; border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600; color: var(--navy); }
-  .pill.pp { background: #e8f4ff; border-color: #93c5fd; color: #1d4ed8; }
-  .pill.pe { background: #f0fdf4; border-color: #86efac; color: #15803d; }
-  .pill.pvc { background: #fff7ed; border-color: #fcd34d; color: #92400e; }
-  .pill.pet { background: #fdf4ff; border-color: #d8b4fe; color: #7e22ce; }
+    .energy-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+    .energy-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+    .e-label { font-size: 11px; color: var(--text-light); text-transform: uppercase; }
+    .e-value { font-size: 22px; font-weight: 700; color: var(--navy); margin: 4px 0; }
+    .e-sub { font-size: 11px; }
+    .e-sub.down { color: var(--red); } .e-sub.up { color: var(--green); } .e-sub.flat { color: var(--text-light); }
 
-  /* PAYMENT TERMS */
-  .terms-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
-  .term-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center; }
-  .term-card .term-name { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-  .term-card .term-count { font-size: 20px; font-weight: 800; color: var(--navy-light); }
-  .term-card .term-label { font-size: 11px; color: var(--text-light); }
+    .news-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    .news-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; border-left: 4px solid var(--text-light); }
+    .news-card.bullish { border-left-color: var(--green); } .news-card.bearish { border-left-color: var(--red); } .news-card.neutral { border-left-color: var(--amber); }
+    .news-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; color: #fff; }
+    .news-badge.bullish { background: var(--green); } .news-badge.bearish { background: var(--red); } .news-badge.neutral { background: var(--amber); }
+    .news-title { font-weight: 700; font-size: 13px; margin: 8px 0 6px; color: var(--navy); }
+    .news-body { font-size: 12px; color: var(--text-light); line-height: 1.5; }
+    .news-src { font-size: 10px; color: #8c98a4; margin-top: 8px; font-style: italic; }
 
-  /* ACTION ITEMS */
-  .action-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-  .action-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; display: flex; align-items: flex-start; gap: 12px; }
-  .action-item.today { border-left: 4px solid var(--red); background: #fff5f5; }
-  .action-item.this-week { border-left: 4px solid var(--amber); background: #fffbeb; }
-  .action-item.upcoming { border-left: 4px solid var(--blue); background: #eff6ff; }
-  .action-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; flex-shrink: 0; margin-top: 2px; text-transform: uppercase; white-space: nowrap; }
-  .action-badge.red { background: var(--red); color: #fff; }
-  .action-badge.amber { background: var(--amber); color: #fff; }
-  .action-badge.blue { background: var(--blue); color: #fff; }
-  .action-text strong { display: block; font-size: 13px; color: var(--text); margin-bottom: 2px; }
-  .action-text span { font-size: 12px; color: var(--text-light); }
+    .reference-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+    .reference-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+    .r-title { font-weight: 700; color: var(--navy); font-size: 13px; margin-bottom: 6px; }
+    .r-body { font-size: 12px; color: var(--text-light); line-height: 1.5; }
 
-  /* TABLE */
-  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 20px; }
-  table { width: 100%; border-collapse: collapse; font-size: 12px; }
-  thead { background: #082d1e; }
-  thead th { color: var(--gold); font-weight: 600; padding: 10px 12px; text-align: left; white-space: nowrap; border-bottom: 2px solid #1a7550; }
-  tbody tr { border-bottom: 1px solid var(--border); }
-  tbody tr:hover { background: #f5f9f6; }
-  tbody td { padding: 9px 12px; white-space: nowrap; color: var(--text); }
-  .stage-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
-  .stage-1 { background: #ede9fe; color: #5b21b6; }
-  .stage-2 { background: #dbeafe; color: #1e40af; }
-  .stage-3 { background: #fef3c7; color: #92400e; }
-  .stage-4 { background: #d1fae5; color: #065f46; }
-  .stage-5 { background: #fee2e2; color: #991b1b; }
-  .margin-high { color: var(--green); font-weight: 700; }
-  .margin-mid { color: var(--amber); font-weight: 700; }
-  .margin-low { color: var(--text-light); }
-
-  /* PRICE TABLE */
-  .price-group-row td { background: #0a3d28 !important; color: var(--gold); font-weight: 700; font-size: 12px; padding: 7px 12px; }
-  .price-val { text-align: right; font-weight: 600; color: var(--navy); }
-  .price-best { background: #d1fae5; }
-
-  /* MARKET INTEL */
-  .energy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 20px; }
-  .energy-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
-  .energy-card .e-label { font-size: 11px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-  .energy-card .e-value { font-size: 28px; font-weight: 800; color: var(--navy); }
-  .energy-card .e-change { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; margin-top: 8px; line-height: 1.5; }
-  .e-down { color: var(--red); }
-  .e-up { color: var(--green); }
-  .e-neutral { color: var(--amber); }
-
-  .news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
-  .news-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
-  .news-tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .tag-bull-oil { background: #d1fae5; color: #065f46; }
-  .tag-bear-oil { background: #fee2e2; color: #991b1b; }
-  .tag-bull-pp { background: #e0e7ff; color: #312e81; }
-  .tag-bear-pp { background: #ffe4e6; color: #9f1239; }
-  .tag-bull-pe { background: #f0fdf4; color: #14532d; }
-  .tag-bear-pe { background: #fef3c7; color: #78350f; }
-  .tag-bear-pvc { background: #fff1f2; color: #881337; }
-  .tag-neutral { background: #f3f4f6; color: #374151; }
-  .tag-freight { background: #eff6ff; color: #1e3a8a; }
-  .news-card h4 { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 8px; line-height: 1.4; }
-  .news-card p { font-size: 12px; color: var(--text-light); line-height: 1.6; }
-  .news-card .news-date { font-size: 11px; color: #9ca3af; margin-top: 8px; }
-
-  .ref-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
-  .ref-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
-  .ref-card .rc-label { font-size: 11px; color: var(--text-light); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-  .ref-card .rc-range { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-  .ref-card .rc-sub { font-size: 11px; color: var(--text-light); line-height: 1.7; }
-
-  /* FOOTER */
-  .footer { text-align: center; padding: 20px; color: var(--text-light); font-size: 11px; border-top: 1px solid var(--border); margin-top: 10px; background: #fff; }
-
-  @media (max-width: 900px) {
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-    .kpi-grid-4 { grid-template-columns: repeat(2, 1fr); }
-    .funnel-grid { grid-template-columns: repeat(3, 1fr); }
-    .two-col, .news-grid, .ref-grid { grid-template-columns: 1fr; }
-    .energy-grid { grid-template-columns: 1fr; }
-    .terms-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+    footer { text-align: center; padding: 18px; font-size: 11px; color: var(--text-light); border-top: 1px solid var(--border); margin-top: 20px; }
+    @media (max-width: 1000px) {
+      .kpi-grid, .funnel-grid, .chart-grid, .energy-grid, .news-grid, .reference-grid { grid-template-columns: 1fr 1fr; }
+    }
 </style>
 </head>
 <body>
 
-<!-- PASSWORD OVERLAY -->
 <div id="auth-overlay">
   <div class="auth-box">
-    <div class="logo">SP</div>
-    <h2>Shad Polymers Dashboard</h2>
-    <p>Enter your access password to continue</p>
-    <input type="password" id="pw-input" placeholder="••••••" onkeydown="if(event.key==='Enter')checkPW()" />
-    <button onclick="checkPW()">Access Dashboard</button>
-    <div class="auth-error" id="pw-error">Incorrect password. Please try again.</div>
+    <h2>Shad Polymers</h2>
+    <p>Enter password to view dashboard</p>
+    <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter') checkPW();">
+    <button onclick="checkPW()">Unlock</button>
+    <div id="pw-error">Incorrect password. Try again.</div>
   </div>
 </div>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="logo-dot">SP</div>
-  <div class="header-title">
-    <h1>Shad Polymers — Dashboard</h1>
-    <p>Order Pipeline &amp; Market Intelligence</p>
-  </div>
-  <div class="header-refresh">
-    <div class="label">Last refreshed</div>
-    <div class="date" id="refresh-date">15 June 2026 · 11:00 AM</div>
-  </div>
-</div>
+<header>
+  <h1>Shad Polymers Dashboard</h1>
+  <div class="sub">Pipeline · Prices · Market Intelligence — June 2026</div>
+</header>
 
-<!-- TAB BAR -->
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('pipeline', this)">📦 Pipeline</button>
   <button class="tab-btn" onclick="switchTab('prices', this)">💰 Prices</button>
-  <button class="tab-btn" onclick="switchTab('customers', this)">🤝 Customers</button>
   <button class="tab-btn" onclick="switchTab('market', this)">📊 Market Intelligence</button>
 </div>
 
-<!-- ===== TAB 1: PIPELINE ===== -->
-<div id="tab-pipeline" class="tab-content active">
+<main>
 
-  <div class="urgent-banner">
-    <h3>🔴 Urgent Actions — June 15, 2026</h3>
+  <div id="tab-pipeline" class="tab-content active">
+
+    <div class="urgent-banner">
+      <div class="urgent-banner-title">⚠ Needs Attention</div>
     <div class="urgent-item">
-      <span class="urgent-badge">TODAY</span>
-      <span><strong>REF 1403 — DANA PLAST / HYOSUNG:</strong> PPRCP R1001N (84 MT, DA-90). PFI sent 08/06. Awaiting Form M. ETD 21st June — follow up urgently to avoid missing vessel.</span>
+      <span class="urgent-badge">PAST DUE</span>
+      <span><strong>REF 1349 — STARPOINT / CRC:</strong> CR8816 (88 MT, DA-60). payment due date passed 87 days ago — verify payment/document status.</span>
     </div>
     <div class="urgent-item">
-      <span class="urgent-badge">TODAY</span>
-      <span><strong>REF 1402 — DANA PLAST / HYOSUNG:</strong> PPCP J1145T (140 MT, DA-90). Form M received, SI sent 12/06. Confirm payment date with RK — at least 1 week before ETD.</span>
+      <span class="urgent-badge">PAST DUE</span>
+      <span><strong>REF 1351 — STARPOINT / HANWHA:</strong> PPCP BJ550 (72 MT, DA-60). payment due date passed 61 days ago — verify payment/document status.</span>
+    </div>
+    <div class="urgent-item">
+      <span class="urgent-badge">PAST DUE</span>
+      <span><strong>REF 1350 — IDDO PLASTICS / HK TOPWAY:</strong> PVC DG1000S (140 MT, DA-90). payment due date passed 59 days ago — verify payment/document status.</span>
+    </div>
+    <div class="urgent-item">
+      <span class="urgent-badge">PAST DUE</span>
+      <span><strong>REF 1360 — DASCO / ITOCHU:</strong> HDPE blow HB3556B (306 MT, DA-60). payment due date passed 47 days ago — verify payment/document status.</span>
+    </div>
+    <div class="urgent-item">
+      <span class="urgent-badge">PAST DUE</span>
+      <span><strong>REF 1359 — SARSOLI / CALMIN:</strong> CALMIN -80 (22.5 MT, DA-60). payment due date passed 40 days ago — verify payment/document status.</span>
     </div>
     <div class="urgent-item">
       <span class="urgent-badge amber">THIS WEEK</span>
-      <span><strong>REF 1394 — DANA PLAST / HYOSUNG:</strong> RK to make supplier payment on <strong>19 June</strong> for PPCP J1145T (84 MT). ETD 25/06.</span>
+      <span><strong>REF 1395 — DANA PLAST / HYOSUNG:</strong> PPRCP R1001N (56 MT, DA-90). due in 3 days — verify payment/document status.</span>
     </div>
     <div class="urgent-item">
       <span class="urgent-badge amber">THIS WEEK</span>
-      <span><strong>REF 1395 — DANA PLAST / HYOSUNG:</strong> PPRCP R1001N (56 MT). ETD <strong>19/06</strong> — confirm docs and BL readiness today.</span>
+      <span><strong>REF 1375 — SARSOLI / CALMIN:</strong> CALMIN -80 (22.5 MT, DA-90). due in 3 days — verify payment/document status.</span>
     </div>
-    <div class="urgent-item">
-      <span class="urgent-badge amber">OVERDUE ETD</span>
-      <span><strong>REF 1385 (SHIVLILA) / REF 1369 (SONHART) / REF 1401 (SUPER SONIC):</strong> ETD was 14 June — confirm BL release, vessel status, and next steps immediately.</span>
     </div>
-  </div>
 
-  <!-- KPI CARDS -->
+    <h2 class="section-title">Key Metrics</h2>
   <div class="kpi-grid">
     <div class="kpi-card accent">
       <div class="label">Active Orders</div>
-      <div class="value">17</div>
-      <div class="sub">Stages 1–4, June 2026</div>
+      <div class="value">45</div>
+      <div class="sub">Stages 1–5, June 2026</div>
     </div>
     <div class="kpi-card accent-gold">
       <div class="label">Pipeline Value</div>
-      <div class="value">$2.88M</div>
+      <div class="value">$5.57M</div>
       <div class="sub">Total PFI value</div>
     </div>
     <div class="kpi-card accent-green">
       <div class="label">Total MT</div>
-      <div class="value">1,933</div>
+      <div class="value">4,421</div>
       <div class="sub">Metric tonnes in pipeline</div>
     </div>
     <div class="kpi-card accent-amber">
       <div class="label">Est. Gross Margin</div>
-      <div class="value">$59,147</div>
+      <div class="value">$131,930</div>
       <div class="sub">Across all active stages</div>
     </div>
     <div class="kpi-card accent-blue">
       <div class="label">Active Buyers</div>
-      <div class="value">8</div>
-      <div class="sub">DANA PLAST, SHIVLILA +6</div>
+      <div class="value">14</div>
+      <div class="sub">SHIVLILA, DANA PLAST +12</div>
     </div>
   </div>
 
-  <!-- FUNNEL -->
-  <div class="section-title">Pipeline Funnel</div>
+    <h2 class="section-title">Pipeline Funnel (Stage 1–6)</h2>
   <div class="funnel-grid">
     <div class="funnel-card s1">
       <div class="stage-num">Stage 1</div>
       <div class="stage-name">Awaiting Form M</div>
-      <div class="count">2</div>
-      <div class="fval">$149,748</div>
+      <div class="count">0</div>
+      <div class="fval">$0</div>
     </div>
     <div class="funnel-card s2">
       <div class="stage-num">Stage 2</div>
-      <div class="stage-name">LC / Payment Due</div>
-      <div class="count">2</div>
-      <div class="fval">$371,280</div>
+      <div class="stage-name">LC to be Issued</div>
+      <div class="count">1</div>
+      <div class="fval">$216,300</div>
     </div>
     <div class="funnel-card s3">
       <div class="stage-num">Stage 3</div>
-      <div class="stage-name">Awaiting Ship. Schedule</div>
+      <div class="stage-name">Awaiting Shipping Sched.</div>
       <div class="count">2</div>
-      <div class="fval">$159,520</div>
+      <div class="fval">$52,728</div>
     </div>
     <div class="funnel-card s4">
       <div class="stage-num">Stage 4</div>
       <div class="stage-name">Awaiting Docs</div>
-      <div class="count">11</div>
-      <div class="fval">$2,195,524</div>
+      <div class="count">10</div>
+      <div class="fval">$1,033,670</div>
     </div>
     <div class="funnel-card s5">
       <div class="stage-num">Stage 5</div>
       <div class="stage-name">Awaiting Payment</div>
-      <div class="count">30+</div>
-      <div class="fval">Historical</div>
+      <div class="count">32</div>
+      <div class="fval">$4,268,895</div>
     </div>
     <div class="funnel-card s6">
       <div class="stage-num">Stage 6</div>
       <div class="stage-name">Completed</div>
-      <div class="count">—</div>
-      <div class="fval">Archive</div>
+      <div class="count">0</div>
+      <div class="fval">$0</div>
     </div>
   </div>
 
-  <!-- CHARTS -->
-  <div class="two-col">
-    <div class="chart-card">
-      <div class="section-title">Top Buyers by Pipeline Value</div>
-      <canvas id="buyerChart"></canvas>
+    <h2 class="section-title">Charts</h2>
+    <div class="chart-grid">
+      <div class="chart-box">
+        <h3>Pipeline Value by Buyer</h3>
+        <canvas id="buyerChart" height="220"></canvas>
+      </div>
+      <div class="chart-box">
+        <h3>Margin $/MT — Top Orders</h3>
+        <canvas id="marginChart" height="220"></canvas>
+      </div>
     </div>
-    <div class="chart-card">
-      <div class="section-title">Margin $/MT by Order</div>
-      <canvas id="marginChart"></canvas>
-    </div>
-  </div>
 
-  <!-- MATERIALS -->
-  <div class="section-title">Materials in Active Pipeline</div>
+    <h2 class="section-title">Materials in Pipeline</h2>
   <div class="pills">
-    <span class="pill pp">PPCP J1145T</span>
-    <span class="pill pp">PPRCP R1001N</span>
-    <span class="pill pp">PPCP EP548R</span>
-    <span class="pill pp">PPCP P640J / P740J / P840J</span>
-    <span class="pill pp">PPCP B350F</span>
-    <span class="pill pp">PPHP Y26</span>
-    <span class="pill pe">HDPE HD5502S</span>
+    <span class="pill pet">AMORPHOUS PET CHIPS</span>
+    <span class="pill pp">AZODICARBONAMIDE-JB55</span>
+    <span class="pill pp">BCPP AW564</span>
+    <span class="pill pp">CALMIN -80</span>
+    <span class="pill pe">CIPLAS LLDPE LL1019BP</span>
+    <span class="pill pe">CIPLAS LLDPE LL1019FP</span>
+    <span class="pill pp">CR8816</span>
+    <span class="pill pp">CR8816 ROUND SHAPE</span>
+    <span class="pill pe">HDPE 7000</span>
     <span class="pill pe">HDPE 7302</span>
     <span class="pill pe">HDPE 8000</span>
-    <span class="pill pe">HDPE 7000</span>
+    <span class="pill pe">HDPE H5604F</span>
+    <span class="pill pe">HDPE HD5502S</span>
+    <span class="pill pe">HDPE TR144</span>
+    <span class="pill pe">HDPE Yanchang 23050</span>
+    <span class="pill pe">HDPE blow HB3556B</span>
+    <span class="pill pe">HDPE-7000</span>
+    <span class="pill pe">LLDPE 7149U</span>
+    <span class="pill pe">LLDPE LLD-7050</span>
+    <span class="pill pet">PET BILLION BRAND BH-801</span>
     <span class="pill pet">PET CRC 8816</span>
-    <span class="pill pet">Amorphous PET Chips</span>
-    <span class="pill">CALMIN-80</span>
+    <span class="pill pp">PP RANDOM R392Y AND R365Y</span>
+    <span class="pill pp">PP RANDOM R520Y AND R380Y</span>
+    <span class="pill pp">PPCP 840J</span>
+    <span class="pill pp">PPCP B350F</span>
+    <span class="pill pp">PPCP BJ550</span>
+    <span class="pill pp">PPCP EP548R</span>
+    <span class="pill pp">PPCP J1145T</span>
+    <span class="pill pp">PPCP RANDOM R1001N</span>
+    <span class="pill pp">PPHP Y26</span>
+    <span class="pill pp">PPRCP R1001N</span>
+    <span class="pill pvc">PVC DG1000S</span>
   </div>
 
-  <!-- PAYMENT TERMS -->
-  <div class="section-title">Payment Terms Breakdown</div>
+    <h2 class="section-title">Payment Terms Breakdown</h2>
   <div class="terms-grid">
     <div class="term-card">
       <div class="term-name">DA-60</div>
-      <div class="term-count">8</div>
+      <div class="term-count">27</div>
       <div class="term-label">orders</div>
     </div>
     <div class="term-card">
       <div class="term-name">DA-90</div>
-      <div class="term-count">6</div>
+      <div class="term-count">8</div>
+      <div class="term-label">orders</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">DA-80</div>
+      <div class="term-count">5</div>
+      <div class="term-label">orders</div>
+    </div>
+    <div class="term-card">
+      <div class="term-name">20% adv and 80% on bl copy</div>
+      <div class="term-count">2</div>
       <div class="term-label">orders</div>
     </div>
     <div class="term-card">
@@ -402,857 +333,1591 @@
       <div class="term-label">orders</div>
     </div>
     <div class="term-card">
-      <div class="term-name">20% + 80% BL</div>
-      <div class="term-count">2</div>
-      <div class="term-label">orders</div>
+      <div class="term-name">LC 90 DAYS</div>
+      <div class="term-count">1</div>
+      <div class="term-label">order</div>
     </div>
   </div>
 
-  <!-- ACTION ITEMS -->
-  <div class="section-title">Action Items</div>
+    <h2 class="section-title">Action Items (sorted by urgency)</h2>
   <div class="action-list">
     <div class="action-item today">
-      <span class="action-badge red">TODAY</span>
-      <div class="action-text">
-        <strong>REF 1403 — DANA PLAST / HYOSUNG — PPRCP R1001N (84 MT, DA-90)</strong>
-        <span>PFI sent 08/06. Awaiting Form M. ETD 21st June — follow up with buyer on Form M urgently.</span>
-      </div>
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1349 — STARPOINT (CR8816, 88 MT)</strong><span>Past due 87d · Supplier: CRC · DA-60 · Due date 28th March 2026</span></div>
     </div>
     <div class="action-item today">
-      <span class="action-badge red">TODAY</span>
-      <div class="action-text">
-        <strong>REF 1402 — DANA PLAST / HYOSUNG — PPCP J1145T (140 MT, DA-90)</strong>
-        <span>Form M received, SI sent 12/06. Confirm with RK payment timing — at least 1 week before ETD. Margin $35/MT.</span>
-      </div>
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1351 — STARPOINT (PPCP BJ550, 72 MT)</strong><span>Past due 61d · Supplier: HANWHA · DA-60 · Due date 23rd April 2026.</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1350 — IDDO PLASTICS (PVC DG1000S, 140 MT)</strong><span>Past due 59d · Supplier: HK TOPWAY · DA-90 · Due date 25th April 2026</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1360 — DASCO (HDPE blow HB3556B, 306 MT)</strong><span>Past due 47d · Supplier: ITOCHU · DA-60 · Due date 7th May</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1359 — SARSOLI (CALMIN -80, 22.5 MT)</strong><span>Past due 40d · Supplier: CALMIN · DA-60 · Due date 14th May</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1353 — DANA PLAST (PPCP RANDOM R1001N, 84 MT)</strong><span>Past due 40d · Supplier: HYOSUNG · DA-80 · Due date 14th May 2026.</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1352 — DANA PLAST (PPCP J1145T, 140 MT)</strong><span>Past due 40d · Supplier: HYOSUNG · DA-80 · Due date 14th May 2026.</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1361 — STARPOINT (CR8816 ROUND SHAPE, 88 MT)</strong><span>Past due 35d · Supplier: CRC · DA-60 · Due date 19th May</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1357 — SHIVLILA (CIPLAS LLDPE LL1019BP, 51 MT)</strong><span>Past due 34d · Supplier: ITOCHU · DA-60 · Due date 20th May 2026.</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1356 — SHIVLILA (BCPP AW564, 99 MT)</strong><span>Past due 28d · Supplier: ITOCHU · DA-60 · Due date 26th May 2026.</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1391 — SUPER SONIC (HDPE HD5502S, 28 MT)</strong><span>Past due 25d · Supplier: HK TOPWAY · 20% adv and 80% on bl copy · 21/05. ETD 29th May 2026.Draft Awaiting Payment to releae the origianls and surrender the BL.</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1373 — DANA PLAST (PPCP RANDOM R1001N, 84 MT)</strong><span>Past due 18d · Supplier: HYOSUNG · DA-80 · Due date 5th June 2026.</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1355 — SHIVLILA (PP RANDOM R392Y AND R365Y, 140 MT)</strong><span>Past due 12d · Supplier: PIAT INTL · DA-60 · Due date 11th June 2026</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1365 — DANA PLAST (PPCP RANDOM R1001N, 84 MT)</strong><span>Past due 11d · Supplier: HYOSUNG · DA-80 · Due date 12th June</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1385 — SHIVLILA (PPHP Y26, 84 MT)</strong><span>Past due 9d · Supplier: HK TOPWAY · DA-60 · 22/06. ETD 14th June 2026. Draft docs confirmed. Awaiting origianls to be delievered to our office.</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1369 — SONHART (PPCP EP548R, 108 MT)</strong><span>Past due 9d · Supplier: HK TOPWAY · DA-60 · 22/06. ETD 14th June 2026. Draft docs confirmed. Awaiting origianls to be delievered to our office.</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1363 — SHIVLILA (HDPE H5604F, 28.125 MT)</strong><span>Past due 5d · Supplier: SCG · DA-60 · Due date 18th June 2026</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1362 — SHIVLILA (PPCP 840J, 56.25 MT)</strong><span>Past due 5d · Supplier: SCG · DA-60 · Due date 18th June 2026</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1371 — STARPOINT (CR8816, 88 MT)</strong><span>Past due 3d · Supplier: CRC · DA-60 · Due date 20th June 2026.</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1358 — SHIVLILA (CIPLAS LLDPE LL1019FP, 51 MT)</strong><span>Past due 3d · Supplier: ITOCHU · DA-60 · Due date 20th June 2026</span></div>
+    </div>
+    <div class="action-item today">
+      <span class="action-badge red">PAST DUE</span>
+      <div class="action-text"><strong>REF 1396 — CHANDAR INVESTMENTS LIMITED. (HDPE 7000, 49.5 MT)</strong><span>Past due 2d · Supplier: MONTACHEM · CAD · 09/06. ETD 21st June 2026. Sent draft bl for chekcing and approval.</span></div>
     </div>
     <div class="action-item this-week">
-      <span class="action-badge amber">19 JUN</span>
-      <div class="action-text">
-        <strong>REF 1394 — DANA PLAST / HYOSUNG — PPCP J1145T (84 MT, DA-90) — ETD 25/06</strong>
-        <span>RK to make supplier payment on 19th June. Confirm funds availability. Margin $60/MT.</span>
-      </div>
+      <span class="action-badge amber">THIS WEEK</span>
+      <div class="action-text"><strong>REF 1395 — DANA PLAST (PPRCP R1001N, 56 MT)</strong><span>Due in 3d · Supplier: HYOSUNG · DA-90 · 10/06. ETD 26th June 2026.</span></div>
     </div>
     <div class="action-item this-week">
-      <span class="action-badge amber">19 JUN</span>
-      <div class="action-text">
-        <strong>REF 1395 — DANA PLAST / HYOSUNG — PPRCP R1001N (56 MT, DA-90) — ETD 19/06</strong>
-        <span>ETD today. Confirm shipping documents, BL readiness, and departure. Margin $60/MT.</span>
-      </div>
+      <span class="action-badge amber">THIS WEEK</span>
+      <div class="action-text"><strong>REF 1375 — SARSOLI (CALMIN -80, 22.5 MT)</strong><span>Due in 3d · Supplier: CALMIN · DA-90 · Due date 26th June 2026.</span></div>
     </div>
     <div class="action-item this-week">
-      <span class="action-badge amber">OVERDUE</span>
-      <div class="action-text">
-        <strong>REF 1385 — SHIVLILA / HK TOPWAY — PPHP Y26 (84 MT, DA-60) — ETD was 14/06</strong>
-        <span>Draft BL sent for approval 10/06. Follow up on BL approval and release of originals.</span>
-      </div>
+      <span class="action-badge amber">THIS WEEK</span>
+      <div class="action-text"><strong>REF 1370 — SHIV LILA (HDPE 7302, 108 MT)</strong><span>Due in 5d · Supplier: PIAT INTL · DA-60 · Due date 28th June 2026</span></div>
     </div>
     <div class="action-item this-week">
-      <span class="action-badge amber">OVERDUE</span>
-      <div class="action-text">
-        <strong>REF 1369 — SONHART / HK TOPWAY — PPCP EP548R (108 MT, DA-60) — ETD was 14/06</strong>
-        <span>Draft BL approved 10/06. Release documents and confirm with SONHART.</span>
-      </div>
+      <span class="action-badge amber">THIS WEEK</span>
+      <div class="action-text"><strong>REF 1354 — SHIVLILA (PP RANDOM R520Y AND R380Y, 315 MT)</strong><span>Due in 5d · Supplier: PIAT INTL · DA-60 · Due date 28th June 2026</span></div>
     </div>
     <div class="action-item this-week">
-      <span class="action-badge amber">OVERDUE</span>
-      <div class="action-text">
-        <strong>REF 1401 — SUPER SONIC / HK TOPWAY — HDPE HD5502S (28 MT) — ETD was 14/06</strong>
-        <span>08/06: Awaiting shipment confirmation. Follow up with HK Topway on vessel status.</span>
-      </div>
+      <span class="action-badge amber">THIS WEEK</span>
+      <div class="action-text"><strong>REF 1398 — STAR POINT (PPCP B350F, 48 MT)</strong><span>Due in 6d · Supplier: REPET ONE · DA-60 · 10/06. ETD 29th June 2026.</span></div>
+    </div>
+    <div class="action-item this-week">
+      <span class="action-badge amber">THIS WEEK</span>
+      <div class="action-text"><strong>REF 1397 — CHANDAR INVESTMENTS LIMITED. (HDPE 8000, 36 MT)</strong><span>Due in 6d · Supplier: REPET ONE · CAD · 09/06. ETD 29th June 2026.</span></div>
+    </div>
+    <div class="action-item this-week">
+      <span class="action-badge amber">THIS WEEK</span>
+      <div class="action-text"><strong>REF 1381 — STAR POINT (PET BILLION BRAND BH-801, 55 MT)</strong><span>Due in 6d · Supplier: HK TOPWAY · DA-60 · Due date 29th June 2026.</span></div>
     </div>
     <div class="action-item upcoming">
-      <span class="action-badge blue">21 JUN</span>
-      <div class="action-text">
-        <strong>REF 1396 — CHANDAR / MONTACHEM — HDPE 7000 (49.5 MT, CAD) — ETD 21/06</strong>
-        <span>Confirm vessel booking and CAD payment schedule. Margin $40/MT.</span>
-      </div>
+      <span class="action-badge blue">UPCOMING</span>
+      <div class="action-text"><strong>REF 1387 — STAR POINT (PET BILLION BRAND BH-801, 110 MT)</strong><span>Due in 13d · Supplier: HK TOPWAY · DA-60 · Due date 6th July 2026.</span></div>
     </div>
     <div class="action-item upcoming">
-      <span class="action-badge blue">26 JUN</span>
-      <div class="action-text">
-        <strong>REF 1397 + 1398 — CHANDAR &amp; STAR POINT — HDPE 8000 (36 MT, CAD) + PPCP B350F (48 MT, DA-60) — ETD 26/06</strong>
-        <span>Confirm loading and shipping schedule. Margins $50 and $30/MT respectively.</span>
-      </div>
+      <span class="action-badge blue">UPCOMING</span>
+      <div class="action-text"><strong>REF 1378 — SHIVLILA (HDPE-7000, 123.75 MT)</strong><span>Due in 16d · Supplier: MONTACHEM · DA-60 · Due date 9th July 2026.</span></div>
     </div>
     <div class="action-item upcoming">
-      <span class="action-badge blue">26 JUN</span>
-      <div class="action-text">
-        <strong>REF 1399 — STAR POINT / CRC — PET CRC 8816 (88 MT, DA-60) — ETD 26/06</strong>
-        <span>Awaiting shipping confirmation from CRC. Follow up for schedule confirmation.</span>
-      </div>
+      <span class="action-badge blue">UPCOMING</span>
+      <div class="action-text"><strong>REF 1372 — DANA PLAST (PPCP J1145T, 140 MT)</strong><span>Due in 16d · Supplier: HYOSUNG · DA-80 · Due date 9TH July 2026.</span></div>
+    </div>
+    <div class="action-item upcoming">
+      <span class="action-badge blue">UPCOMING</span>
+      <div class="action-text"><strong>REF 1384 — SHIVLILA (HDPE TR144, 81 MT)</strong><span>Due in 21d · Supplier: HK TOPWAY · DA-60 · Due date 14th July 2026.</span></div>
+    </div>
+    <div class="action-item upcoming">
+      <span class="action-badge blue">UPCOMING</span>
+      <div class="action-text"><strong>REF 1383 — SHIVLILA (LLDPE LLD-7050, 81 MT)</strong><span>Due in 21d · Supplier: HK TOPWAY · DA-60 · Due date 14th July 2026.</span></div>
+    </div>
+    <div class="action-item upcoming">
+      <span class="action-badge blue">UPCOMING</span>
+      <div class="action-text"><strong>REF 1382 — SHIVLILA (HDPE TR144, 81 MT)</strong><span>Due in 21d · Supplier: HK TOPWAY · DA-60 · Due date 14th July 2026.</span></div>
+    </div>
+    <div class="action-item upcoming">
+      <span class="action-badge blue">UPCOMING</span>
+      <div class="action-text"><strong>REF 1376 — DOSHI AND CO (HDPE Yanchang 23050, 196 MT)</strong><span>Due in 22d · Supplier: HK TOPWAY · LC 90 DAYS · Due date 15th July 2026.</span></div>
+    </div>
+    <div class="action-item upcoming">
+      <span class="action-badge blue">UPCOMING</span>
+      <div class="action-text"><strong>REF 1380 — HART (LLDPE 7149U, 84 MT)</strong><span>Due in 24d · Supplier: HK TOPWAY · DA-60 · Due date 17th July 2026.</span></div>
+    </div>
+    <div class="action-item upcoming">
+      <span class="action-badge blue">UPCOMING</span>
+      <div class="action-text"><strong>REF 1379 — SONHART (LLDPE 7149U, 140 MT)</strong><span>Due in 24d · Supplier: HK TOPWAY · DA-60 · Due date 17th July 2026.</span></div>
     </div>
   </div>
 
-  <!-- FULL ORDERS TABLE -->
-  <div class="section-title">Full Orders Table — Active Pipeline (Stages 1–4)</div>
-  <div class="table-wrap">
+    <h2 class="section-title">All Active Orders</h2>
+    <div class="table-wrap">
     <table>
       <thead>
         <tr>
-          <th>Ref</th>
-          <th>Stage</th>
-          <th>Buyer</th>
-          <th>Supplier</th>
-          <th>Material / Description</th>
-          <th>MT</th>
-          <th>PFI Value</th>
-          <th>Sell $/MT</th>
-          <th>Buy $/MT</th>
-          <th>Margin $/MT</th>
-          <th>Terms</th>
-          <th>PFI Date</th>
-          <th>Notes / Next Action</th>
+          <th>Ref</th><th>Buyer</th><th>Supplier</th><th>Material</th><th>MT</th><th>PFI Value</th>
+          <th>Sell/MT</th><th>Buy/MT</th><th>Margin/MT</th><th>Terms</th><th>PFI Date</th><th>Stage</th><th>Notes</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td><strong>1400</strong></td>
-          <td><span class="stage-badge stage-1">Stage 1</span></td>
-          <td>SARSOLI</td>
-          <td>CALMIN</td>
-          <td>CALMIN-80</td>
-          <td>22.5</td>
-          <td>$11,568</td>
-          <td>$514</td>
-          <td>$474</td>
-          <td class="margin-mid">$40</td>
-          <td>DA-60</td>
-          <td>26/05/2026</td>
-          <td>27/05. PFI sent. Awaiting Form M</td>
-        </tr>
-        <tr>
-          <td><strong>1403</strong></td>
-          <td><span class="stage-badge stage-1">Stage 1</span></td>
-          <td>DANA PLAST</td>
-          <td>HYOSUNG</td>
-          <td>PPRCP R1001N</td>
-          <td>84</td>
-          <td>$138,180</td>
-          <td>$1,645</td>
-          <td>$1,610</td>
-          <td class="margin-mid">$35</td>
-          <td>DA-90</td>
-          <td>08/06/2026</td>
-          <td>09/06. PFI sent. Awaiting Form M. ETD 21 Jun ⚠️</td>
-        </tr>
-        <tr>
-          <td><strong>1394</strong></td>
-          <td><span class="stage-badge stage-2">Stage 2</span></td>
-          <td>DANA PLAST</td>
-          <td>HYOSUNG</td>
-          <td>PPCP J1145T</td>
-          <td>84</td>
-          <td>$154,980</td>
-          <td>$1,845</td>
-          <td>$1,785</td>
-          <td class="margin-high">$60</td>
-          <td>DA-90</td>
-          <td>14/05/2026</td>
-          <td>ETD 25/06. RK payment due 19 Jun ⚠️</td>
-        </tr>
-        <tr>
-          <td><strong>1402</strong></td>
-          <td><span class="stage-badge stage-2">Stage 2</span></td>
-          <td>DANA PLAST</td>
-          <td>HYOSUNG</td>
-          <td>PPCP J1145T</td>
-          <td>140</td>
-          <td>$216,300</td>
-          <td>$1,545</td>
-          <td>$1,510</td>
-          <td class="margin-mid">$35</td>
-          <td>DA-90</td>
-          <td>08/06/2026</td>
-          <td>12/06. Form M rcvd. SI sent. RK to pay 1 wk before ETD ⚠️</td>
-        </tr>
-        <tr>
-          <td><strong>1399</strong></td>
-          <td><span class="stage-badge stage-3">Stage 3</span></td>
-          <td>STAR POINT</td>
-          <td>CRC</td>
-          <td>PET CRC 8816</td>
-          <td>88</td>
-          <td>$118,360</td>
-          <td>$1,345</td>
-          <td>$1,315</td>
-          <td class="margin-low">$30</td>
-          <td>DA-60</td>
-          <td>20/05/2026</td>
-          <td>10/06. ETD 26/06. Awaiting shipping confirmation</td>
-        </tr>
-        <tr>
-          <td><strong>1401</strong></td>
-          <td><span class="stage-badge stage-3">Stage 3</span></td>
-          <td>SUPER SONIC</td>
-          <td>HK TOPWAY</td>
-          <td>HDPE HD5502S</td>
-          <td>28</td>
-          <td>$41,160</td>
-          <td>$1,470</td>
-          <td>$1,430</td>
-          <td class="margin-mid">$40</td>
-          <td>20%+80%BL</td>
-          <td>19/05/2026</td>
-          <td>08/06. ETD 14/06. Awaiting confirmation ⚠️</td>
-        </tr>
-        <tr>
-          <td><strong>1392</strong></td>
-          <td><span class="stage-badge stage-4">Stage 4</span></td>
-          <td>STAR POINT</td>
-          <td>CRC</td>
-          <td>PET CRC 8816</td>
-          <td>88</td>
-          <td>$124,520</td>
-          <td>$1,415</td>
-          <td>$1,388</td>
-          <td class="margin-low">$27</td>
-          <td>DA-60</td>
-          <td>30/04/2026</td>
-          <td>ETD 19 May. Draft BL confirmed. Awaiting originals AWB 9770459300</td>
-        </tr>
-        <tr>
-          <td><strong>1388</strong></td>
-          <td><span class="stage-badge stage-4">Stage 4</span></td>
-          <td>SHIVLILA</td>
-          <td>PIAT INTL</td>
-          <td>HDPE 7302</td>
-          <td>108</td>
-          <td>$199,260</td>
-          <td>$1,845</td>
-          <td>$1,820</td>
-          <td class="margin-low">$25</td>
-          <td>DA-60</td>
-          <td>14/04/2026</td>
-          <td>02/05. ETD 28 May. Awaiting originals at Shad</td>
-        </tr>
-        <tr>
-          <td><strong>1391</strong></td>
-          <td><span class="stage-badge stage-4">Stage 4</span></td>
-          <td>SUPER SONIC</td>
-          <td>HK TOPWAY</td>
-          <td>HDPE HD5502S</td>
-          <td>28</td>
-          <td>$41,160</td>
-          <td>$1,470</td>
-          <td>$1,430</td>
-          <td class="margin-mid">$40</td>
-          <td>20%+80%BL</td>
-          <td>30/04/2026</td>
-          <td>21/05. ETD 29 May. Awaiting payment to release originals &amp; surrender BL</td>
-        </tr>
-        <tr>
-          <td><strong>1390</strong></td>
-          <td><span class="stage-badge stage-4">Stage 4</span></td>
-          <td>ENGEE PET</td>
-          <td>INDORMA</td>
-          <td>Amorphous PET Chips</td>
-          <td>600</td>
-          <td>$801,000</td>
-          <td>$1,335</td>
-          <td>$1,310</td>
-          <td class="margin-low">$25</td>
-          <td>DA-90</td>
-          <td>21/04/2026</td>
-          <td>21/05. ETD 29 May. Draft docs confirmed. Awaiting AWB 843061 9643</td>
-        </tr>
-        <tr>
-          <td><strong>1385</strong></td>
-          <td><span class="stage-badge stage-4">Stage 4</span></td>
-          <td>SHIVLILA</td>
-          <td>HK TOPWAY</td>
-          <td>PPHP Y26</td>
-          <td>84</td>
-          <td>$128,940</td>
-          <td>$1,535</td>
-          <td>$1,510</td>
-          <td class="margin-low">$25</td>
-          <td>DA-60</td>
-          <td>08/04/2026</td>
-          <td>10/06. ETD 14 Jun. Draft BL sent for approval ⚠️</td>
-        </tr>
-        <tr>
-          <td><strong>1369</strong></td>
-          <td><span class="stage-badge stage-4">Stage 4</span></td>
-          <td>SONHART</td>
-          <td>HK TOPWAY</td>
-          <td>PPCP EP548R</td>
-          <td>108</td>
-          <td>$109,620</td>
-          <td>$1,015</td>
-          <td>$990</td>
-          <td class="margin-low">$25</td>
-          <td>DA-60</td>
-          <td>27/02/2026</td>
-          <td>10/06. ETD 14 Jun. Draft BL approved ⚠️</td>
-        </tr>
-        <tr>
-          <td><strong>1393</strong></td>
-          <td><span class="stage-badge stage-4">Stage 4</span></td>
-          <td>SHIVLILA</td>
-          <td>SCG</td>
-          <td>PPCP P640J / P740J / P840J</td>
-          <td>281.25</td>
-          <td>$448,594</td>
-          <td>$1,595</td>
-          <td>$1,570</td>
-          <td class="margin-low">$25</td>
-          <td>DA-60</td>
-          <td>13/05/2026</td>
-          <td>26/05. ETD 7 Jun. Draft docs sent. Soncap applied</td>
-        </tr>
-        <tr>
-          <td><strong>1397</strong></td>
-          <td><span class="stage-badge stage-4">Stage 4</span></td>
-          <td>CHANDAR</td>
-          <td>REPET ONE</td>
-          <td>HDPE 8000</td>
-          <td>36</td>
-          <td>$65,160</td>
-          <td>$1,810</td>
-          <td>$1,760</td>
-          <td class="margin-high">$50</td>
-          <td>CAD</td>
-          <td>18/05/2026</td>
-          <td>09/06. ETD 26 Jun</td>
-        </tr>
-        <tr>
-          <td><strong>1396</strong></td>
-          <td><span class="stage-badge stage-4">Stage 4</span></td>
-          <td>CHANDAR</td>
-          <td>MONTACHEM</td>
-          <td>HDPE 7000</td>
-          <td>49.5</td>
-          <td>$88,110</td>
-          <td>$1,780</td>
-          <td>$1,740</td>
-          <td class="margin-mid">$40</td>
-          <td>CAD</td>
-          <td>14/05/2026</td>
-          <td>09/06. ETD 21 Jun</td>
-        </tr>
-        <tr>
-          <td><strong>1398</strong></td>
-          <td><span class="stage-badge stage-4">Stage 4</span></td>
-          <td>STAR POINT</td>
-          <td>REPET ONE</td>
-          <td>PPCP B350F</td>
-          <td>48</td>
-          <td>$79,680</td>
-          <td>$1,660</td>
-          <td>$1,630</td>
-          <td class="margin-low">$30</td>
-          <td>DA-60</td>
-          <td>20/05/2026</td>
-          <td>10/06. ETD 26 Jun</td>
-        </tr>
-        <tr>
-          <td><strong>1395</strong></td>
-          <td><span class="stage-badge stage-4">Stage 4</span></td>
-          <td>DANA PLAST</td>
-          <td>HYOSUNG</td>
-          <td>PPRCP R1001N</td>
-          <td>56</td>
-          <td>$109,480</td>
-          <td>$1,955</td>
-          <td>$1,895</td>
-          <td class="margin-high">$60</td>
-          <td>DA-90</td>
-          <td>14/05/2026</td>
-          <td>11/06. ETD 19/06/2026 ⚠️</td>
-        </tr>
+    <tr>
+      <td>1402</td>
+      <td>DANA PLAST</td>
+      <td>HYOSUNG</td>
+      <td>PPCP J1145T</td>
+      <td>140</td>
+      <td>$216,300</td>
+      <td>$1,545.00</td>
+      <td>$1,510.00</td>
+      <td class="margin-mid">$35.00</td>
+      <td>DA-90</td>
+      <td>08/06/2026</td>
+      <td><span class="stage-badge stage-2">Stage 2</span></td>
+      <td>12/06. Form M rcvd. SI sent. RK to make payment 1 week before ETD</td>
+    </tr>
+    <tr>
+      <td>1401</td>
+      <td>SUPER SONIC</td>
+      <td>HK TOPWAY</td>
+      <td>HDPE HD5502S</td>
+      <td>28</td>
+      <td>$41,160</td>
+      <td>$1,470.00</td>
+      <td>$1,430.00</td>
+      <td class="margin-mid">$40.00</td>
+      <td>20% adv and 80% on bl copy</td>
+      <td>19/05/2026</td>
+      <td><span class="stage-badge stage-3">Stage 3</span></td>
+      <td>08/06. ETD 14/06. Awaiting final docs and BL to be surrendered after they payment has been rcvd.</td>
+    </tr>
+    <tr>
+      <td>1400</td>
+      <td>SARSOLI</td>
+      <td>CALMIN</td>
+      <td>CALMIN -80</td>
+      <td>22.5</td>
+      <td>$11,568</td>
+      <td>$514.13</td>
+      <td>$474.13</td>
+      <td class="margin-mid">$40.00</td>
+      <td>DA=60</td>
+      <td>26/05/2026</td>
+      <td><span class="stage-badge stage-3">Stage 3</span></td>
+      <td>17/06. Awaiting shipping schedule.</td>
+    </tr>
+    <tr>
+      <td>1403</td>
+      <td>DANA PLAST</td>
+      <td>HYOSUNG</td>
+      <td>PPRCP R1001N</td>
+      <td>84</td>
+      <td>$138,180</td>
+      <td>$1,645.00</td>
+      <td>$1,610.00</td>
+      <td class="margin-mid">$35.00</td>
+      <td>DA-90</td>
+      <td>08/06/2026</td>
+      <td><span class="stage-badge stage-4">Stage 4</span></td>
+      <td>19/06. ETD 26/06.</td>
+    </tr>
+    <tr>
+      <td>1399</td>
+      <td>STAR POINT</td>
+      <td>CRC</td>
+      <td>PET CRC 8816</td>
+      <td>88</td>
+      <td>$118,360</td>
+      <td>$1,345.00</td>
+      <td>$1,315.00</td>
+      <td class="margin-mid">$30.00</td>
+      <td>DA-60</td>
+      <td>20/05/2026</td>
+      <td><span class="stage-badge stage-4">Stage 4</span></td>
+      <td>22/06. ETD 26/06.</td>
+    </tr>
+    <tr>
+      <td>1398</td>
+      <td>STAR POINT</td>
+      <td>REPET ONE</td>
+      <td>PPCP B350F</td>
+      <td>48</td>
+      <td>$79,680</td>
+      <td>$1,660.00</td>
+      <td>$1,630.00</td>
+      <td class="margin-mid">$30.00</td>
+      <td>DA-60</td>
+      <td>20/05/2026</td>
+      <td><span class="stage-badge stage-4">Stage 4</span></td>
+      <td>10/06. ETD 29th June 2026.</td>
+    </tr>
+    <tr>
+      <td>1397</td>
+      <td>CHANDAR INVESTMENTS LIMITED.</td>
+      <td>REPET ONE</td>
+      <td>HDPE 8000</td>
+      <td>36</td>
+      <td>$65,160</td>
+      <td>$1,810.00</td>
+      <td>$1,760.00</td>
+      <td class="margin-high">$50.00</td>
+      <td>CAD</td>
+      <td>18/05/2026</td>
+      <td><span class="stage-badge stage-4">Stage 4</span></td>
+      <td>09/06. ETD 29th June 2026.</td>
+    </tr>
+    <tr>
+      <td>1396</td>
+      <td>CHANDAR INVESTMENTS LIMITED.</td>
+      <td>MONTACHEM</td>
+      <td>HDPE 7000</td>
+      <td>49.5</td>
+      <td>$88,110</td>
+      <td>$1,780.00</td>
+      <td>$1,740.00</td>
+      <td class="margin-mid">$40.00</td>
+      <td>CAD</td>
+      <td>14/05/2026</td>
+      <td><span class="stage-badge stage-4">Stage 4</span></td>
+      <td>09/06. ETD 21st June 2026. Sent draft bl for chekcing and approval.</td>
+    </tr>
+    <tr>
+      <td>1395</td>
+      <td>DANA PLAST</td>
+      <td>HYOSUNG</td>
+      <td>PPRCP R1001N</td>
+      <td>56</td>
+      <td>$109,480</td>
+      <td>$1,955.00</td>
+      <td>$1,895.00</td>
+      <td class="margin-high">$60.00</td>
+      <td>DA-90</td>
+      <td>14/05/2026</td>
+      <td><span class="stage-badge stage-4">Stage 4</span></td>
+      <td>10/06. ETD 26th June 2026.</td>
+    </tr>
+    <tr>
+      <td>1394</td>
+      <td>DANA PLAST</td>
+      <td>HYOSUNG</td>
+      <td>PPCP J1145T</td>
+      <td>84</td>
+      <td>$154,980</td>
+      <td>$1,845.00</td>
+      <td>$1,785.00</td>
+      <td class="margin-high">$60.00</td>
+      <td>DA-90</td>
+      <td>14/05/2026</td>
+      <td><span class="stage-badge stage-4">Stage 4</span></td>
+      <td>19/06. ETD 25/06.</td>
+    </tr>
+    <tr>
+      <td>1391</td>
+      <td>SUPER SONIC</td>
+      <td>HK TOPWAY</td>
+      <td>HDPE HD5502S</td>
+      <td>28</td>
+      <td>$41,160</td>
+      <td>$1,470.00</td>
+      <td>$1,430.00</td>
+      <td class="margin-mid">$40.00</td>
+      <td>20% adv and 80% on bl copy</td>
+      <td>30/04/2026</td>
+      <td><span class="stage-badge stage-4">Stage 4</span></td>
+      <td>21/05. ETD 29th May 2026.Draft Awaiting Payment to releae the origianls and surrender the BL.</td>
+    </tr>
+    <tr>
+      <td>1385</td>
+      <td>SHIVLILA</td>
+      <td>HK TOPWAY</td>
+      <td>PPHP Y26</td>
+      <td>84</td>
+      <td>$128,940</td>
+      <td>$1,535.00</td>
+      <td>$1,510.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>08/04/2026</td>
+      <td><span class="stage-badge stage-4">Stage 4</span></td>
+      <td>22/06. ETD 14th June 2026. Draft docs confirmed. Awaiting origianls to be delievered to our office.</td>
+    </tr>
+    <tr>
+      <td>1369</td>
+      <td>SONHART</td>
+      <td>HK TOPWAY</td>
+      <td>PPCP EP548R</td>
+      <td>108</td>
+      <td>$109,620</td>
+      <td>$1,015.00</td>
+      <td>$990.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>27-02-2026</td>
+      <td><span class="stage-badge stage-4">Stage 4</span></td>
+      <td>22/06. ETD 14th June 2026. Draft docs confirmed. Awaiting origianls to be delievered to our office.</td>
+    </tr>
+    <tr>
+      <td>1387</td>
+      <td>STAR POINT</td>
+      <td>HK TOPWAY</td>
+      <td>PET BILLION BRAND BH-801</td>
+      <td>110</td>
+      <td>$140,800</td>
+      <td>$1,280.00</td>
+      <td>$1,250.00</td>
+      <td class="margin-mid">$30.00</td>
+      <td>DA-60</td>
+      <td>13/04/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 6th July 2026.</td>
+    </tr>
+    <tr>
+      <td>1384</td>
+      <td>SHIVLILA</td>
+      <td>HK TOPWAY</td>
+      <td>HDPE TR144</td>
+      <td>81</td>
+      <td>$121,500</td>
+      <td>$1,500.00</td>
+      <td>$1,475.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>01/04/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 14th July 2026.</td>
+    </tr>
+    <tr>
+      <td>1383</td>
+      <td>SHIVLILA</td>
+      <td>HK TOPWAY</td>
+      <td>LLDPE LLD-7050</td>
+      <td>81</td>
+      <td>$116,640</td>
+      <td>$1,440.00</td>
+      <td>$1,415.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>01/04/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 14th July 2026.</td>
+    </tr>
+    <tr>
+      <td>1382</td>
+      <td>SHIVLILA</td>
+      <td>HK TOPWAY</td>
+      <td>HDPE TR144</td>
+      <td>81</td>
+      <td>$121,500</td>
+      <td>$1,500.00</td>
+      <td>$1,475.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>01/04/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 14th July 2026.</td>
+    </tr>
+    <tr>
+      <td>1381</td>
+      <td>STAR POINT</td>
+      <td>HK TOPWAY</td>
+      <td>PET BILLION BRAND BH-801</td>
+      <td>55</td>
+      <td>$71,500</td>
+      <td>$1,300.00</td>
+      <td>$1,260.00</td>
+      <td class="margin-mid">$40.00</td>
+      <td>DA-60</td>
+      <td>02/04/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 29th June 2026.</td>
+    </tr>
+    <tr>
+      <td>1380</td>
+      <td>HART</td>
+      <td>HK TOPWAY</td>
+      <td>LLDPE 7149U</td>
+      <td>84</td>
+      <td>$125,580</td>
+      <td>$1,495.00</td>
+      <td>$1,465.00</td>
+      <td class="margin-mid">$30.00</td>
+      <td>DA-60</td>
+      <td>31/03/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 17th July 2026.</td>
+    </tr>
+    <tr>
+      <td>1379</td>
+      <td>SONHART</td>
+      <td>HK TOPWAY</td>
+      <td>LLDPE 7149U</td>
+      <td>140</td>
+      <td>$209,300</td>
+      <td>$1,495.00</td>
+      <td>$1,465.00</td>
+      <td class="margin-mid">$30.00</td>
+      <td>DA-60</td>
+      <td>31/03/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 17th July 2026.</td>
+    </tr>
+    <tr>
+      <td>1378</td>
+      <td>SHIVLILA</td>
+      <td>MONTACHEM</td>
+      <td>HDPE-7000</td>
+      <td>123.75</td>
+      <td>$177,581</td>
+      <td>$1,435.00</td>
+      <td>$1,410.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>12/03/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 9th July 2026.</td>
+    </tr>
+    <tr>
+      <td>1376</td>
+      <td>DOSHI AND CO</td>
+      <td>HK TOPWAY</td>
+      <td>HDPE Yanchang 23050</td>
+      <td>196</td>
+      <td>$288,120</td>
+      <td>$1,470.00</td>
+      <td>$1,420.00</td>
+      <td class="margin-high">$50.00</td>
+      <td>LC 90 DAYS</td>
+      <td>26/03/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 15th July 2026.</td>
+    </tr>
+    <tr>
+      <td>1375</td>
+      <td>SARSOLI</td>
+      <td>CALMIN</td>
+      <td>CALMIN -80</td>
+      <td>22.5</td>
+      <td>$11,219</td>
+      <td>$498.62</td>
+      <td>$458.62</td>
+      <td class="margin-mid">$40.00</td>
+      <td>DA-90</td>
+      <td>17/03/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 26th June 2026.</td>
+    </tr>
+    <tr>
+      <td>1374</td>
+      <td>ENGEE PET</td>
+      <td>DRAGON</td>
+      <td>AMORPHOUS PET CHIPS</td>
+      <td>400</td>
+      <td>$542,000</td>
+      <td>$1,355.00</td>
+      <td>$1,330.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-90</td>
+      <td>13/03/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 6th August 2026.</td>
+    </tr>
+    <tr>
+      <td>1373</td>
+      <td>DANA PLAST</td>
+      <td>HYOSUNG</td>
+      <td>PPCP RANDOM R1001N</td>
+      <td>84</td>
+      <td>$120,960</td>
+      <td>$1,440.00</td>
+      <td>$1,415.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-80</td>
+      <td>09/03/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 5th June 2026.</td>
+    </tr>
+    <tr>
+      <td>1372</td>
+      <td>DANA PLAST</td>
+      <td>HYOSUNG</td>
+      <td>PPCP J1145T</td>
+      <td>140</td>
+      <td>$187,600</td>
+      <td>$1,340.00</td>
+      <td>$1,315.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-80</td>
+      <td>09/03/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 9TH July 2026.</td>
+    </tr>
+    <tr>
+      <td>1371</td>
+      <td>STARPOINT</td>
+      <td>CRC</td>
+      <td>CR8816</td>
+      <td>88</td>
+      <td>$93,720</td>
+      <td>$1,065.00</td>
+      <td>$1,040.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>05/03/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 20th June 2026.</td>
+    </tr>
+    <tr>
+      <td>1370</td>
+      <td>SHIV LILA</td>
+      <td>PIAT INTL</td>
+      <td>HDPE 7302</td>
+      <td>108</td>
+      <td>$115,020</td>
+      <td>$1,065.00</td>
+      <td>$1,040.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>03/03/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 28th June 2026</td>
+    </tr>
+    <tr>
+      <td>1368</td>
+      <td>IDDO PLASTICS</td>
+      <td>JB INDUSTRIES INDIA</td>
+      <td>AZODICARBONAMIDE-JB55</td>
+      <td>6</td>
+      <td>$18,820</td>
+      <td>$3,136.67</td>
+      <td>$2,840.00</td>
+      <td class="margin-high">$297.00</td>
+      <td>DA-90</td>
+      <td>18/02/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 27th July 2026.</td>
+    </tr>
+    <tr>
+      <td>1365</td>
+      <td>DANA PLAST</td>
+      <td>HYOSUNG</td>
+      <td>PPCP RANDOM R1001N</td>
+      <td>84</td>
+      <td>$98,280</td>
+      <td>$1,170.00</td>
+      <td>$1,145.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-80</td>
+      <td>06/02/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 12th June</td>
+    </tr>
+    <tr>
+      <td>1363</td>
+      <td>SHIVLILA</td>
+      <td>SCG</td>
+      <td>HDPE H5604F</td>
+      <td>28.125</td>
+      <td>$28,547</td>
+      <td>$1,015.00</td>
+      <td>$990.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>05/02/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 18th June 2026</td>
+    </tr>
+    <tr>
+      <td>1362</td>
+      <td>SHIVLILA</td>
+      <td>SCG</td>
+      <td>PPCP 840J</td>
+      <td>56.25</td>
+      <td>$137,114</td>
+      <td>$975.00</td>
+      <td>$950.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>05/02/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 18th June 2026</td>
+    </tr>
+    <tr>
+      <td>1361</td>
+      <td>STARPOINT</td>
+      <td>CRC</td>
+      <td>CR8816 ROUND SHAPE</td>
+      <td>88</td>
+      <td>$84,216</td>
+      <td>$957.00</td>
+      <td>$932.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>03/02/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 19th May</td>
+    </tr>
+    <tr>
+      <td>1360</td>
+      <td>DASCO</td>
+      <td>ITOCHU</td>
+      <td>HDPE blow HB3556B</td>
+      <td>306</td>
+      <td>$286,110</td>
+      <td>$935.00</td>
+      <td>$910.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>02/02/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 7th May</td>
+    </tr>
+    <tr>
+      <td>1359</td>
+      <td>SARSOLI</td>
+      <td>CALMIN</td>
+      <td>CALMIN -80</td>
+      <td>22.5</td>
+      <td>$10,282</td>
+      <td>$457.00</td>
+      <td>$417.00</td>
+      <td class="margin-mid">$40.00</td>
+      <td>DA-60</td>
+      <td>02/02/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 14th May</td>
+    </tr>
+    <tr>
+      <td>1358</td>
+      <td>SHIVLILA</td>
+      <td>ITOCHU</td>
+      <td>CIPLAS LLDPE LL1019FP</td>
+      <td>51</td>
+      <td>$48,705</td>
+      <td>$955.00</td>
+      <td>$930.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>26/01/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 20th June 2026</td>
+    </tr>
+    <tr>
+      <td>1357</td>
+      <td>SHIVLILA</td>
+      <td>ITOCHU</td>
+      <td>CIPLAS LLDPE LL1019BP</td>
+      <td>51</td>
+      <td>$48,450</td>
+      <td>$950.00</td>
+      <td>$925.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>26/01/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 20th May 2026.</td>
+    </tr>
+    <tr>
+      <td>1356</td>
+      <td>SHIVLILA</td>
+      <td>ITOCHU</td>
+      <td>BCPP AW564</td>
+      <td>99</td>
+      <td>$92,565</td>
+      <td>$935.00</td>
+      <td>$910.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>23/01/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 26th May 2026.</td>
+    </tr>
+    <tr>
+      <td>1355</td>
+      <td>SHIVLILA</td>
+      <td>PIAT INTL</td>
+      <td>PP RANDOM R392Y AND R365Y</td>
+      <td>140</td>
+      <td>$153,580</td>
+      <td>$1,097.00</td>
+      <td>$1,072.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>23/01/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 11th June 2026</td>
+    </tr>
+    <tr>
+      <td>1354</td>
+      <td>SHIVLILA</td>
+      <td>PIAT INTL</td>
+      <td>PP RANDOM R520Y AND R380Y</td>
+      <td>315</td>
+      <td>$336,105</td>
+      <td>$1,067.00</td>
+      <td>$1,042.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>23/01/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 28th June 2026</td>
+    </tr>
+    <tr>
+      <td>1353</td>
+      <td>DANA PLAST</td>
+      <td>HYOSUNG</td>
+      <td>PPCP RANDOM R1001N</td>
+      <td>84</td>
+      <td>$92,820</td>
+      <td>$1,105.00</td>
+      <td>$1,080.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-80</td>
+      <td>21/01/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 14th May 2026.</td>
+    </tr>
+    <tr>
+      <td>1352</td>
+      <td>DANA PLAST</td>
+      <td>HYOSUNG</td>
+      <td>PPCP J1145T</td>
+      <td>140</td>
+      <td>$138,600</td>
+      <td>$990.00</td>
+      <td>$965.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-80</td>
+      <td>21/01/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 14th May 2026.</td>
+    </tr>
+    <tr>
+      <td>1351</td>
+      <td>STARPOINT</td>
+      <td>HANWHA</td>
+      <td>PPCP BJ550</td>
+      <td>72</td>
+      <td>$72,000</td>
+      <td>$1,000.00</td>
+      <td>$970.00</td>
+      <td class="margin-mid">$30.00</td>
+      <td>DA-60</td>
+      <td>20/01/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 23rd April 2026.</td>
+    </tr>
+    <tr>
+      <td>1350</td>
+      <td>IDDO PLASTICS</td>
+      <td>HK TOPWAY</td>
+      <td>PVC DG1000S</td>
+      <td>140</td>
+      <td>$98,700</td>
+      <td>$705.00</td>
+      <td>$675.00</td>
+      <td class="margin-mid">$30.00</td>
+      <td>DA-90</td>
+      <td>08/01/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 25th April 2026</td>
+    </tr>
+    <tr>
+      <td>1349</td>
+      <td>STARPOINT</td>
+      <td>CRC</td>
+      <td>CR8816</td>
+      <td>88</td>
+      <td>$80,960</td>
+      <td>$920.00</td>
+      <td>$895.00</td>
+      <td class="margin-low">$25.00</td>
+      <td>DA-60</td>
+      <td>08/01/2026</td>
+      <td><span class="stage-badge stage-5">Stage 5</span></td>
+      <td>Due date 28th March 2026</td>
+    </tr>
       </tbody>
     </table>
-  </div>
-</div>
-
-<!-- ===== TAB 2: PRICES ===== -->
-<div id="tab-prices" class="tab-content">
-
-  <!-- Data source banner -->
-  <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:8px; padding:10px 16px; margin-bottom:16px; font-size:12px; color:#15803d;">
-    📂 <strong>Data sources (Google Drive › Claude › Shad Dashboard › Prices):</strong>
-    &nbsp;①&nbsp;<strong>prices.xlsx</strong> — Active market prices (shown first)
-    &nbsp;②&nbsp;<strong>topway.xlsx</strong> — CFR offer sheet, July shipment
-    &nbsp;③&nbsp;<strong>ATT</strong> — PP COPO &amp; PP RANDOM FOB/CFR Apapa
-  </div>
-
-  <!-- KPI SUMMARY -->
-  <div class="kpi-grid kpi-grid-4">
-    <div class="kpi-card accent">
-      <div class="label">PP Homo / Raffia (Active)</div>
-      <div class="value">$1,430–$1,530</div>
-      <div class="sub">Emeraude · Snetor · June 2026</div>
     </div>
-    <div class="kpi-card accent-gold">
-      <div class="label">HDPE Blow CFR Apapa</div>
-      <div class="value">$1,475–$1,690</div>
-      <div class="sub">July shipment · Topway</div>
+
+  </div>
+
+  <div id="tab-prices" class="tab-content">
+    <h2 class="section-title">Price Overview</h2>
+  <div class="kpi-grid">
+    <div class="kpi-card accent">
+      <div class="label">PP Range (Apapa CFR)</div>
+      <div class="value">$1,440–$1,685</div>
+      <div class="sub">per MT, all PP grades</div>
     </div>
     <div class="kpi-card accent-green">
-      <div class="label">PVC CFR Apapa</div>
-      <div class="value">$900–$1,030</div>
-      <div class="sub">SG-5 $910 · DG-700 $1,030 · Topway</div>
+      <div class="label">PE Range (Apapa CFR)</div>
+      <div class="value">$1,375–$1,855</div>
+      <div class="sub">per MT, all PE grades</div>
     </div>
     <div class="kpi-card accent-amber">
-      <div class="label">PP COPO CFR Apapa (ATT)</div>
-      <div class="value">$1,515–$1,785</div>
-      <div class="sub">FOB range $1,290–$1,560 · ATT offer</div>
+      <div class="label">PVC Range (Apapa CFR)</div>
+      <div class="value">$910–$1,030</div>
+      <div class="sub">per MT, all PVC grades</div>
+    </div>
+    <div class="kpi-card accent-blue">
+      <div class="label">Grades Quoted</div>
+      <div class="value">36</div>
+      <div class="sub">across 11 product families</div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 1: ACTIVE PRICES — prices.xlsx        -->
-  <!-- ══════════════════════════════════════════════ -->
-  <div class="section-title">
-    📋 Active Market Prices — prices.xlsx
-    <span style="font-size:11px; font-weight:400; color:var(--text-light); text-transform:none; letter-spacing:0;">
-      &nbsp;· Source: prices.xlsx · Google Drive › Claude › Shad Dashboard › Prices · Updated June 2026
-    </span>
+    <h2 class="section-title">PP / PE / PVC CFR Price Table (source: topway.xlsx)</h2>
+    <div class="table-wrap">
+  <table class="price-table">
+    <thead>
+      <tr>
+        <th>Product</th><th>Grade</th><th>Manufacturer</th><th>MI</th><th>Origin</th>
+        <th>Pallets</th><th>Shipment</th><th>QTY (MT)</th>
+        <th>Apapa/Onne</th><th>Abidjan/Tema/Lomé</th><th>Cotonou</th><th>Mombasa</th><th>Dar Es Salaam</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="family-row pp"><td colspan="13">PP Raffia (4 grades)</td></tr>
+      <tr>
+        <td>PP Raffia</td>
+        <td>L5E89</td>
+        <td>CHN Energy Shenhua</td>
+        <td>3.5</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>300</td>
+        <td>$1,490</td>
+        <td>$1,465</td>
+        <td>$1,470</td>
+        <td>$1,470</td>
+        <td>$1,470</td>
+      </tr>
+      <tr>
+        <td>PP Raffia</td>
+        <td>1102K</td>
+        <td>CHN Energy</td>
+        <td>3</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>200</td>
+        <td>$1,520</td>
+        <td>$1,495</td>
+        <td>$1,500</td>
+        <td>$1,500</td>
+        <td>$1,500</td>
+      </tr>
+      <tr>
+        <td>PP Raffia</td>
+        <td>HP550J</td>
+        <td>Jinneng/Baofeng</td>
+        <td>3</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>200</td>
+        <td>$1,440</td>
+        <td>$1,415</td>
+        <td>$1,420</td>
+        <td>$1,420</td>
+        <td>$1,420</td>
+      </tr>
+      <tr>
+        <td>PP Raffia</td>
+        <td>L5E89H/S1005</td>
+        <td>CHN Energy</td>
+        <td>4.5</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>100</td>
+        <td>$1,510</td>
+        <td>$1,485</td>
+        <td>$1,490</td>
+        <td>$1,490</td>
+        <td>$1,490</td>
+      </tr>
+      <tr class="family-row pp"><td colspan="13">PP Homo (5 grades)</td></tr>
+      <tr>
+        <td>PP Homo</td>
+        <td>1100N</td>
+        <td>CHN Energy</td>
+        <td>12</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>200</td>
+        <td>$1,520</td>
+        <td>$1,495</td>
+        <td>$1,500</td>
+        <td>$1,500</td>
+        <td>$1,500</td>
+      </tr>
+      <tr>
+        <td>PP Homo</td>
+        <td>HP500N</td>
+        <td>Jinneng/Baofeng</td>
+        <td>12</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>84</td>
+        <td>$1,440</td>
+        <td>$1,415</td>
+        <td>$1,420</td>
+        <td>$1,420</td>
+        <td>$1,420</td>
+      </tr>
+      <tr>
+        <td>PP Homo</td>
+        <td>Y26</td>
+        <td>Oriental Energy</td>
+        <td>25</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>200</td>
+        <td>$1,560</td>
+        <td>$1,535</td>
+        <td>$1,540</td>
+        <td>$1,540</td>
+        <td>$1,540</td>
+      </tr>
+      <tr>
+        <td>PP Homo</td>
+        <td>S2040</td>
+        <td>CHN Energy Shenhua</td>
+        <td>40</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>200</td>
+        <td>$1,550</td>
+        <td>$1,525</td>
+        <td>$1,530</td>
+        <td>$1,530</td>
+        <td>$1,530</td>
+      </tr>
+      <tr>
+        <td>PP Homo</td>
+        <td>Y40</td>
+        <td>Oriental Energy</td>
+        <td>40</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>100</td>
+        <td>$1,560</td>
+        <td>$1,535</td>
+        <td>$1,540</td>
+        <td>$1,540</td>
+        <td>$1,540</td>
+      </tr>
+      <tr class="family-row pp"><td colspan="13">PP Copo (6 grades)</td></tr>
+      <tr>
+        <td>PP Copo</td>
+        <td>EP300H B</td>
+        <td>Bora basell</td>
+        <td>1.8</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>84</td>
+        <td>$1,575</td>
+        <td>$1,550</td>
+        <td>$1,560</td>
+        <td>$1,560</td>
+        <td>$1,560</td>
+      </tr>
+      <tr>
+        <td>PP Copo</td>
+        <td>37MK10</td>
+        <td>Sabic</td>
+        <td>9</td>
+        <td>Saudi Arabia</td>
+        <td>Yes</td>
+        <td>July</td>
+        <td>99</td>
+        <td>$1,620</td>
+        <td>$1,595</td>
+        <td>$1,600</td>
+        <td>$1,600</td>
+        <td>$1,600</td>
+      </tr>
+      <tr>
+        <td>PP Copo</td>
+        <td>K8009</td>
+        <td>Any Chinese manufacturer</td>
+        <td>9</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>100</td>
+        <td>$1,585</td>
+        <td>$1,560</td>
+        <td>$1,570</td>
+        <td>$1,570</td>
+        <td>$1,570</td>
+      </tr>
+      <tr>
+        <td>PP Copo</td>
+        <td>9017</td>
+        <td>Sinopec</td>
+        <td>18</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>108</td>
+        <td>$1,685</td>
+        <td>$1,660</td>
+        <td>$1,670</td>
+        <td>$1,670</td>
+        <td>$1,670</td>
+      </tr>
+      <tr>
+        <td>PP Copo</td>
+        <td>EP548R</td>
+        <td>Sinopec/PetorChina</td>
+        <td>30</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>100</td>
+        <td>$1,570</td>
+        <td>$1,545</td>
+        <td>$1,550</td>
+        <td>$1,550</td>
+        <td>$1,550</td>
+      </tr>
+      <tr>
+        <td>PP Copo</td>
+        <td>K9928H/K7726</td>
+        <td>CHN Energy</td>
+        <td>30</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>100</td>
+        <td>$1,560</td>
+        <td>$1,535</td>
+        <td>$1,540</td>
+        <td>$1,540</td>
+        <td>$1,540</td>
+      </tr>
+      <tr class="family-row pe"><td colspan="13">LDPE (6 grades)</td></tr>
+      <tr>
+        <td>LDPE</td>
+        <td>2420D</td>
+        <td>Shenhua/PetroChina/ZPC</td>
+        <td>0.3</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>54</td>
+        <td>$1,755</td>
+        <td>$1,730</td>
+        <td>$1,740</td>
+        <td>$1,740</td>
+        <td>$1,740</td>
+      </tr>
+      <tr>
+        <td>LDPE</td>
+        <td>2426K</td>
+        <td>ZPC/sinopec</td>
+        <td>4</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>54</td>
+        <td>$1,725</td>
+        <td>$1,700</td>
+        <td>$1,710</td>
+        <td>$1,710</td>
+        <td>$1,710</td>
+      </tr>
+      <tr>
+        <td>LDPE</td>
+        <td>LD2022.AC</td>
+        <td>EXXON CHINA</td>
+        <td>2 add</td>
+        <td>China</td>
+        <td>Yes</td>
+        <td>July</td>
+        <td>108</td>
+        <td>$1,635</td>
+        <td>$1,610</td>
+        <td>$1,620</td>
+        <td>$1,620</td>
+        <td>$1,620</td>
+      </tr>
+      <tr>
+        <td>LDPE</td>
+        <td>LD2022.BW</td>
+        <td>EXXON CHINA</td>
+        <td>2</td>
+        <td>China</td>
+        <td>Yes</td>
+        <td>July</td>
+        <td>108</td>
+        <td>$1,635</td>
+        <td>$1,610</td>
+        <td>$1,620</td>
+        <td>$1,620</td>
+        <td>$1,620</td>
+      </tr>
+      <tr>
+        <td>LDPE</td>
+        <td>LD 03322.BW1</td>
+        <td>EXXON CHINA</td>
+        <td>0.3</td>
+        <td>China</td>
+        <td>Yes</td>
+        <td>July</td>
+        <td>108</td>
+        <td>$1,755</td>
+        <td>$1,730</td>
+        <td>$1,740</td>
+        <td>$1,740</td>
+        <td>$1,740</td>
+      </tr>
+      <tr>
+        <td>LDPE</td>
+        <td>LD 07523.AC</td>
+        <td>EXXON CHINA</td>
+        <td>0.7 add</td>
+        <td>China</td>
+        <td>Yes</td>
+        <td>July</td>
+        <td>108</td>
+        <td>$1,795</td>
+        <td>$1,765</td>
+        <td>$1,775</td>
+        <td>$1,775</td>
+        <td>$1,775</td>
+      </tr>
+      <tr class="family-row pe"><td colspan="13">LLDPE (1 grade)</td></tr>
+      <tr>
+        <td>LLDPE</td>
+        <td>222WJ</td>
+        <td>Sabic</td>
+        <td>2 add</td>
+        <td>Saudi Arabia</td>
+        <td>Yes</td>
+        <td>July</td>
+        <td>99</td>
+        <td>$1,515</td>
+        <td>$1,485</td>
+        <td>$1,495</td>
+        <td>$1,495</td>
+        <td>$1,495</td>
+      </tr>
+      <tr class="family-row pe"><td colspan="13">MLLDPE (4 grades)</td></tr>
+      <tr>
+        <td>MLLDPE</td>
+        <td>M1018.RA</td>
+        <td>EXXON CHINA</td>
+        <td>1</td>
+        <td>China</td>
+        <td>Yes</td>
+        <td>July</td>
+        <td>49.5</td>
+        <td>$1,785</td>
+        <td>$1,760</td>
+        <td>$1,770</td>
+        <td>$1,770</td>
+        <td>$1,770</td>
+      </tr>
+      <tr>
+        <td>MLLDPE</td>
+        <td>M1018.RF</td>
+        <td>EXXON CHINA</td>
+        <td>1 add</td>
+        <td>China</td>
+        <td>Yes</td>
+        <td>July</td>
+        <td>49.5</td>
+        <td>$1,785</td>
+        <td>$1,760</td>
+        <td>$1,770</td>
+        <td>$1,770</td>
+        <td>$1,770</td>
+      </tr>
+      <tr>
+        <td>MLLDPE</td>
+        <td>M2018.RA</td>
+        <td>EXXON CHINA</td>
+        <td>2</td>
+        <td>China</td>
+        <td>Yes</td>
+        <td>July</td>
+        <td>49.5</td>
+        <td>$1,855</td>
+        <td>$1,830</td>
+        <td>$1,840</td>
+        <td>$1,840</td>
+        <td>$1,840</td>
+      </tr>
+      <tr>
+        <td>MLLDPE</td>
+        <td>M2018.RB</td>
+        <td>EXXON CHINA</td>
+        <td>2 add</td>
+        <td>China</td>
+        <td>Yes</td>
+        <td>July</td>
+        <td>49.5</td>
+        <td>$1,855</td>
+        <td>$1,830</td>
+        <td>$1,840</td>
+        <td>$1,840</td>
+        <td>$1,840</td>
+      </tr>
+      <tr class="family-row pe"><td colspan="13">HDPE Injection (1 grade)</td></tr>
+      <tr>
+        <td>HDPE Injection</td>
+        <td>T60-800</td>
+        <td>SINO-INEOS</td>
+        <td>8</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>108</td>
+        <td>$1,375</td>
+        <td>$1,350</td>
+        <td>$1,360</td>
+        <td>$1,360</td>
+        <td>$1,360</td>
+      </tr>
+      <tr class="family-row pe"><td colspan="13">HDPE Blow (3 grades)</td></tr>
+      <tr>
+        <td>HDPE Blow</td>
+        <td>5502S/5502H</td>
+        <td>Baofeng/ZPC/yanchang/sinopec</td>
+        <td>0.2</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>108</td>
+        <td>$1,475</td>
+        <td>$1,450</td>
+        <td>$1,460</td>
+        <td>$1,460</td>
+        <td>$1,460</td>
+      </tr>
+      <tr>
+        <td>HDPE Blow</td>
+        <td>HD5502/HD5502ZK</td>
+        <td>Sinopec</td>
+        <td>0.3</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>108</td>
+        <td>$1,495</td>
+        <td>$1,470</td>
+        <td>$1,480</td>
+        <td>$1,480</td>
+        <td>$1,480</td>
+      </tr>
+      <tr>
+        <td>HDPE Blow</td>
+        <td>B1254</td>
+        <td>Sabic</td>
+        <td>0.14</td>
+        <td>Saudi Arabia</td>
+        <td>YES</td>
+        <td>July</td>
+        <td>150</td>
+        <td>$1,690</td>
+        <td>$1,660</td>
+        <td>$1,670</td>
+        <td>$1,670</td>
+        <td>$1,670</td>
+      </tr>
+      <tr class="family-row pe"><td colspan="13">HDPE Film (2 grades)</td></tr>
+      <tr>
+        <td>HDPE Film</td>
+        <td>J50-10N5000</td>
+        <td>SINO-INEOS</td>
+        <td>Bimodal</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>108</td>
+        <td>$1,505</td>
+        <td>$1,480</td>
+        <td>$1,490</td>
+        <td>$1,490</td>
+        <td>$1,490</td>
+      </tr>
+      <tr>
+        <td>HDPE Film</td>
+        <td>F 6095</td>
+        <td>BASF</td>
+        <td></td>
+        <td>China</td>
+        <td>YES</td>
+        <td>July</td>
+        <td>108</td>
+        <td>$1,505</td>
+        <td>$1,480</td>
+        <td>$1,490</td>
+        <td>$1,490</td>
+        <td>$1,490</td>
+      </tr>
+      <tr class="family-row pe"><td colspan="13">HDPE Pipe Natural (1 grade)</td></tr>
+      <tr>
+        <td>HDPE Pipe Natural</td>
+        <td>23050</td>
+        <td>Baofeng/Yanchang/ZPC</td>
+        <td>PE100</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>112</td>
+        <td>$1,470</td>
+        <td>$1,445</td>
+        <td>$1,450</td>
+        <td>$1,450</td>
+        <td>$1,450</td>
+      </tr>
+      <tr class="family-row pvc"><td colspan="13">PVC (3 grades)</td></tr>
+      <tr>
+        <td>PVC</td>
+        <td>SG-5</td>
+        <td>Any Chinese manufacturer</td>
+        <td>K65-67</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>200</td>
+        <td>$910</td>
+        <td>$885</td>
+        <td>$890</td>
+        <td>$890</td>
+        <td>$890</td>
+      </tr>
+      <tr>
+        <td>PVC</td>
+        <td>DG-1000S</td>
+        <td>Dagu</td>
+        <td>K65-67</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>200</td>
+        <td>$1,005</td>
+        <td>$980</td>
+        <td>$985</td>
+        <td>$985</td>
+        <td>$985</td>
+      </tr>
+      <tr>
+        <td>PVC</td>
+        <td>DG-700</td>
+        <td>Dagu</td>
+        <td>K57</td>
+        <td>China</td>
+        <td>No</td>
+        <td>July</td>
+        <td>200</td>
+        <td>$1,030</td>
+        <td>$1,005</td>
+        <td>$1,010</td>
+        <td>$1,010</td>
+        <td>$1,010</td>
+      </tr>
+    </tbody>
+  </table>
+    </div>
   </div>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Category</th><th>Application</th><th>Grade</th><th>MI</th>
-          <th>Price $/MT</th><th>Supplier</th><th>Date</th><th>Payment</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="price-group-row"><td colspan="8">HDPE</td></tr>
-        <tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td class="price-val">$1,840</td><td>Tricon</td><td>9-Jun</td><td>Credit</td></tr>
-        <tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td class="price-val">$1,800</td><td>Lotte</td><td>10-Jun</td><td>Cash</td></tr>
-        <tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td class="price-val">$1,830</td><td>Lotte</td><td>11-Jun</td><td>Cash</td></tr>
-        <tr><td>HDPE</td><td>Film</td><td>7000</td><td>2.13</td><td class="price-val">$1,440</td><td>Montachem</td><td>4-Jun</td><td>Credit</td></tr>
-        <tr><td>HDPE</td><td>Film</td><td>Tr144</td><td>0.18</td><td class="price-val">$1,550</td><td>Snetor</td><td>9-Jun</td><td>Credit</td></tr>
-        <tr><td>HDPE</td><td>Blow</td><td>50100</td><td>10</td><td class="price-val">$1,630</td><td>Snetor</td><td>9-Jun</td><td>Credit</td></tr>
-        <tr><td>HDPE</td><td>Injection</td><td>8000UV</td><td>8</td><td class="price-val">$1,420</td><td>Montachem</td><td>9-Jun</td><td>Credit</td></tr>
 
-        <tr class="price-group-row"><td colspan="8">LDPE</td></tr>
-        <tr><td>LDPE</td><td>Film</td><td>100AC</td><td>2</td><td class="price-val">$1,650</td><td>Emeraude</td><td>3-Jun</td><td>Credit</td></tr>
-        <tr><td>LDPE</td><td>Film</td><td>2022AC</td><td>2</td><td class="price-val">$1,810</td><td>Emeraude</td><td>27-May</td><td>Credit</td></tr>
-        <tr><td>LDPE</td><td>Film</td><td>4 mfi</td><td>4</td><td class="price-val">$1,700</td><td>Snetor</td><td>29-May</td><td>Credit</td></tr>
-        <tr><td>LDPE</td><td>Shrink</td><td>07523W</td><td>0.3</td><td class="price-val">$1,915</td><td>Emeraude</td><td>27-May</td><td>Credit</td></tr>
-        <tr><td>LDPE</td><td>Shrink</td><td>0.3 mfi</td><td>0.3</td><td class="price-val">$1,720</td><td>Snetor</td><td>29-May</td><td>Credit</td></tr>
-
-        <tr class="price-group-row"><td colspan="8">LLDPE</td></tr>
-        <tr><td>LLDPE</td><td>Special</td><td>Enable</td><td>1</td><td class="price-val">$1,680</td><td>Emeraude</td><td>1-Jun</td><td>Credit</td></tr>
-        <tr><td>LLDPE</td><td>Special</td><td>Exceed</td><td>1</td><td class="price-val">$1,710</td><td>Emeraude</td><td>1-Jun</td><td>Credit</td></tr>
-        <tr><td>LLDPE</td><td>Non Slip</td><td>1018N</td><td>1</td><td class="price-val">$1,510</td><td>Emeraude</td><td>27-May</td><td>Credit</td></tr>
-        <tr><td>LLDPE</td><td>Non Slip</td><td>DFDC 7080H</td><td>1</td><td class="price-val">$1,510</td><td>Snetor</td><td>22-May</td><td>Credit</td></tr>
-        <tr><td>LLDPE</td><td>Slip</td><td>—</td><td>1</td><td class="price-val">$1,500</td><td>Montachem</td><td>4-Jun</td><td>Credit</td></tr>
-
-        <tr class="price-group-row"><td colspan="8">PP</td></tr>
-        <tr><td>PP</td><td>Homopolymer</td><td>1100N</td><td>12</td><td class="price-val">$1,430</td><td>Emeraude</td><td>28-May</td><td>Credit</td></tr>
-        <tr><td>PP</td><td>Homopolymer</td><td>Y26</td><td>26</td><td class="price-val">$1,530</td><td>Snetor</td><td>8-Jun</td><td>Credit</td></tr>
-        <tr><td>PP</td><td>Homopolymer</td><td>HNR100</td><td>12</td><td class="price-val">$1,500</td><td>Snetor</td><td>29-May</td><td>Credit</td></tr>
-        <tr><td>PP</td><td>Copolymer</td><td>P840J</td><td>43</td><td class="price-val">$1,505</td><td>Shad</td><td>—</td><td>30/70</td></tr>
-        <tr><td>PP</td><td>Raffia</td><td>Exxon</td><td>3.2</td><td class="price-val">$1,430</td><td>Emeraude</td><td>4-Jun</td><td>—</td></tr>
-
-        <tr class="price-group-row"><td colspan="8">PVC</td></tr>
-        <tr><td>PVC</td><td>US</td><td>—</td><td>—</td><td class="price-val">$900</td><td>Snetor</td><td>5-Jun</td><td>Credit</td></tr>
-        <tr><td>PVC</td><td>China</td><td>—</td><td>—</td><td class="price-val">—</td><td>—</td><td>—</td><td>—</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p style="font-size:11px; color:var(--text-light); margin-bottom:28px">Source: <strong>prices.xlsx</strong> · Google Drive › Claude › Shad Dashboard › Prices · Prices in $/MT</p>
-
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 2: TOPWAY CFR OFFER SHEET             -->
-  <!-- ══════════════════════════════════════════════ -->
-  <div class="section-title">
-    Topway — PP / PE / PVC CFR Offer Sheet · July Shipment
-    <span style="font-size:11px; font-weight:400; color:var(--text-light); text-transform:none; letter-spacing:0;">
-      &nbsp;· Source: topway.xlsx · Google Drive › Claude › Shad Dashboard › Prices · Offer date: Jun 8, 2026
-    </span>
-  </div>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Product</th><th>Grade</th><th>Manufacturer</th><th>MI</th><th>Origin</th>
-          <th>Pallets</th><th>QTY/POD</th>
-          <th>CFR Apapa / Onne $/MT</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="price-group-row"><td colspan="12">PP RAFFIA</td></tr>
-        <tr><td>PP Raffia</td><td>HP550J</td><td>Jinneng / Baofeng</td><td>3</td><td>China</td><td>No</td><td>200</td><td class="price-val price-best">$1,440</td></tr>
-        <tr><td>PP Raffia</td><td>L5E89</td><td>CHN Energy Shenhua</td><td>3.5</td><td>China</td><td>No</td><td>300</td><td class="price-val">$1,490</td></tr>
-        <tr><td>PP Raffia</td><td>L5E89H / S1005</td><td>CHN Energy</td><td>4.5</td><td>China</td><td>No</td><td>100</td><td class="price-val">$1,510</td></tr>
-
-        <tr class="price-group-row"><td colspan="12">PP HOMO</td></tr>
-        <tr><td>PP Homo</td><td>HP500N</td><td>Jinneng / Baofeng</td><td>12</td><td>China</td><td>No</td><td>84</td><td class="price-val price-best">$1,440</td></tr>
-        <tr><td>PP Homo</td><td>1100N</td><td>CHN Energy</td><td>12</td><td>China</td><td>No</td><td>200</td><td class="price-val">$1,520</td></tr>
-        <tr><td>PP Homo</td><td>S2040</td><td>CHN Energy Shenhua</td><td>40</td><td>China</td><td>No</td><td>200</td><td class="price-val">$1,550</td></tr>
-
-        <tr class="price-group-row"><td colspan="12">PP COPOLYMER</td></tr>
-        <tr><td>PP Copo</td><td>K9928H / K7726</td><td>CHN Energy</td><td>30</td><td>China</td><td>No</td><td>100</td><td class="price-val price-best">$1,560</td></tr>
-        <tr><td>PP Copo</td><td>EP548R</td><td>Sinopec / PetroChina</td><td>30</td><td>China</td><td>No</td><td>100</td><td class="price-val">$1,570</td></tr>
-        <tr><td>PP Copo</td><td>EP300H B</td><td>Bora Basell</td><td>1.8</td><td>China</td><td>No</td><td>84</td><td class="price-val">$1,575</td></tr>
-
-        <tr class="price-group-row"><td colspan="12">LDPE</td></tr>
-        <tr><td>LDPE</td><td>LD2022.AC</td><td>EXXON China</td><td>2 add</td><td>China</td><td>Yes</td><td>108</td><td class="price-val price-best">$1,635</td></tr>
-        <tr><td>LDPE</td><td>LD2022.BW</td><td>EXXON China</td><td>2</td><td>China</td><td>Yes</td><td>108</td><td class="price-val price-best">$1,635</td></tr>
-        <tr><td>LDPE</td><td>2426K</td><td>ZPC / Sinopec</td><td>4</td><td>China</td><td>No</td><td>54</td><td class="price-val">$1,725</td></tr>
-
-        <tr class="price-group-row"><td colspan="12">LLDPE / MLLDPE</td></tr>
-        <tr><td>LLDPE</td><td>222WJ</td><td>Sabic</td><td>2 add</td><td>Saudi Arabia</td><td>Yes</td><td>99</td><td class="price-val price-best">$1,515</td></tr>
-        <tr><td>MLLDPE</td><td>M1018.RA</td><td>EXXON China</td><td>1</td><td>China</td><td>Yes</td><td>49.5</td><td class="price-val">$1,785</td></tr>
-        <tr><td>MLLDPE</td><td>M1018.RF</td><td>EXXON China</td><td>1 add</td><td>China</td><td>Yes</td><td>49.5</td><td class="price-val">$1,785</td></tr>
-
-        <tr class="price-group-row"><td colspan="12">HDPE</td></tr>
-        <tr><td>HDPE Injection</td><td>T60-800</td><td>SINO-INEOS</td><td>8</td><td>China</td><td>No</td><td>108</td><td class="price-val price-best">$1,375</td></tr>
-        <tr><td>HDPE Pipe Natural</td><td>23050</td><td>Baofeng / Yanchang / ZPC</td><td>PE100</td><td>China</td><td>No</td><td>112</td><td class="price-val">$1,470</td></tr>
-        <tr><td>HDPE Blow</td><td>5502S / 5502H</td><td>Baofeng / ZPC / Yanchang / Sinopec</td><td>0.2</td><td>China</td><td>No</td><td>108</td><td class="price-val">$1,475</td></tr>
-
-        <tr class="price-group-row"><td colspan="12">PVC</td></tr>
-        <tr><td>PVC</td><td>SG-5</td><td>Any Chinese mfr</td><td>K65-67</td><td>China</td><td>No</td><td>200</td><td class="price-val price-best">$910</td></tr>
-        <tr><td>PVC</td><td>DG-1000S</td><td>Dagu</td><td>K65-67</td><td>China</td><td>No</td><td>200</td><td class="price-val">$1,005</td></tr>
-        <tr><td>PVC</td><td>DG-700</td><td>Dagu</td><td>K57</td><td>China</td><td>No</td><td>200</td><td class="price-val">$1,030</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p style="font-size:11px; color:var(--text-light); margin-bottom:28px">🟢 Highlighted = lowest in group. All prices CFR destination port. Shipment: July 2026. Source: <strong>topway.xlsx</strong> · Google Drive › Claude › Shad Dashboard › Prices · Updated Jun 8, 2026</p>
-
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- SECTION 3: ATT — PP COPO & PP RANDOM          -->
-  <!-- ══════════════════════════════════════════════ -->
-  <div class="section-title">
-    ATT — PP COPO &amp; PP RANDOM · FOB &amp; CFR Apapa
-    <span style="font-size:11px; font-weight:400; color:var(--text-light); text-transform:none; letter-spacing:0;">
-      &nbsp;· Source: ATT · Google Drive › Claude › Shad Dashboard › Prices
-    </span>
-  </div>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th><th>Brand</th><th>Grade</th><th>MI</th><th>Origin</th>
-          <th>FOB $/MT</th><th>CFR Apapa $/MT</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="price-group-row"><td colspan="7">PP COPOLYMER (PPCOPO)</td></tr>
-        <tr><td>PPCOPO</td><td>Yanchang</td><td>EP300K-B</td><td>14</td><td>China (Qingdao)</td><td class="price-val price-best">$1,290</td><td class="price-val price-best">$1,515</td></tr>
-        <tr><td>PPCOPO</td><td>ZPC</td><td>K8003</td><td>2.5</td><td>China (Ningbo)</td><td class="price-val">$1,330</td><td class="price-val">$1,555</td></tr>
-        <tr><td>PPCOPO</td><td>Baofeng (coal)</td><td>K8003</td><td>3</td><td>China (Ningbo)</td><td class="price-val">$1,330</td><td class="price-val">$1,555</td></tr>
-
-        <tr class="price-group-row"><td colspan="7">PP RANDOM (PPRANDOM)</td></tr>
-        <tr><td>PPRANDOM</td><td>Oriental</td><td>MN70</td><td>70</td><td>China (Ningbo)</td><td class="price-val price-best">$1,330</td><td class="price-val price-best">$1,555</td></tr>
-        <tr><td>PPRANDOM</td><td>Chambroad</td><td>MT400B</td><td>35</td><td>China (Qingdao)</td><td class="price-val">$1,360</td><td class="price-val">$1,585</td></tr>
-        <tr><td>PPRANDOM</td><td>Chambroad</td><td>RP340R</td><td>28</td><td>China (Qingdao)</td><td class="price-val">$1,370</td><td class="price-val">$1,595</td></tr>
-      </tbody>
-    </table>
-  </div>
-  <p style="font-size:11px; color:var(--text-light); margin-bottom:20px">🟢 Highlighted = lowest price in each group. Source: <strong>ATT</strong> image · Google Drive › Claude › Shad Dashboard › Prices · All prices in $/MT</p>
-
-</div>
-
-<!-- ===== TAB 3: MARKET INTELLIGENCE ===== -->
-<div id="tab-market" class="tab-content">
-
-  <div class="section-title">Energy Prices — June 15, 2026</div>
+  <div id="tab-market" class="tab-content">
+    <h2 class="section-title">Energy & FX</h2>
   <div class="energy-grid">
     <div class="energy-card">
-      <div class="e-label">🛢️ Brent Crude Oil</div>
-      <div class="e-value">$84.44<span style="font-size:14px; font-weight:400; color:var(--text-light)"> /bbl</span></div>
-      <div class="e-change e-down">▼ &minus;3.2% on 14 Jun &mdash; US/Iran Strait of Hormuz peace negotiations</div>
+      <div class="e-label">Brent Crude</div>
+      <div class="e-value">$76.68</div>
+      <div class="e-sub down">▼ from $77.90 close · broke below $80 on Iran ceasefire news</div>
     </div>
     <div class="energy-card">
-      <div class="e-label">🛢️ WTI Crude Oil</div>
-      <div class="e-value">$80.73<span style="font-size:14px; font-weight:400; color:var(--text-light)"> /bbl</span></div>
-      <div class="e-change e-down">▼ &minus;4.89% on 15 Jun &mdash; Iran Deputy FM confirms deal signed; ceremony expected in Switzerland. Traders cautious after prior false starts.</div>
+      <div class="e-label">WTI Crude</div>
+      <div class="e-value">~$74</div>
+      <div class="e-sub down">▼ stabilizing near $74 as Hormuz traffic normalizes</div>
     </div>
     <div class="energy-card">
-      <div class="e-label">📉 Short-Term Outlook</div>
-      <div class="e-value" style="font-size:20px; line-height:1.3; margin-top:4px">BEARISH</div>
-      <div class="e-change e-neutral">⚠️ US-Iran deal could reopen Strait of Hormuz, boosting global oil supply. If confirmed, expect downward pressure on feedstock costs for PP &amp; PE. Watch polymer export prices from China closely this week.</div>
+      <div class="e-label">USD/NGN (Official)</div>
+      <div class="e-value">₦1,363.83</div>
+      <div class="e-sub up">Naira +0.82% past month, range ₦1,361–₦1,380</div>
+    </div>
+    <div class="energy-card">
+      <div class="e-label">Lagos FCL Freight (40ft)</div>
+      <div class="e-value">$3,150–$3,850</div>
+      <div class="e-sub flat">Unchanged from May; other lanes repricing upward</div>
     </div>
   </div>
 
-  <div class="section-title">Market News &amp; Price Signals</div>
-  <div class="news-grid">
-    <div class="news-card">
-      <span class="news-tag tag-bear-oil">BEARISH OIL</span>
-      <h4>US–Iran Deal Signals Strait of Hormuz Reopening</h4>
-      <p>An Iranian Deputy Foreign Minister confirmed a deal has been reached with the US, with a signing ceremony scheduled in Switzerland. WTI fell 4.89% to $80.73 and Brent declined to $84.44 on June 15 as markets priced in increased global oil supply. Multiple prior reports of breakthroughs failed to materialise — market caution remains. If confirmed, this would ease supply constraints that have supported polymer feedstock costs since March 2026.</p>
-      <div class="news-date">📅 June 15, 2026</div>
+    <h2 class="section-title">Market News</h2>
+    <div class="news-grid">
+    <div class="news-card bearish">
+      <span class="news-badge bearish">BEARISH</span>
+      <div class="news-title">Brent breaks below $80 on Iran peace talks</div>
+      <div class="news-body">Brent crude fell sharply to $76.68–$77.90/bbl after the US and Iran agreed to end hostilities and reopen the Strait of Hormuz, reversing an earlier spike to $82.30. Lower crude feeds through to lower naphtha/propylene feedstock costs over time.</div>
+      <div class="news-src">Source: CNBC, TradingEconomics</div>
     </div>
-    <div class="news-card">
-      <span class="news-tag tag-bull-pp">BULLISH PP (Recent)</span>
-      <h4>PP CFR West Africa Raffia Up ~39% Since March 2026 Conflict</h4>
-      <p>Polypropylene CFR West Africa raffia prices surged approximately 39% from early March 2026 following the outbreak of the Middle East conflict, which disrupted supply chains and reduced import offer availability. Prompt CFR discussions remain elevated as constrained merchant inventories and sustained import cost pressures maintain short-term firmness. The global PP market in 2026 shows "high-level fluctuations, more prone to declines than rises" — any oil price easing may accelerate correction.</p>
-      <div class="news-date">📅 June 2026 | Source: S&amp;P Global, Chemanalyst</div>
+    <div class="news-card neutral">
+      <span class="news-badge neutral">NEUTRAL</span>
+      <div class="news-title">Hormuz traffic normalizing but risk premium persists</div>
+      <div class="news-body">Iran has not targeted shipping for two consecutive nights and traffic through the Strait has picked up, with Kuwait, UAE and Iran itself increasing exports. Analysts expect prices will not fully revert to pre-March levels given lingering geopolitical risk through the rest of 2026.</div>
+      <div class="news-src">Source: CNBC, TradingKey</div>
     </div>
-    <div class="news-card">
-      <span class="news-tag tag-bear-pvc">BEARISH PVC</span>
-      <h4>PVC June 2026: Range-Bound at Low Levels, Demand Sluggish</h4>
-      <p>The PVC market extended weak range-bound trading from May. Ethylene-based units restarted in June, increasing supply pressure as demand remains sluggish. Real estate applications — over 60% of PVC consumption — continue to weigh. Operating rates dropped sharply in May, marking the strongest supply contraction in recent years. Both calcium carbide-based and ethylene-based producers are in loss-making territory; coal and calcium carbide costs provide a floor. Market expected to remain weak through June.</p>
-      <div class="news-date">📅 June 2026 | Source: Chemdo, Plastics Technology</div>
+    <div class="news-card bearish">
+      <span class="news-badge bearish">BEARISH</span>
+      <div class="news-title">SE Asia PP/PE/PVC panic-buying has stopped</div>
+      <div class="news-body">Converters in Southeast Asia who stockpiled resin during the March–April Middle East escalation are now sitting on comfortable inventories and buying only on a need-to basis, easing spot pricing pressure for PP, PE and PVC regionally.</div>
+      <div class="news-src">Source: Market reports</div>
     </div>
-    <div class="news-card">
-      <span class="news-tag tag-bear-pe">NEUTRAL/SOFT PE</span>
-      <h4>PE / HDPE: Balanced Inventories, Moderate Demand</h4>
-      <p>HDPE experienced a downward trend in Q1 2026 driven by sufficient supply and moderated demand from packaging and industrial sectors. June 2026 sees balanced inventories and steady export demand from China sustaining CFR offers in the $1,375–$1,690 range for Apapa. LDPE demand positive for packaging and FMCG. EXXON MLLDPE maintains a strong premium at $1,785–$1,855 CFR Apapa. If the oil price decline persists, Chinese export prices are likely to soften further.</p>
-      <div class="news-date">📅 June 2026 | Source: Chemanalyst, IMARC</div>
+    <div class="news-card neutral">
+      <span class="news-badge neutral">NEUTRAL</span>
+      <div class="news-title">China–SE Asia PP arbitrage window opens</div>
+      <div class="news-body">As Southeast Asia PP prices soften while China values hold firmer, an arbitrage window has opened between the two regions — a dynamic worth watching for sourcing flexibility on PP Raffia/Homo/Copo grades.</div>
+      <div class="news-src">Source: Market reports</div>
     </div>
-    <div class="news-card">
-      <span class="news-tag tag-freight">FREIGHT — ELEVATED</span>
-      <h4>Ocean Freight Peak Season: PSS up to $2,000/FEU in Effect</h4>
-      <p>The transpacific market is experiencing an unusually early and aggressive peak season with rates climbing and capacity tightening. Carriers implemented June 1 GRIs successfully, and Peak Season Surcharges of up to $2,000 per FEU are now in effect on several trade lanes. The Containerized Freight Index stood at 2,726.48 on 12 June 2026. Elevated freight rates increase polymer import costs from China into West African ports and need to be factored into offer price calculations.</p>
-      <div class="news-date">📅 June 12, 2026 | Source: J.M. Rodgers, Trading Economics</div>
+    <div class="news-card bearish">
+      <span class="news-badge bearish">BEARISH</span>
+      <div class="news-title">Global freight rates rising on Middle East conflict knock-on</div>
+      <div class="news-body">A new wave of freight rate increases is building across global trade lanes due to the Middle East conflict and related Southeast Asia port disruption, even though Lagos-bound FCL rates ($2,970–$3,850) held flat month-on-month.</div>
+      <div class="news-src">Source: Sino-Shipping, Market reports</div>
     </div>
-    <div class="news-card">
-      <span class="news-tag tag-neutral">2026 OUTLOOK</span>
-      <h4>Polymer Markets in 2026: Geopolitical Risk vs. China Overcapacity</h4>
-      <p>Two opposing forces dominate 2026 polymer markets: geopolitical risk (Middle East conflict, Strait of Hormuz) supporting elevated CFR import prices, vs. China's continued capacity expansion pushing export prices lower. PP Raffia CFR Apapa is currently $1,440–$1,520; if Iran deal holds and oil normalises, Chinese PP export offers could soften by $30–$60/MT in coming weeks. PVC remains structurally weak. HDPE fundamentals are balanced. Shad's active pipeline margins ($25–$60/MT) suggest modest but steady profitability.</p>
-      <div class="news-date">📅 June 2026 | Source: Chemorbis, Procurement Resource</div>
+    <div class="news-card bullish">
+      <span class="news-badge bullish">BULLISH</span>
+      <div class="news-title">Naira stability supports import planning</div>
+      <div class="news-body">The naira strengthened 0.82% over the past month (officially ~₦1,363/$ vs. a ₦1,395–1,405 parallel rate), aided by stronger FX inflows and improved market confidence — a modest tailwind for buyers financing dollar-denominated PFIs.</div>
+      <div class="news-src">Source: TradingEconomics, CBN</div>
+    </div>
+    </div>
+
+    <h2 class="section-title">Polymer & Terms Reference</h2>
+  <div class="reference-grid">
+    <div class="reference-card">
+      <div class="r-title">PP (Polypropylene)</div>
+      <div class="r-body">Raffia, Homo and Copo grades sourced mainly from China (CHN Energy, Jinneng/Baofeng). Used for woven bags, packaging film, injection molding. Currently $1,415–$1,520/MT CFR Apapa depending on grade and manufacturer.</div>
+    </div>
+    <div class="reference-card">
+      <div class="r-title">PE (Polyethylene)</div>
+      <div class="r-body">LDPE, LLDPE, MLLDPE, HDPE (Injection/Blow/Film/Pipe) cover the bulk of quoted grades. Used in film, blow-molded containers, pipe. Widest family range in current price sheet.</div>
+    </div>
+    <div class="reference-card">
+      <div class="r-title">PVC (Polyvinyl Chloride)</div>
+      <div class="r-body">SG-5 and related suspension grades, used for pipe, profiles, cable insulation. Currently the smallest quoted family (3 grades) on the topway.xlsx sheet.</div>
+    </div>
+    <div class="reference-card">
+      <div class="r-title">Payment Terms Glossary</div>
+      <div class="r-body">DA-60/DA-90: Documents against Acceptance, payment due 60/90 days after shipment/acceptance. LC: Letter of Credit. PFI: Pro-Forma Invoice, the buyer-facing order confirmation that anchors each pipeline entry.</div>
     </div>
   </div>
 
-  <!-- UPLOADED DOCS: Google Drive › Claude › Shad Dashboard › Market Info -->
-  <div class="section-title">
-    📁 Uploaded Market Documents
-    <span style="font-size:11px; font-weight:400; color:var(--text-light); text-transform:none; letter-spacing:0;">
-      &nbsp;· Source: Google Drive › Claude › Shad Dashboard › Market Info
-    </span>
-  </div>
-  <div style="background:#f9fafb; border:1px solid var(--border); border-radius:10px; padding:20px 24px; margin-bottom:20px; font-size:13px; color:var(--text-light);">
-    📂 <em>No documents currently uploaded to the Market Info folder.</em>
-    When documents are added to <strong>Google Drive › Claude › Shad Dashboard › Market Info</strong>,
-    summaries will appear here automatically on the next dashboard refresh.
   </div>
 
-  <div class="section-title">Polymer Price Reference — CFR Apapa (July 2026 Shipment)</div>
-  <div class="ref-grid">
-    <div class="ref-card">
-      <div class="rc-label">🟦 PP CFR Apapa Range</div>
-      <div class="rc-range">$1,440 – $1,685</div>
-      <div class="rc-sub">
-        Raffia: $1,440–$1,520<br>
-        Homo: $1,440–$1,560<br>
-        Copo: $1,560–$1,685<br>
-        <em>Source: Topway, Jun 8–11 2026</em>
-      </div>
-    </div>
-    <div class="ref-card">
-      <div class="rc-label">🟩 PE CFR Apapa Range</div>
-      <div class="rc-range">$1,375 – $1,855</div>
-      <div class="rc-sub">
-        HDPE Injection: $1,375<br>
-        HDPE Blow: $1,475–$1,690<br>
-        LDPE: $1,635–$1,795<br>
-        MLLDPE: $1,785–$1,855<br>
-        <em>Source: Topway, Jun 8–11 2026</em>
-      </div>
-    </div>
-    <div class="ref-card">
-      <div class="rc-label">🟨 PVC CFR Apapa Range</div>
-      <div class="rc-range">$910 – $1,030</div>
-      <div class="rc-sub">
-        SG-5: $910<br>
-        DG-1000S (K65-67): $1,005<br>
-        DG-700 (K57): $1,030<br>
-        <em>Source: Topway, Jun 8–11 2026</em>
-      </div>
-    </div>
-    <div class="ref-card">
-      <div class="rc-label">📦 Shad Active Pipeline Context</div>
-      <div class="rc-range">$1,015 – $1,955 /MT</div>
-      <div class="rc-sub">
-        17 orders · $2.88M pipeline<br>
-        1,933 MT in progress<br>
-        Est. margin: $59,147<br>
-        Avg margin: ~$30/MT
-      </div>
-    </div>
-  </div>
-</div>
+</main>
 
-<!-- ===== TAB 4: CUSTOMERS ===== -->
-<div id="tab-customers" class="tab-content">
+<footer id="footer-text"></footer>
 
-  <div style="background:#f0fdf4; border:1px solid #86efac; border-radius:8px; padding:10px 16px; margin-bottom:16px; font-size:12px; color:#15803d;">
-    📂 <strong>Data source:</strong> prices.xlsx · Google Drive › Claude › Shad Dashboard › Prices · Rows with Customer &amp; Offer Price populated
-  </div>
-
-  <div class="kpi-grid kpi-grid-4">
-    <div class="kpi-card accent">
-      <div class="label">Active Customer Quotes</div>
-      <div class="value">2</div>
-      <div class="sub">From prices.xlsx · June 2026</div>
-    </div>
-    <div class="kpi-card accent-gold">
-      <div class="label">Offer Price Range</div>
-      <div class="value">$1,740 – $1,950</div>
-      <div class="sub">Hart · Polybag</div>
-    </div>
-    <div class="kpi-card accent-green">
-      <div class="label">Buy Price Range</div>
-      <div class="value">$1,630 – $1,840</div>
-      <div class="sub">Snetor · Tricon · 9-Jun</div>
-    </div>
-    <div class="kpi-card accent-amber">
-      <div class="label">Estimated Margin</div>
-      <div class="value">$110 /MT</div>
-      <div class="sub">Both quotes · Offer − Buy</div>
-    </div>
-  </div>
-
-  <div class="section-title">Customer Quotes — Active Offers</div>
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Customer</th>
-          <th>Category</th>
-          <th>Application</th>
-          <th>Grade</th>
-          <th>MI</th>
-          <th>Supplier</th>
-          <th>Buy Price $/MT</th>
-          <th>Offer Price $/MT</th>
-          <th>Margin $/MT</th>
-          <th>Date</th>
-          <th>Payment</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Polybag</strong></td>
-          <td>HDPE</td>
-          <td>Caps CSD</td>
-          <td>CL9010</td>
-          <td>1</td>
-          <td>Tricon</td>
-          <td class="price-val">$1,840</td>
-          <td class="price-val" style="color:var(--navy-light); font-weight:700;">$1,950</td>
-          <td class="margin-high">$110</td>
-          <td>9-Jun</td>
-          <td>Credit</td>
-        </tr>
-        <tr>
-          <td><strong>Hart</strong></td>
-          <td>HDPE</td>
-          <td>Blow</td>
-          <td>50100</td>
-          <td>10</td>
-          <td>Snetor</td>
-          <td class="price-val">$1,630</td>
-          <td class="price-val" style="color:var(--navy-light); font-weight:700;">$1,740</td>
-          <td class="margin-high">$110</td>
-          <td>9-Jun</td>
-          <td>Credit</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <p style="font-size:11px; color:var(--text-light); margin-bottom:20px">
-    Rows are pulled from <strong>prices.xlsx</strong> where both Customer and Offer Price are filled in.
-    Add more entries to the file to see them appear here automatically.
-  </p>
-
-</div>
-
-<div class="footer">
-  Last refreshed: 15 June 2026 · 11:00 AM &nbsp;|&nbsp;
-  Data sourced from Google Drive (June 2026 Tracker · Prices · Market Info) · Auto-refreshed daily at 11am<br>
-  A Windows Scheduled Task ("Shad Polymers – Netlify Deploy") automatically deploys this file to Netlify at 11:30am each day.
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
-  (function() {
-    if (sessionStorage.getItem('sp_auth') === 'true') {
-      document.getElementById('auth-overlay').style.display = 'none';
-    }
-    const now = new Date();
-    const day = now.getDate();
-    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    const month = months[now.getMonth()];
-    const year = now.getFullYear();
-    const h = now.getHours().toString().padStart(2,'0');
-    const m = now.getMinutes().toString().padStart(2,'0');
-    document.getElementById('refresh-date').textContent = day + ' ' + month + ' ' + year + ' · ' + h + ':' + m;
-  })();
-
-  function checkPW() {
-    const input = document.getElementById('pw-input').value;
-    if (input === 'SP2026') {
-      sessionStorage.setItem('sp_auth', 'true');
-      document.getElementById('auth-overlay').style.display = 'none';
-    } else {
-      document.getElementById('pw-error').style.display = 'block';
-      document.getElementById('pw-input').value = '';
-      document.getElementById('pw-input').focus();
-    }
+function checkPW() {
+  const input = document.getElementById('pw-input').value;
+  if (input === 'SP2026') {
+    sessionStorage.setItem('sp_auth', 'true');
+    document.getElementById('auth-overlay').style.display = 'none';
+  } else {
+    document.getElementById('pw-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
   }
+}
+if (sessionStorage.getItem('sp_auth') === 'true') {
+  document.getElementById('auth-overlay').style.display = 'none';
+}
 
-  function switchTab(name, btn) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + name).classList.add('active');
-    btn.classList.add('active');
-  }
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
 
-  document.addEventListener('DOMContentLoaded', function() {
-    const buyerCtx = document.getElementById('buyerChart').getContext('2d');
+document.getElementById('footer-text').textContent =
+  'Last refreshed: ' + new Date().toLocaleString() +
+  ' / Data sourced from Google Drive (June 2026 Tracker · Prices · Market Info) · Auto-refreshed daily at 11am';
+
+document.addEventListener('DOMContentLoaded', function() {
+  const buyerCtx = document.getElementById('buyerChart');
+  if (buyerCtx) {
     new Chart(buyerCtx, {
       type: 'bar',
       data: {
-        labels: ['ENGEE PET', 'SHIVLILA', 'DANA PLAST', 'STAR POINT', 'CHANDAR', 'SONHART', 'SUPER SONIC', 'SARSOLI'],
-        datasets: [{
-          data: [801000, 776794, 618940, 322560, 153270, 109620, 82320, 11568],
-          backgroundColor: ['#12593b','#1a7550','#c49a3c','#3182ce','#f59e0b','#38a169','#6366f1','#9ca3af'],
-          borderRadius: 4,
-        }]
+        labels: ["SHIVLILA", "DANA PLAST", "ENGEE PET", "STAR POINT", "STARPOINT", "SONHART", "DOSHI AND CO", "DASCO", "CHANDAR INVESTMENTS LIMITED.", "HART", "IDDO PLASTICS", "SHIV LILA", "SUPER SONIC", "SARSOLI"],
+        datasets: [{ label: 'PFI Value ($)', data: [1511227, 1257200, 542000, 410340, 330896, 318920, 288120, 286110, 153270, 125580, 117520, 115020, 82320, 33069], backgroundColor: '#1a7550' }]
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: { legend: { display: false } },
-        scales: {
-          y: { ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'k' }, grid: { color: '#e5e7eb' } },
-          x: { ticks: { font: { size: 10 } }, grid: { display: false } }
-        }
-      }
+      options: { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true } } }
     });
-
-    const marginCtx = document.getElementById('marginChart').getContext('2d');
-    const marginData = [40, 35, 60, 35, 30, 40, 27, 25, 40, 25, 25, 25, 25, 50, 40, 30, 60];
+  }
+  const marginCtx = document.getElementById('marginChart');
+  if (marginCtx) {
     new Chart(marginCtx, {
       type: 'bar',
       data: {
-        labels: ['1400','1403','1394','1402','1399','1401','1392','1388','1391','1390','1385','1369','1393','1397','1396','1398','1395'],
-        datasets: [{
-          label: 'Margin $/MT',
-          data: marginData,
-          backgroundColor: marginData.map(v => v >= 50 ? '#38a169' : v >= 35 ? '#f59e0b' : '#9ca3af'),
-          borderRadius: 4,
-        }]
+        labels: ["1374", "1376", "1354", "1360", "1394", "1402", "1379", "1350", "1372", "1355", "1352", "1395", "1387", "1378", "1403", "1369", "1370", "1399"],
+        datasets: [{ label: 'Margin $/MT', data: [25.0, 50.0, 25.0, 25.0, 60.0, 35.0, 30.0, 30.0, 25.0, 25.0, 25.0, 60.0, 30.0, 25.0, 35.0, 25.0, 25.0, 30.0], backgroundColor: '#c49a3c' }]
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: {
-            display: true,
-            labels: {
-              font: { size: 11 },
-              generateLabels: () => [
-                { text: '≥ $50 (High)', fillStyle: '#38a169', strokeStyle: '#38a169', lineWidth: 1 },
-                { text: '$35–49 (Mid)', fillStyle: '#f59e0b', strokeStyle: '#f59e0b', lineWidth: 1 },
-                { text: '< $35 (Low)',  fillStyle: '#9ca3af', strokeStyle: '#9ca3af', lineWidth: 1 }
-              ]
-            }
-          }
-        },
-        scales: {
-          y: { ticks: { callback: v => '$' + v }, grid: { color: '#e5e7eb' }, suggestedMin: 0, suggestedMax: 70 },
-          x: { ticks: { font: { size: 10 } }, grid: { display: false } }
-        }
-      }
+      options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
     });
-  });
+  }
+});
 </script>
+
 </body>
 </html>
