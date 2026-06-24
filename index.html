@@ -268,7 +268,7 @@
         <canvas id="buyerChart" height="220"></canvas>
       </div>
       <div class="chart-box">
-        <h3>Total Volume Booked (MT) — Last 12 Months</h3>
+        <h3>Total Volume Booked (MT) — Since Jan 2026 (hover bar for top 3 customers)</h3>
         <canvas id="volumeChart" height="220"></canvas>
       </div>
     </div>
@@ -1191,775 +1191,141 @@
     <div class="kpi-card accent-blue">
       <div class="label">Active Price Lines</div>
       <div class="value">28</div>
-      <div class="sub">all supplier price lines (customer column hidden here — see Customer tab)</div>
+      <div class="sub">includes customer-quoted lines (Customer/OP $/MT shown when applicable)</div>
+    </div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card accent">
+      <div class="label">PP Range</div>
+      <div class="value">$1,430–$1,550</div>
+      <div class="sub">per MT, active price sheet (PP + PPCP grades)</div>
+    </div>
+    <div class="kpi-card accent-green">
+      <div class="label">PE Range</div>
+      <div class="value">$1,420–$1,915</div>
+      <div class="sub">per MT, active price sheet (LLDPE/LDPE/HDPE)</div>
+    </div>
+    <div class="kpi-card accent-amber">
+      <div class="label">PVC</div>
+      <div class="value">$900</div>
+      <div class="sub">per MT, active price sheet (1 priced quote)</div>
     </div>
   </div>
 
     <div class="table-wrap">
     <table class="price-table">
       <thead>
-        <tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th></tr>
+        <tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th><th>Customer</th><th>OP $/MT</th></tr>
       </thead>
       <tbody>
-        <tr><td>LLDPE</td><td>non slip</td><td>1018N</td><td>1</td><td>$1510</td><td>Emeraude</td><td></td><td>27-May</td><td>Credit</td></tr>
-        <tr><td>LLDPE</td><td>non slip</td><td>DFDC 7080H</td><td>1</td><td>$1510</td><td>Snetor</td><td></td><td>22-May</td><td>Credit</td></tr>
-        <tr><td>LLDPE</td><td>Slip</td><td></td><td>1</td><td>$1500</td><td>Montachem</td><td>Exelene</td><td>4-Jun</td><td>Credit</td></tr>
-        <tr><td>LLDPE</td><td>Special</td><td>Enable</td><td>1</td><td>$1680</td><td>Emeraude</td><td>Exxon</td><td>1-Jun</td><td>Credit</td></tr>
-        <tr><td>LLDPE</td><td>Special</td><td>Exceed</td><td>1</td><td>$1710</td><td>Emeraude</td><td></td><td>1-Jun</td><td>Credit</td></tr>
-        <tr><td>LDPE</td><td>Film</td><td>100AC</td><td>2</td><td>$1650</td><td>Emeraude</td><td>Exxon</td><td>3-Jun</td><td>Credit</td></tr>
-        <tr><td>LDPE</td><td>film</td><td>4</td><td>4</td><td>$1700</td><td>Snetor</td><td></td><td>29-May</td><td>Credit</td></tr>
-        <tr><td>LDPE</td><td>film</td><td>2022AC</td><td>2</td><td>$1810</td><td>Emeraude</td><td></td><td>27-May</td><td>Credit</td></tr>
-        <tr><td>LDPE</td><td>shrink</td><td>FE8000</td><td>0.8</td><td>$1520</td><td>Snetor</td><td>total</td><td>21-June</td><td>credit</td></tr>
-        <tr><td>LDPE</td><td>shrink</td><td>0.3</td><td>0.3</td><td>$1720</td><td>Snetor</td><td></td><td>29-May</td><td>Credit</td></tr>
-        <tr><td>LDPE</td><td>shrink</td><td>07523W</td><td>0.3</td><td>$1915</td><td>Emeraude</td><td></td><td>27-May</td><td>Credit</td></tr>
-        <tr><td>HDPE</td><td>Blow</td><td>50100</td><td>10</td><td>$1630</td><td>Snetor</td><td></td><td>9-Jun</td><td>Credit</td></tr>
-        <tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1830</td><td>Lotte</td><td></td><td>11-Jun</td><td>Cash</td></tr>
-        <tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1800</td><td>Lotte</td><td></td><td>10-Jun</td><td>Cash</td></tr>
-        <tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1840</td><td>Tricon</td><td>Lotte</td><td>9-Jun</td><td>Credit</td></tr>
-        <tr><td>HDPE</td><td>Film</td><td>Tr144</td><td>0.18</td><td>$1550</td><td>snetor</td><td></td><td>9-Jun</td><td>Credit</td></tr>
-        <tr><td>HDPE</td><td>Film</td><td>7000</td><td>2.13</td><td>$1440</td><td>Montachem</td><td>Exelene</td><td>4-Jun</td><td>Credit</td></tr>
-        <tr><td>HDPE</td><td>injection</td><td>8000UV</td><td>8</td><td>$1420</td><td>Montachem</td><td></td><td>9-Jun</td><td>Credit</td></tr>
-        <tr><td>PPCP</td><td>INJECTION</td><td>B350F</td><td>9</td><td>$1550</td><td>SK GLOBAL</td><td></td><td>17 Jun</td><td>CASH</td></tr>
-        <tr><td>PP</td><td>Copolymer</td><td>P840J</td><td>43</td><td>$1505</td><td>SCG</td><td></td><td>4 Jun</td><td>30/70</td></tr>
-        <tr><td>PP</td><td>Homopolymer</td><td>Y26</td><td>26</td><td>$1530</td><td>Snetor</td><td></td><td>8-Jun</td><td>Credit</td></tr>
-        <tr><td>PP</td><td>Homopolymer</td><td>HNR100</td><td>12</td><td>$1500</td><td>Snetor</td><td></td><td>29-May</td><td>Credit</td></tr>
-        <tr><td>PP</td><td>Homopolymer</td><td>1100N</td><td>12</td><td>$1430</td><td>Emeraude</td><td></td><td>28-May</td><td>Credit</td></tr>
-        <tr><td>PP</td><td>Raffia</td><td>exxon</td><td>3.2</td><td>$1430</td><td>Emeraude</td><td></td><td>4-Jun</td><td></td></tr>
-        <tr><td>PVC</td><td>China</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-        <tr><td>PVC</td><td>US</td><td></td><td></td><td>$900</td><td>Snetor</td><td></td><td>5-Jun</td><td>Credit</td></tr>
-        <tr><td>PET</td><td>BOTTLE GRADE</td><td>CR8816</td><td>0.8</td><td>$1198</td><td>CRC</td><td></td><td>18 Jun</td><td>CASH</td></tr>
-        <tr><td>PET</td><td>BOTTLE GRADE</td><td>CZ302</td><td>0.8</td><td>$1290</td><td>ELAINE</td><td></td><td>17 Jun</td><td>CASH</td></tr>
+        <tr><td>LLDPE</td><td>non slip</td><td>1018N</td><td>1</td><td>$1510</td><td>Emeraude</td><td></td><td>27-May</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>LLDPE</td><td>non slip</td><td>DFDC 7080H</td><td>1</td><td>$1510</td><td>Snetor</td><td></td><td>22-May</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>LLDPE</td><td>Slip</td><td></td><td>1</td><td>$1500</td><td>Montachem</td><td>Exelene</td><td>4-Jun</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>LLDPE</td><td>Special</td><td>Enable</td><td>1</td><td>$1680</td><td>Emeraude</td><td>Exxon</td><td>1-Jun</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>LLDPE</td><td>Special</td><td>Exceed</td><td>1</td><td>$1710</td><td>Emeraude</td><td></td><td>1-Jun</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>LDPE</td><td>Film</td><td>100AC</td><td>2</td><td>$1650</td><td>Emeraude</td><td>Exxon</td><td>3-Jun</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>LDPE</td><td>film</td><td>4</td><td>4</td><td>$1700</td><td>Snetor</td><td></td><td>29-May</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>LDPE</td><td>film</td><td>2022AC</td><td>2</td><td>$1810</td><td>Emeraude</td><td></td><td>27-May</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>LDPE</td><td>shrink</td><td>FE8000</td><td>0.8</td><td>$1520</td><td>Snetor</td><td>total</td><td>21-June</td><td>credit</td><td></td><td></td></tr>
+        <tr><td>LDPE</td><td>shrink</td><td>0.3</td><td>0.3</td><td>$1720</td><td>Snetor</td><td></td><td>29-May</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>LDPE</td><td>shrink</td><td>07523W</td><td>0.3</td><td>$1915</td><td>Emeraude</td><td></td><td>27-May</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>HDPE</td><td>Blow</td><td>50100</td><td>10</td><td>$1630</td><td>Snetor</td><td></td><td>9-Jun</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1830</td><td>Lotte</td><td></td><td>11-Jun</td><td>Cash</td><td></td><td></td></tr>
+        <tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1800</td><td>Lotte</td><td></td><td>10-Jun</td><td>Cash</td><td></td><td></td></tr>
+        <tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1840</td><td>Tricon</td><td>Lotte</td><td>9-Jun</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>HDPE</td><td>Film</td><td>Tr144</td><td>0.18</td><td>$1550</td><td>snetor</td><td></td><td>9-Jun</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>HDPE</td><td>Film</td><td>7000</td><td>2.13</td><td>$1440</td><td>Montachem</td><td>Exelene</td><td>4-Jun</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>HDPE</td><td>injection</td><td>8000UV</td><td>8</td><td>$1420</td><td>Montachem</td><td></td><td>9-Jun</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>PPCP</td><td>INJECTION</td><td>B350F</td><td>9</td><td>$1550</td><td>SK GLOBAL</td><td></td><td>17 Jun</td><td>CASH</td><td>STARPOINT</td><td></td></tr>
+        <tr><td>PP</td><td>Copolymer</td><td>P840J</td><td>43</td><td>$1505</td><td>SCG</td><td></td><td>4 Jun</td><td>30/70</td><td></td><td></td></tr>
+        <tr><td>PP</td><td>Homopolymer</td><td>Y26</td><td>26</td><td>$1530</td><td>Snetor</td><td></td><td>8-Jun</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>PP</td><td>Homopolymer</td><td>HNR100</td><td>12</td><td>$1500</td><td>Snetor</td><td></td><td>29-May</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>PP</td><td>Homopolymer</td><td>1100N</td><td>12</td><td>$1430</td><td>Emeraude</td><td></td><td>28-May</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>PP</td><td>Raffia</td><td>exxon</td><td>3.2</td><td>$1430</td><td>Emeraude</td><td></td><td>4-Jun</td><td></td><td></td><td></td></tr>
+        <tr><td>PVC</td><td>China</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>PVC</td><td>US</td><td></td><td></td><td>$900</td><td>Snetor</td><td></td><td>5-Jun</td><td>Credit</td><td></td><td></td></tr>
+        <tr><td>PET</td><td>BOTTLE GRADE</td><td>CR8816</td><td>0.8</td><td>$1198</td><td>CRC</td><td></td><td>18 Jun</td><td>CASH</td><td>STARPOINT</td><td></td></tr>
+        <tr><td>PET</td><td>BOTTLE GRADE</td><td>CZ302</td><td>0.8</td><td>$1290</td><td>ELAINE</td><td></td><td>17 Jun</td><td>CASH</td><td>STARPOINT</td><td></td></tr>
       </tbody>
     </table>
     </div>
 
     <h2 class="section-title">Other Uploaded Documents</h2>
 
-    <h3 style="font-size:14px;margin:14px 0 8px;color:var(--navy);">PP / PE / PVC CFR Price Table (source: SHAD TOPWAY PP PE PVC.xlsx, offer 6.22)</h3>
-  <div class="kpi-grid">
-    <div class="kpi-card accent">
-      <div class="label">PP Range (Apapa CFR)</div>
-      <div class="value">$1,360–$1,560</div>
-      <div class="sub">per MT, all PP grades</div>
-    </div>
-    <div class="kpi-card accent-green">
-      <div class="label">PE Range (Apapa CFR)</div>
-      <div class="value">$1,250–$1,705</div>
-      <div class="sub">per MT, all PE grades</div>
-    </div>
-    <div class="kpi-card accent-amber">
-      <div class="label">PVC Range (Apapa CFR)</div>
-      <div class="value">$895–$995</div>
-      <div class="sub">per MT, all PVC grades</div>
-    </div>
-    <div class="kpi-card accent-blue">
-      <div class="label">Grades Quoted</div>
-      <div class="value">45</div>
-      <div class="sub">across 16 product families</div>
-    </div>
-  </div>
-
+    <h3 style="font-size:14px;margin:14px 0 8px;color:var(--navy);">PP / PE / PVC CFR Price Table — Nigeria only (source: SHAD TOPWAY PP PE PVC.xlsx, offer 6.22)</h3>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">This sheet also quotes Abidjan/Tema/Lomé, Cotonou, Mombasa and Dar Es Salaam CFR prices; Cotonou pricing has been moved to the Cotonou tab (tagged supplier: SHAD TOPWAY). Other ports are not on this dashboard and are omitted here.</p>
     <div class="table-wrap">
   <table class="price-table">
     <thead>
       <tr>
         <th>Product</th><th>Grade</th><th>Manufacturer</th><th>MI</th><th>Origin</th>
         <th>Pallets</th><th>Shipment</th><th>QTY (MT)</th>
-        <th>Apapa/Onne</th><th>Abidjan/Tema/Lomé</th><th>Cotonou</th><th>Mombasa</th><th>Dar Es Salaam</th>
+        <th>CFR Nigeria (Apapa/Onne)</th>
       </tr>
     </thead>
     <tbody>
-      <tr class="family-row pp"><td colspan="13">PP Raffia (4 grades)</td></tr>
-      <tr>
-        <td>PP Raffia</td>
-        <td>L5E89</td>
-        <td>CHN Energy Shenhua</td>
-        <td>3.5</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>300</td>
-        <td>$1,370</td>
-        <td>$1,350</td>
-        <td>$1,350</td>
-        <td>$1,340</td>
-        <td>$1,350</td>
-      </tr>
-      <tr>
-        <td>PP Raffia</td>
-        <td>1102K</td>
-        <td>CHN Energy</td>
-        <td>3</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$1,370</td>
-        <td>$1,350</td>
-        <td>$1,350</td>
-        <td>$1,340</td>
-        <td>$1,350</td>
-      </tr>
-      <tr>
-        <td>PP Raffia</td>
-        <td>HP550J</td>
-        <td>Jinneng/Baofeng</td>
-        <td>3</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$1,360</td>
-        <td>$1,340</td>
-        <td>$1,340</td>
-        <td>$1,330</td>
-        <td>$1,340</td>
-      </tr>
-      <tr>
-        <td>PP Raffia</td>
-        <td>L5E89H/S1005</td>
-        <td>CHN Energy</td>
-        <td>4.5</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>100</td>
-        <td>$1,410</td>
-        <td>$1,390</td>
-        <td>$1,390</td>
-        <td>$1,380</td>
-        <td>$1,390</td>
-      </tr>
-      <tr class="family-row pp"><td colspan="13">PP Homo (6 grades)</td></tr>
-      <tr>
-        <td>PP Homo</td>
-        <td>1100N</td>
-        <td>CHN Energy</td>
-        <td>12</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$1,380</td>
-        <td>$1,360</td>
-        <td>$1,360</td>
-        <td>$1,350</td>
-        <td>$1,360</td>
-      </tr>
-      <tr>
-        <td>PP Homo</td>
-        <td>HP500N</td>
-        <td>Jinneng/Baofeng</td>
-        <td>12</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>84</td>
-        <td>$1,360</td>
-        <td>$1,340</td>
-        <td>$1,340</td>
-        <td>$1,330</td>
-        <td>$1,340</td>
-      </tr>
-      <tr>
-        <td>PP Homo</td>
-        <td>Y16</td>
-        <td>Oriental Energy</td>
-        <td>15</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$1,440</td>
-        <td>$1,420</td>
-        <td>$1,420</td>
-        <td>$1,410</td>
-        <td>$1,420</td>
-      </tr>
-      <tr>
-        <td>PP Homo</td>
-        <td>Y26</td>
-        <td>Oriental Energy</td>
-        <td>25</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$1,440</td>
-        <td>$1,420</td>
-        <td>$1,420</td>
-        <td>$1,410</td>
-        <td>$1,420</td>
-      </tr>
-      <tr>
-        <td>PP Homo</td>
-        <td>S2040</td>
-        <td>CHN Energy Shenhua</td>
-        <td>40</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$1,440</td>
-        <td>$1,420</td>
-        <td>$1,420</td>
-        <td>$1,410</td>
-        <td>$1,420</td>
-      </tr>
-      <tr>
-        <td>PP Homo</td>
-        <td>Y40</td>
-        <td>Oriental Energy</td>
-        <td>40</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>100</td>
-        <td>$1,440</td>
-        <td>$1,420</td>
-        <td>$1,420</td>
-        <td>$1,410</td>
-        <td>$1,420</td>
-      </tr>
-      <tr class="family-row pp"><td colspan="13">PP Copo (8 grades)</td></tr>
-      <tr>
-        <td>PP Copo</td>
-        <td>EP300H B</td>
-        <td>Bora basell</td>
-        <td>1.8</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>84</td>
-        <td>$1,515</td>
-        <td>$1,495</td>
-        <td>$1,495</td>
-        <td>$1,490</td>
-        <td>$1,500</td>
-      </tr>
-      <tr>
-        <td>PP Copo</td>
-        <td>37MK10</td>
-        <td>Sabic</td>
-        <td>9</td>
-        <td>Saudi Arabia</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>99</td>
-        <td>$1,530</td>
-        <td>$1,510</td>
-        <td>$1,510</td>
-        <td>$1,500</td>
-        <td>$1,510</td>
-      </tr>
-      <tr>
-        <td>PP Copo</td>
-        <td>K8009</td>
-        <td>Any Chinese manufacturer</td>
-        <td>9</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>100</td>
-        <td>$1,535</td>
-        <td>$1,515</td>
-        <td>$1,515</td>
-        <td>$1,510</td>
-        <td>$1,520</td>
-      </tr>
-      <tr>
-        <td>PP Copo</td>
-        <td>EP440N</td>
-        <td>Sinopec</td>
-        <td>12</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>112</td>
-        <td>$1,490</td>
-        <td>$1,470</td>
-        <td>$1,470</td>
-        <td>$1,460</td>
-        <td>$1,470</td>
-      </tr>
-      <tr>
-        <td>PP Copo</td>
-        <td>9017</td>
-        <td>Sinopec</td>
-        <td>18</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>108</td>
-        <td>$1,545</td>
-        <td>$1,525</td>
-        <td>$1,525</td>
-        <td>$1,520</td>
-        <td>$1,530</td>
-      </tr>
-      <tr>
-        <td>PP Copo</td>
-        <td>EP548R</td>
-        <td>Sinopec/PetorChina</td>
-        <td>30</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>100</td>
-        <td>$1,510</td>
-        <td>$1,490</td>
-        <td>$1,490</td>
-        <td>$1,480</td>
-        <td>$1,490</td>
-      </tr>
-      <tr>
-        <td>PP Copo</td>
-        <td>K9928H/K7726</td>
-        <td>CHN Energy</td>
-        <td>30</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>100</td>
-        <td>$1,460</td>
-        <td>$1,440</td>
-        <td>$1,440</td>
-        <td>$1,430</td>
-        <td>$1,440</td>
-      </tr>
-      <tr>
-        <td>PP Copo</td>
-        <td>K7760H</td>
-        <td>CHN Energy</td>
-        <td>60</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>112</td>
-        <td>$1,460</td>
-        <td>$1,440</td>
-        <td>$1,440</td>
-        <td>$1,430</td>
-        <td>$1,440</td>
-      </tr>
-      <tr class="family-row pp"><td colspan="13">PP Random (1 grade)</td></tr>
-      <tr>
-        <td>PP Random</td>
-        <td>MT40</td>
-        <td>Grand Resource</td>
-        <td>40</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>112</td>
-        <td>$1,560</td>
-        <td>$1,540</td>
-        <td>$1,540</td>
-        <td>$1,530</td>
-        <td>$1,540</td>
-      </tr>
-      <tr class="family-row pe"><td colspan="13">LDPE (6 grades)</td></tr>
-      <tr>
-        <td>LDPE</td>
-        <td>2420D</td>
-        <td>Shenhua/PetroChina/ZPC</td>
-        <td>0.3</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>54</td>
-        <td>$1,705</td>
-        <td>$1,685</td>
-        <td>$1,685</td>
-        <td>$1,680</td>
-        <td>$1,690</td>
-      </tr>
-      <tr>
-        <td>LDPE</td>
-        <td>2426K</td>
-        <td>ZPC/sinopec</td>
-        <td>4</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>54</td>
-        <td>$1,595</td>
-        <td>$1,575</td>
-        <td>$1,575</td>
-        <td>$1,570</td>
-        <td>$1,580</td>
-      </tr>
-      <tr>
-        <td>LDPE</td>
-        <td>LD2022.AC</td>
-        <td>EXXON CHINA</td>
-        <td>2 add</td>
-        <td>China</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>108</td>
-        <td>$1,495</td>
-        <td>$1,475</td>
-        <td>$1,475</td>
-        <td>$1,470</td>
-        <td>$1,480</td>
-      </tr>
-      <tr>
-        <td>LDPE</td>
-        <td>LD2022.BW</td>
-        <td>EXXON CHINA</td>
-        <td>2</td>
-        <td>China</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>108</td>
-        <td>$1,495</td>
-        <td>$1,475</td>
-        <td>$1,475</td>
-        <td>$1,470</td>
-        <td>$1,480</td>
-      </tr>
-      <tr>
-        <td>LDPE</td>
-        <td>LD 03322.BW1</td>
-        <td>EXXON CHINA</td>
-        <td>0.3</td>
-        <td>China</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>108</td>
-        <td>$1,695</td>
-        <td>$1,675</td>
-        <td>$1,675</td>
-        <td>$1,670</td>
-        <td>$1,680</td>
-      </tr>
-      <tr>
-        <td>LDPE</td>
-        <td>LD 07523.BW</td>
-        <td>EXXON CHINA</td>
-        <td>0.7</td>
-        <td>China</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>108</td>
-        <td>$1,645</td>
-        <td>$1,625</td>
-        <td>$1,625</td>
-        <td>$1,620</td>
-        <td>$1,630</td>
-      </tr>
-      <tr class="family-row pe"><td colspan="13">LLDPE (1 grade)</td></tr>
-      <tr>
-        <td>LLDPE</td>
-        <td>DFDA-7042</td>
-        <td>Any Chinese manufacturer</td>
-        <td>2</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$1,250</td>
-        <td>$1,230</td>
-        <td>$1,230</td>
-        <td>$1,220</td>
-        <td>$1,230</td>
-      </tr>
-      <tr class="family-row pe"><td colspan="13">MLLDPE (2 grades)</td></tr>
-      <tr>
-        <td>MLLDPE</td>
-        <td>M1018.RA</td>
-        <td>EXXON CHINA</td>
-        <td>1</td>
-        <td>China</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>49.5</td>
-        <td>$1,575</td>
-        <td>$1,555</td>
-        <td>$1,555</td>
-        <td>$1,550</td>
-        <td>$1,560</td>
-      </tr>
-      <tr>
-        <td>MLLDPE</td>
-        <td>M1018.RF</td>
-        <td>EXXON CHINA</td>
-        <td>1 add</td>
-        <td>China</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>49.5</td>
-        <td>$1,575</td>
-        <td>$1,555</td>
-        <td>$1,555</td>
-        <td>$1,550</td>
-        <td>$1,560</td>
-      </tr>
-      <tr class="family-row pe"><td colspan="13">HDPE Injection (1 grade)</td></tr>
-      <tr>
-        <td>HDPE Injection</td>
-        <td>T60-800</td>
-        <td>SINO-INEOS</td>
-        <td>8</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>108</td>
-        <td>$1,345</td>
-        <td>$1,325</td>
-        <td>$1,325</td>
-        <td>$1,320</td>
-        <td>$1,330</td>
-      </tr>
-      <tr class="family-row pe"><td colspan="13">HDPE Blow (3 grades)</td></tr>
-      <tr>
-        <td>HDPE Blow</td>
-        <td>HD5502S</td>
-        <td>Baofeng/ZPC/yanchang/sinopec</td>
-        <td>0.2</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>108</td>
-        <td>$1,330</td>
-        <td>$1,310</td>
-        <td>$1,310</td>
-        <td>$1,300</td>
-        <td>$1,310</td>
-      </tr>
-      <tr>
-        <td>HDPE Blow</td>
-        <td>HD5502/HD5502ZK</td>
-        <td>Sinopec</td>
-        <td>0.3</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>108</td>
-        <td>$1,345</td>
-        <td>$1,325</td>
-        <td>$1,325</td>
-        <td>$1,320</td>
-        <td>$1,330</td>
-      </tr>
-      <tr>
-        <td>HDPE Blow</td>
-        <td>B1254</td>
-        <td>Sabic</td>
-        <td>0.14</td>
-        <td>Saudi Arabia</td>
-        <td>YES</td>
-        <td>July</td>
-        <td>150</td>
-        <td>$1,590</td>
-        <td>$1,565</td>
-        <td>$1,565</td>
-        <td>$1,560</td>
-        <td>$1,570</td>
-      </tr>
-      <tr class="family-row pe"><td colspan="13">HDPE Film (1 grade)</td></tr>
-      <tr>
-        <td>HDPE Film</td>
-        <td>F 6095</td>
-        <td>BASF</td>
-        <td></td>
-        <td>China</td>
-        <td>YES</td>
-        <td>July</td>
-        <td>108</td>
-        <td>$1,365</td>
-        <td>$1,345</td>
-        <td>$1,345</td>
-        <td>$1,340</td>
-        <td>$1,350</td>
-      </tr>
-      <tr class="family-row pe"><td colspan="13">HDPE Pipe Natural (1 grade)</td></tr>
-      <tr>
-        <td>HDPE Pipe Natural</td>
-        <td>23050</td>
-        <td>Baofeng/Yanchang/ZPC</td>
-        <td>PE100</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>112</td>
-        <td>$1,380</td>
-        <td>$1,360</td>
-        <td>$1,360</td>
-        <td>$1,350</td>
-        <td>$1,360</td>
-      </tr>
-      <tr class="family-row pvc"><td colspan="13">PVC (3 grades)</td></tr>
-      <tr>
-        <td>PVC</td>
-        <td>SG-5</td>
-        <td>Any Chinese manufacturer</td>
-        <td>K65-67</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$895</td>
-        <td>$875</td>
-        <td>$875</td>
-        <td>$865</td>
-        <td>$875</td>
-      </tr>
-      <tr>
-        <td>PVC</td>
-        <td>DG-1000S</td>
-        <td>Dagu</td>
-        <td>K65-67</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$970</td>
-        <td>$950</td>
-        <td>$950</td>
-        <td>$940</td>
-        <td>$950</td>
-      </tr>
-      <tr>
-        <td>PVC</td>
-        <td>DG-700</td>
-        <td>Dagu</td>
-        <td>K57</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$995</td>
-        <td>$975</td>
-        <td>$975</td>
-        <td>$965</td>
-        <td>$975</td>
-      </tr>
-      <tr class="family-row"><td colspan="13">GPPS (1 grade)</td></tr>
-      <tr>
-        <td>GPPS</td>
-        <td>PS-525</td>
-        <td>Liwan</td>
-        <td>9</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$1,450</td>
-        <td>$1,430</td>
-        <td>$1,430</td>
-        <td>$1,420</td>
-        <td>$1,430</td>
-      </tr>
-      <tr class="family-row"><td colspan="13">HIPS (1 grade)</td></tr>
-      <tr>
-        <td>HIPS</td>
-        <td>HP 825</td>
-        <td>Liwan</td>
-        <td>4.5</td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>200</td>
-        <td>$1,530</td>
-        <td>$1,510</td>
-        <td>$1,510</td>
-        <td>$1,500</td>
-        <td>$1,510</td>
-      </tr>
-      <tr class="family-row"><td colspan="13">ABS (5 grades)</td></tr>
-      <tr>
-        <td>ABS</td>
-        <td>GP-22 natural</td>
-        <td>INEOS</td>
-        <td>19</td>
-        <td>China</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>112</td>
-        <td>$1,640</td>
-        <td>$1,620</td>
-        <td>$1,620</td>
-        <td>$1,610</td>
-        <td>$1,620</td>
-      </tr>
-      <tr>
-        <td>ABS</td>
-        <td>GP-35 natural</td>
-        <td>INEOS</td>
-        <td>40</td>
-        <td>China</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>112</td>
-        <td>$1,670</td>
-        <td>$1,650</td>
-        <td>$1,650</td>
-        <td>$1,640</td>
-        <td>$1,650</td>
-      </tr>
-      <tr>
-        <td>ABS</td>
-        <td>HI-10 natural</td>
-        <td>INEOS</td>
-        <td>40</td>
-        <td>China</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>112</td>
-        <td>$1,710</td>
-        <td>$1,690</td>
-        <td>$1,690</td>
-        <td>$1,680</td>
-        <td>$1,690</td>
-      </tr>
-      <tr>
-        <td>ABS</td>
-        <td>ZA0210</td>
-        <td>ZPC</td>
-        <td>20</td>
-        <td>China</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>108</td>
-        <td>$1,615</td>
-        <td>$1,595</td>
-        <td>$1,595</td>
-        <td>$1,590</td>
-        <td>$1,600</td>
-      </tr>
-      <tr>
-        <td>ABS</td>
-        <td>ZA0211 1</td>
-        <td>ZPC</td>
-        <td>20</td>
-        <td>China</td>
-        <td>Yes</td>
-        <td>July</td>
-        <td>108</td>
-        <td>$1,595</td>
-        <td>$1,575</td>
-        <td>$1,575</td>
-        <td>$1,570</td>
-        <td>$1,580</td>
-      </tr>
-      <tr class="family-row"><td colspan="13">PA6 (1 grade)</td></tr>
-      <tr>
-        <td>PA6</td>
-        <td>J2700</td>
-        <td>Juheshun</td>
-        <td></td>
-        <td>China</td>
-        <td>No</td>
-        <td>July</td>
-        <td>100</td>
-        <td>$1,840</td>
-        <td>$1,820</td>
-        <td>$1,820</td>
-        <td>$1,810</td>
-        <td>$1,820</td>
-      </tr>
+      <tr class="family-row"><td colspan="9">PP Raffia (4 grades)</td></tr>
+      <tr><td>PP Raffia</td><td>L5E89</td><td>CHN Energy Shenhua</td><td>3.5</td><td>China</td><td>No</td><td>July</td><td>300</td><td>$1,370</td></tr>
+      <tr><td>PP Raffia</td><td>1102K</td><td>CHN Energy</td><td>3</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,370</td></tr>
+      <tr><td>PP Raffia</td><td>HP550J</td><td>Jinneng/Baofeng</td><td>3</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,360</td></tr>
+      <tr><td>PP Raffia</td><td>L5E89H/S1005</td><td>CHN Energy</td><td>4.5</td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,410</td></tr>
+      <tr class="family-row"><td colspan="9">PP Homo (6 grades)</td></tr>
+      <tr><td>PP Homo</td><td>1100N</td><td>CHN Energy</td><td>12</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,380</td></tr>
+      <tr><td>PP Homo</td><td>HP500N</td><td>Jinneng/Baofeng</td><td>12</td><td>China</td><td>No</td><td>July</td><td>84</td><td>$1,360</td></tr>
+      <tr><td>PP Homo</td><td>Y16</td><td>Oriental Energy</td><td>15</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,440</td></tr>
+      <tr><td>PP Homo</td><td>Y26</td><td>Oriental Energy</td><td>25</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,440</td></tr>
+      <tr><td>PP Homo</td><td>S2040</td><td>CHN Energy Shenhua</td><td>40</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,440</td></tr>
+      <tr><td>PP Homo</td><td>Y40</td><td>Oriental Energy</td><td>40</td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,440</td></tr>
+      <tr class="family-row"><td colspan="9">PP Copo (8 grades)</td></tr>
+      <tr><td>PP Copo</td><td>EP300H B</td><td>Bora basell</td><td>1.8</td><td>China</td><td>No</td><td>July</td><td>84</td><td>$1,515</td></tr>
+      <tr><td>PP Copo</td><td>37MK10</td><td>Sabic</td><td>9</td><td>Saudi Arabia</td><td>Yes</td><td>July</td><td>99</td><td>$1,530</td></tr>
+      <tr><td>PP Copo</td><td>K8009</td><td>Any Chinese manufacturer</td><td>9</td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,535</td></tr>
+      <tr><td>PP Copo</td><td>EP440N</td><td>Sinopec</td><td>12</td><td>China</td><td>No</td><td>July</td><td>112</td><td>$1,490</td></tr>
+      <tr><td>PP Copo</td><td>9017</td><td>Sinopec</td><td>18</td><td>China</td><td>No</td><td>July</td><td>108</td><td>$1,545</td></tr>
+      <tr><td>PP Copo</td><td>EP548R</td><td>Sinopec/PetorChina</td><td>30</td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,510</td></tr>
+      <tr><td>PP Copo</td><td>K9928H/K7726</td><td>CHN Energy</td><td>30</td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,460</td></tr>
+      <tr><td>PP Copo</td><td>K7760H</td><td>CHN Energy</td><td>60</td><td>China</td><td>No</td><td>July</td><td>112</td><td>$1,460</td></tr>
+      <tr class="family-row"><td colspan="9">PP Random (1 grade)</td></tr>
+      <tr><td>PP Random</td><td>MT40</td><td>Grand Resource</td><td>40</td><td>China</td><td>No</td><td>July</td><td>112</td><td>$1,560</td></tr>
+      <tr class="family-row"><td colspan="9">LDPE (6 grades)</td></tr>
+      <tr><td>LDPE</td><td>2420D</td><td>Shenhua/PetroChina/ZPC</td><td>0.3</td><td>China</td><td>No</td><td>July</td><td>54</td><td>$1,705</td></tr>
+      <tr><td>LDPE</td><td>2426K</td><td>ZPC/sinopec</td><td>4</td><td>China</td><td>No</td><td>July</td><td>54</td><td>$1,595</td></tr>
+      <tr><td>LDPE</td><td>LD2022.AC</td><td>EXXON CHINA</td><td>2 add</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,495</td></tr>
+      <tr><td>LDPE</td><td>LD2022.BW</td><td>EXXON CHINA</td><td>2</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,495</td></tr>
+      <tr><td>LDPE</td><td>LD 03322.BW1</td><td>EXXON CHINA</td><td>0.3</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,695</td></tr>
+      <tr><td>LDPE</td><td>LD 07523.BW</td><td>EXXON CHINA</td><td>0.7</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,645</td></tr>
+      <tr class="family-row"><td colspan="9">LLDPE (1 grade)</td></tr>
+      <tr><td>LLDPE</td><td>DFDA-7042</td><td>Any Chinese manufacturer</td><td>2</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,250</td></tr>
+      <tr class="family-row"><td colspan="9">MLLDPE (2 grades)</td></tr>
+      <tr><td>MLLDPE</td><td>M1018.RA</td><td>EXXON CHINA</td><td>1</td><td>China</td><td>Yes</td><td>July</td><td>49.5</td><td>$1,575</td></tr>
+      <tr><td>MLLDPE</td><td>M1018.RF</td><td>EXXON CHINA</td><td>1 add</td><td>China</td><td>Yes</td><td>July</td><td>49.5</td><td>$1,575</td></tr>
+      <tr class="family-row"><td colspan="9">HDPE Injection (1 grade)</td></tr>
+      <tr><td>HDPE Injection</td><td>T60-800</td><td>SINO-INEOS</td><td>8</td><td>China</td><td>No</td><td>July</td><td>108</td><td>$1,345</td></tr>
+      <tr class="family-row"><td colspan="9">HDPE Blow (3 grades)</td></tr>
+      <tr><td>HDPE Blow</td><td>HD5502S</td><td>Baofeng/ZPC/yanchang/sinopec</td><td>0.2</td><td>China</td><td>No</td><td>July</td><td>108</td><td>$1,330</td></tr>
+      <tr><td>HDPE Blow</td><td>HD5502/HD5502ZK</td><td>Sinopec</td><td>0.3</td><td>China</td><td>No</td><td>July</td><td>108</td><td>$1,345</td></tr>
+      <tr><td>HDPE Blow</td><td>B1254</td><td>Sabic</td><td>0.14</td><td>Saudi Arabia</td><td>YES</td><td>July</td><td>150</td><td>$1,590</td></tr>
+      <tr class="family-row"><td colspan="9">HDPE Film (1 grade)</td></tr>
+      <tr><td>HDPE Film</td><td>F 6095</td><td>BASF</td><td></td><td>China</td><td>YES</td><td>July</td><td>108</td><td>$1,365</td></tr>
+      <tr class="family-row"><td colspan="9">HDPE Pipe Natural (1 grade)</td></tr>
+      <tr><td>HDPE Pipe Natural</td><td>23050</td><td>Baofeng/Yanchang/ZPC</td><td>PE100</td><td>China</td><td>No</td><td>July</td><td>112</td><td>$1,380</td></tr>
+      <tr class="family-row"><td colspan="9">PVC (3 grades)</td></tr>
+      <tr><td>PVC</td><td>SG-5</td><td>Any Chinese manufacturer</td><td>K65-67</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$895</td></tr>
+      <tr><td>PVC</td><td>DG-1000S</td><td>Dagu</td><td>K65-67</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$970</td></tr>
+      <tr><td>PVC</td><td>DG-700</td><td>Dagu</td><td>K57</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$995</td></tr>
+      <tr class="family-row"><td colspan="9">GPPS (1 grade)</td></tr>
+      <tr><td>GPPS</td><td>PS-525</td><td>Liwan</td><td>9</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,450</td></tr>
+      <tr class="family-row"><td colspan="9">HIPS (1 grade)</td></tr>
+      <tr><td>HIPS</td><td>HP 825</td><td>Liwan</td><td>4.5</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,530</td></tr>
+      <tr class="family-row"><td colspan="9">ABS (5 grades)</td></tr>
+      <tr><td>ABS</td><td>GP-22 natural</td><td>INEOS</td><td>19</td><td>China</td><td>Yes</td><td>July</td><td>112</td><td>$1,640</td></tr>
+      <tr><td>ABS</td><td>GP-35 natural</td><td>INEOS</td><td>40</td><td>China</td><td>Yes</td><td>July</td><td>112</td><td>$1,670</td></tr>
+      <tr><td>ABS</td><td>HI-10 natural</td><td>INEOS</td><td>40</td><td>China</td><td>Yes</td><td>July</td><td>112</td><td>$1,710</td></tr>
+      <tr><td>ABS</td><td>ZA0210</td><td>ZPC</td><td>20</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,615</td></tr>
+      <tr><td>ABS</td><td>ZA0211 1</td><td>ZPC</td><td>20</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,595</td></tr>
+      <tr class="family-row"><td colspan="9">PA6 (1 grade)</td></tr>
+      <tr><td>PA6</td><td>J2700</td><td>Juheshun</td><td></td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,840</td></tr>
     </tbody>
   </table>
     </div>
@@ -2001,6 +1367,23 @@
     </table>
     </div>
 
+    <h2 class="section-title">Freight Reference — CFR to Lagos/Apapa (indicative)</h2>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Indicative ocean-freight ranges from freight-forwarder marketing pages (Sino-Shipping, DTFU Logistics, Basenton, SGK Global, Value Handlers), April–June 2026 — not live spot quotes; verify before quoting to customers.</p>
+    <div class="table-wrap">
+    <table class="price-table">
+      <thead>
+        <tr><th>Origin</th><th>Container</th><th>Rate (USD)</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>China</td><td>40ft</td><td>$3,150–$4,150</td><td>Maersk added $2,000/40ft Asia–West Africa surcharge, Jun 2026</td></tr>
+        <tr><td>USA</td><td>20ft / 40ft</td><td>$3,500–$5,500 / $5,500–$8,500</td><td>Houston-origin reference</td></tr>
+        <tr><td>India</td><td>20ft / 40ft</td><td>~$2,900 / ~$3,750</td><td>Port-to-port</td></tr>
+        <tr><td>Middle East (Jebel Ali)</td><td>—</td><td>$4,000–$6,000</td><td>Volatile post Jebel Ali incident (Mar 2026); war-risk surcharge layered on top — treat as unstable</td></tr>
+        <tr><td>South Korea</td><td>20ft / 40ft</td><td>~$2,850 / ~$3,500</td><td>Ocean freight only</td></tr>
+      </tbody>
+    </table>
+    </div>
+
   </div>
 
   <div id="tab-srilanka" class="tab-content">
@@ -2009,19 +1392,36 @@
     <div class="kpi-card accent-blue">
       <div class="label">Active Price Lines</div>
       <div class="value">3</div>
-      <div class="sub">all supplier price lines (customer column hidden here — see Customer tab)</div>
+      <div class="sub">includes customer-quoted lines (Customer/OP $/MT shown when applicable)</div>
     </div>
   </div>
 
     <div class="table-wrap">
     <table class="price-table">
       <thead>
-        <tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th></tr>
+        <tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th><th>Customer</th><th>OP $/MT</th></tr>
       </thead>
       <tbody>
-        <tr><td>PET</td><td>BOTTLE GRADE</td><td>CR8816</td><td>0.8</td><td>$1185</td><td>CRC</td><td></td><td>18-Jun</td><td>CASH</td></tr>
-        <tr><td>PET</td><td>BOTTLE GRADE</td><td>CR8816</td><td>0.8</td><td>$1288</td><td>CRC</td><td></td><td>18-May</td><td>CASH</td></tr>
-        <tr><td>HDPE</td><td>LOTRENE BLOW</td><td>Q5502BN</td><td>5.5</td><td>$905</td><td>ROSHAN</td><td></td><td>18-Mar</td><td>CASH</td></tr>
+        <tr><td>PET</td><td>BOTTLE GRADE</td><td>CR8816</td><td>0.8</td><td>$1185</td><td>CRC</td><td></td><td>18-Jun</td><td>CASH</td><td>GP POLYMER</td><td></td></tr>
+        <tr><td>PET</td><td>BOTTLE GRADE</td><td>CR8816</td><td>0.8</td><td>$1288</td><td>CRC</td><td></td><td>18-May</td><td>CASH</td><td>GP POLYMER</td><td></td></tr>
+        <tr><td>HDPE</td><td>LOTRENE BLOW</td><td>Q5502BN</td><td>5.5</td><td>$905</td><td>ROSHAN</td><td></td><td>18-Mar</td><td>CASH</td><td>GP POLYMER</td><td></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 class="section-title">Freight Reference — CFR to Colombo (indicative)</h2>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Indicative ocean-freight ranges from freight-forwarder sources, April–June 2026 — not live spot quotes; several lanes have data gaps, verify before quoting to customers.</p>
+    <div class="table-wrap">
+    <table class="price-table">
+      <thead>
+        <tr><th>Origin</th><th>Container</th><th>Rate (USD)</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>China</td><td>40ft</td><td>$1,530–$1,870</td><td>Dated Apr 2026</td></tr>
+        <tr><td>India</td><td>Feeder/TEU</td><td>~$400/TEU</td><td>Chennai–Colombo feeder slot, more than doubled recently — not a full FCL rate</td></tr>
+        <tr><td>Middle East (Jebel Ali)</td><td>20ft / 40ft</td><td>$586 / $605</td><td>Conflicting quotes seen — indicative only</td></tr>
+        <tr><td>South Korea</td><td>—</td><td>No reliable June 2026 data found</td><td>Data gap</td></tr>
+        <tr><td>USA</td><td>—</td><td>No reliable rate found</td><td>Data gap</td></tr>
       </tbody>
     </table>
     </div>
@@ -2033,19 +1433,36 @@
     <div class="kpi-card accent-blue">
       <div class="label">Active Price Lines</div>
       <div class="value">3</div>
-      <div class="sub">all supplier price lines (customer column hidden here — see Customer tab)</div>
+      <div class="sub">includes customer-quoted lines (Customer/OP $/MT shown when applicable)</div>
     </div>
   </div>
 
     <div class="table-wrap">
     <table class="price-table">
       <thead>
-        <tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th></tr>
+        <tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th><th>Customer</th><th>OP $/MT</th></tr>
       </thead>
       <tbody>
-        <tr><td>PPCP</td><td></td><td>J842N</td><td>45</td><td>$1560</td><td>HYOSUNG</td><td></td><td>23-Jun</td><td>CASH</td></tr>
-        <tr><td>RANDOM</td><td></td><td>R901TN</td><td>45</td><td>$1670</td><td>HYOSUNG</td><td></td><td>23-Jun</td><td>CASH</td></tr>
-        <tr><td>RANDOM</td><td></td><td>PPR-MT40</td><td>40</td><td>$1650</td><td>JESSIE</td><td></td><td>23-Jun</td><td>CASH</td></tr>
+        <tr><td>PPCP</td><td></td><td>J842N</td><td>45</td><td>$1560</td><td>HYOSUNG</td><td></td><td>23-Jun</td><td>CASH</td><td>SUPERSONIC</td><td></td></tr>
+        <tr><td>RANDOM</td><td></td><td>R901TN</td><td>45</td><td>$1670</td><td>HYOSUNG</td><td></td><td>23-Jun</td><td>CASH</td><td>SUPERSONIC</td><td></td></tr>
+        <tr><td>RANDOM</td><td></td><td>PPR-MT40</td><td>40</td><td>$1650</td><td>JESSIE</td><td></td><td>23-Jun</td><td>CASH</td><td>SUPERSONIC</td><td></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2 class="section-title">Freight Reference — CFR to Santos (indicative)</h2>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Indicative ocean-freight ranges from freight-forwarder sources, April–June 2026 — not live spot quotes; several lanes have data gaps, verify before quoting to customers.</p>
+    <div class="table-wrap">
+    <table class="price-table">
+      <thead>
+        <tr><th>Origin</th><th>Container</th><th>Rate (USD)</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>China</td><td>40ft</td><td>$3,105–$3,795</td><td>Up 23% m/m (Apr 2026), Hormuz-linked</td></tr>
+        <tr><td>South Korea</td><td>20ft / 40ft</td><td>$2,925–$3,575 / $3,105–$3,795</td><td>Up 23–27% m/m</td></tr>
+        <tr><td>USA</td><td>20ft / 40ft</td><td>$600–$2,500 / $1,000–$5,000</td><td>Broad Brazil-wide range, not Santos-specific</td></tr>
+        <tr><td>Middle East</td><td>—</td><td>No reliable Santos-bound rate found</td><td>Data gap</td></tr>
+        <tr><td>India</td><td>20ft / 40ft</td><td>$1,800–$3,500 / $3,500–$6,500</td><td>Generic Asia–Brazil range, not Santos-specific; stale</td></tr>
       </tbody>
     </table>
     </div>
@@ -2057,22 +1474,118 @@
     <div class="kpi-card accent-blue">
       <div class="label">Active Price Lines</div>
       <div class="value">3</div>
-      <div class="sub">all supplier price lines (customer column hidden here — see Customer tab)</div>
+      <div class="sub">includes customer-quoted lines (Customer/OP $/MT shown when applicable)</div>
     </div>
   </div>
 
     <div class="table-wrap">
     <table class="price-table">
       <thead>
-        <tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th></tr>
+        <tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th><th>Customer</th><th>OP $/MT</th></tr>
       </thead>
       <tbody>
-        <tr><td>PPCP</td><td></td><td>J842N</td><td>45</td><td>$1580</td><td>HYOSUNG</td><td></td><td>16-Jun</td><td>CASH</td></tr>
-        <tr><td>RANDOM</td><td></td><td>R901TN</td><td>45</td><td>$1660</td><td>HYOSUNG</td><td></td><td>16-Jun</td><td>CASH</td></tr>
-        <tr><td>RANDOM</td><td></td><td>PPR-MT40</td><td>40</td><td>$1570</td><td>JESSIE</td><td></td><td>18-Jun</td><td>CASH</td></tr>
+        <tr><td>PPCP</td><td></td><td>J842N</td><td>45</td><td>$1580</td><td>HYOSUNG</td><td></td><td>16-Jun</td><td>CASH</td><td>SUPERSONIC</td><td></td></tr>
+        <tr><td>RANDOM</td><td></td><td>R901TN</td><td>45</td><td>$1660</td><td>HYOSUNG</td><td></td><td>16-Jun</td><td>CASH</td><td>SUPERSONIC</td><td></td></tr>
+        <tr><td>RANDOM</td><td></td><td>PPR-MT40</td><td>40</td><td>$1570</td><td>JESSIE</td><td></td><td>18-Jun</td><td>CASH</td><td>SUPERSONIC</td><td></td></tr>
       </tbody>
     </table>
     </div>
+
+    <h2 class="section-title">Other Uploaded Documents</h2>
+
+    <h3 style="font-size:14px;margin:14px 0 8px;color:var(--navy);">PP / PE / PVC CFR Price Table — Cotonou (source: SHAD TOPWAY PP PE PVC.xlsx, offer 6.22; uploaded under Nigeria, Cotonou column routed here)</h3>
+    <div class="table-wrap">
+  <table class="price-table">
+    <thead>
+      <tr>
+        <th>Product</th><th>Grade</th><th>Manufacturer</th><th>MI</th><th>Origin</th>
+        <th>Pallets</th><th>Shipment</th><th>QTY (MT)</th>
+        <th>CFR Cotonou</th><th>Supplier</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="family-row"><td colspan="10">PP Raffia (4 grades)</td></tr>
+      <tr><td>PP Raffia</td><td>L5E89</td><td>CHN Energy Shenhua</td><td>3.5</td><td>China</td><td>No</td><td>July</td><td>300</td><td>$1,350</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Raffia</td><td>1102K</td><td>CHN Energy</td><td>3</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,350</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Raffia</td><td>HP550J</td><td>Jinneng/Baofeng</td><td>3</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,340</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Raffia</td><td>L5E89H/S1005</td><td>CHN Energy</td><td>4.5</td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,390</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">PP Homo (6 grades)</td></tr>
+      <tr><td>PP Homo</td><td>1100N</td><td>CHN Energy</td><td>12</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,360</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Homo</td><td>HP500N</td><td>Jinneng/Baofeng</td><td>12</td><td>China</td><td>No</td><td>July</td><td>84</td><td>$1,340</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Homo</td><td>Y16</td><td>Oriental Energy</td><td>15</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,420</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Homo</td><td>Y26</td><td>Oriental Energy</td><td>25</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,420</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Homo</td><td>S2040</td><td>CHN Energy Shenhua</td><td>40</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,420</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Homo</td><td>Y40</td><td>Oriental Energy</td><td>40</td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,420</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">PP Copo (8 grades)</td></tr>
+      <tr><td>PP Copo</td><td>EP300H B</td><td>Bora basell</td><td>1.8</td><td>China</td><td>No</td><td>July</td><td>84</td><td>$1,495</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Copo</td><td>37MK10</td><td>Sabic</td><td>9</td><td>Saudi Arabia</td><td>Yes</td><td>July</td><td>99</td><td>$1,510</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Copo</td><td>K8009</td><td>Any Chinese manufacturer</td><td>9</td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,515</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Copo</td><td>EP440N</td><td>Sinopec</td><td>12</td><td>China</td><td>No</td><td>July</td><td>112</td><td>$1,470</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Copo</td><td>9017</td><td>Sinopec</td><td>18</td><td>China</td><td>No</td><td>July</td><td>108</td><td>$1,525</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Copo</td><td>EP548R</td><td>Sinopec/PetorChina</td><td>30</td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,490</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Copo</td><td>K9928H/K7726</td><td>CHN Energy</td><td>30</td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,440</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PP Copo</td><td>K7760H</td><td>CHN Energy</td><td>60</td><td>China</td><td>No</td><td>July</td><td>112</td><td>$1,440</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">PP Random (1 grade)</td></tr>
+      <tr><td>PP Random</td><td>MT40</td><td>Grand Resource</td><td>40</td><td>China</td><td>No</td><td>July</td><td>112</td><td>$1,540</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">LDPE (6 grades)</td></tr>
+      <tr><td>LDPE</td><td>2420D</td><td>Shenhua/PetroChina/ZPC</td><td>0.3</td><td>China</td><td>No</td><td>July</td><td>54</td><td>$1,685</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>LDPE</td><td>2426K</td><td>ZPC/sinopec</td><td>4</td><td>China</td><td>No</td><td>July</td><td>54</td><td>$1,575</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>LDPE</td><td>LD2022.AC</td><td>EXXON CHINA</td><td>2 add</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,475</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>LDPE</td><td>LD2022.BW</td><td>EXXON CHINA</td><td>2</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,475</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>LDPE</td><td>LD 03322.BW1</td><td>EXXON CHINA</td><td>0.3</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,675</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>LDPE</td><td>LD 07523.BW</td><td>EXXON CHINA</td><td>0.7</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,625</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">LLDPE (1 grade)</td></tr>
+      <tr><td>LLDPE</td><td>DFDA-7042</td><td>Any Chinese manufacturer</td><td>2</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,230</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">MLLDPE (2 grades)</td></tr>
+      <tr><td>MLLDPE</td><td>M1018.RA</td><td>EXXON CHINA</td><td>1</td><td>China</td><td>Yes</td><td>July</td><td>49.5</td><td>$1,555</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>MLLDPE</td><td>M1018.RF</td><td>EXXON CHINA</td><td>1 add</td><td>China</td><td>Yes</td><td>July</td><td>49.5</td><td>$1,555</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">HDPE Injection (1 grade)</td></tr>
+      <tr><td>HDPE Injection</td><td>T60-800</td><td>SINO-INEOS</td><td>8</td><td>China</td><td>No</td><td>July</td><td>108</td><td>$1,325</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">HDPE Blow (3 grades)</td></tr>
+      <tr><td>HDPE Blow</td><td>HD5502S</td><td>Baofeng/ZPC/yanchang/sinopec</td><td>0.2</td><td>China</td><td>No</td><td>July</td><td>108</td><td>$1,310</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>HDPE Blow</td><td>HD5502/HD5502ZK</td><td>Sinopec</td><td>0.3</td><td>China</td><td>No</td><td>July</td><td>108</td><td>$1,325</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>HDPE Blow</td><td>B1254</td><td>Sabic</td><td>0.14</td><td>Saudi Arabia</td><td>YES</td><td>July</td><td>150</td><td>$1,565</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">HDPE Film (1 grade)</td></tr>
+      <tr><td>HDPE Film</td><td>F 6095</td><td>BASF</td><td></td><td>China</td><td>YES</td><td>July</td><td>108</td><td>$1,345</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">HDPE Pipe Natural (1 grade)</td></tr>
+      <tr><td>HDPE Pipe Natural</td><td>23050</td><td>Baofeng/Yanchang/ZPC</td><td>PE100</td><td>China</td><td>No</td><td>July</td><td>112</td><td>$1,360</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">PVC (3 grades)</td></tr>
+      <tr><td>PVC</td><td>SG-5</td><td>Any Chinese manufacturer</td><td>K65-67</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$875</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PVC</td><td>DG-1000S</td><td>Dagu</td><td>K65-67</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$950</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>PVC</td><td>DG-700</td><td>Dagu</td><td>K57</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$975</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">GPPS (1 grade)</td></tr>
+      <tr><td>GPPS</td><td>PS-525</td><td>Liwan</td><td>9</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,430</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">HIPS (1 grade)</td></tr>
+      <tr><td>HIPS</td><td>HP 825</td><td>Liwan</td><td>4.5</td><td>China</td><td>No</td><td>July</td><td>200</td><td>$1,510</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">ABS (5 grades)</td></tr>
+      <tr><td>ABS</td><td>GP-22 natural</td><td>INEOS</td><td>19</td><td>China</td><td>Yes</td><td>July</td><td>112</td><td>$1,620</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>ABS</td><td>GP-35 natural</td><td>INEOS</td><td>40</td><td>China</td><td>Yes</td><td>July</td><td>112</td><td>$1,650</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>ABS</td><td>HI-10 natural</td><td>INEOS</td><td>40</td><td>China</td><td>Yes</td><td>July</td><td>112</td><td>$1,690</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>ABS</td><td>ZA0210</td><td>ZPC</td><td>20</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,595</td><td>SHAD TOPWAY</td></tr>
+      <tr><td>ABS</td><td>ZA0211 1</td><td>ZPC</td><td>20</td><td>China</td><td>Yes</td><td>July</td><td>108</td><td>$1,575</td><td>SHAD TOPWAY</td></tr>
+      <tr class="family-row"><td colspan="10">PA6 (1 grade)</td></tr>
+      <tr><td>PA6</td><td>J2700</td><td>Juheshun</td><td></td><td>China</td><td>No</td><td>July</td><td>100</td><td>$1,820</td><td>SHAD TOPWAY</td></tr>
+    </tbody>
+  </table>
+    </div>
+
+    <h2 class="section-title">Freight Reference — CFR to Cotonou (indicative)</h2>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Indicative ocean-freight ranges from freight-forwarder sources, April–June 2026 — not live spot quotes; several lanes have data gaps, verify before quoting to customers.</p>
+    <div class="table-wrap">
+    <table class="price-table">
+      <thead>
+        <tr><th>Origin</th><th>Container</th><th>Rate (USD)</th><th>Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>China</td><td>20ft / 40ft</td><td>$2,500–$3,800 / $3,000–$5,200</td><td></td></tr>
+        <tr><td>USA</td><td>20ft / 40ft</td><td>$3,200–$5,100 / $4,900–$8,000</td><td>LA-specific reference</td></tr>
+        <tr><td>India</td><td>—</td><td>~$4,850</td><td>Container size unspecified</td></tr>
+        <tr><td>Middle East</td><td>—</td><td>No rate found</td><td>Only 8–10 week transit time cited; data gap</td></tr>
+        <tr><td>South Korea</td><td>—</td><td>No rate found</td><td>Data gap</td></tr>
+      </tbody>
+    </table>
+    </div>
+
   </div>
 
   <div id="tab-customer" class="tab-content">
@@ -2099,10 +1612,10 @@
     <div class="table-wrap">
     <table class="price-table">
       <thead>
-        <tr><th>Country</th><th>Customer</th><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Buy Price $/MT</th><th>Offer Price $/MT</th><th>Margin $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th></tr>
+        <tr><th>Country</th><th>Customer</th><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Buy Price $/MT</th><th>Offer Price $/MT</th><th>Margin $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th><th>OP</th></tr>
       </thead>
       <tbody>
-        <tr><td>Nigeria</td><td>STARPOINT</td><td>PPCP</td><td>INJECTION</td><td>B350F</td><td>9</td><td>$1550</td><td>$1580</td><td>$30</td><td>SK GLOBAL</td><td></td><td>17 Jun</td><td>CASH</td></tr><tr><td>Nigeria</td><td>STARPOINT</td><td>PET</td><td>BOTTLE GRADE</td><td>CZ302</td><td>0.8</td><td>$1290</td><td>$1320</td><td>$30</td><td>ELAINE</td><td></td><td>17 Jun</td><td>CASH</td></tr><tr><td>Nigeria</td><td>STARPOINT</td><td>PET</td><td>BOTTLE GRADE</td><td>CR8816</td><td>0.8</td><td>$1198</td><td>$1230</td><td>$32</td><td>CRC</td><td></td><td>18 Jun</td><td>CASH</td></tr><tr><td>Brazil</td><td>SUPERSONIC</td><td>PPCP</td><td></td><td>J842N</td><td>45</td><td>$1560</td><td>$1590</td><td>$30</td><td>HYOSUNG</td><td></td><td>23-Jun</td><td>CASH</td></tr><tr><td>Brazil</td><td>SUPERSONIC</td><td>RANDOM</td><td></td><td>R901TN</td><td>45</td><td>$1670</td><td>$1700</td><td>$30</td><td>HYOSUNG</td><td></td><td>23-Jun</td><td>CASH</td></tr><tr><td>Brazil</td><td>SUPERSONIC</td><td>RANDOM</td><td></td><td>PPR-MT40</td><td>40</td><td>$1650</td><td>$1690</td><td>$40</td><td>JESSIE</td><td></td><td>23-Jun</td><td>CASH</td></tr>
+        <tr><td>Nigeria</td><td>STARPOINT</td><td>PPCP</td><td>INJECTION</td><td>B350F</td><td>9</td><td>$1550</td><td>$1580</td><td>$30</td><td>SK GLOBAL</td><td></td><td>17 Jun</td><td>CASH</td><td></td></tr><tr><td>Nigeria</td><td>STARPOINT</td><td>PET</td><td>BOTTLE GRADE</td><td>CZ302</td><td>0.8</td><td>$1290</td><td>$1320</td><td>$30</td><td>ELAINE</td><td></td><td>17 Jun</td><td>CASH</td><td></td></tr><tr><td>Nigeria</td><td>STARPOINT</td><td>PET</td><td>BOTTLE GRADE</td><td>CR8816</td><td>0.8</td><td>$1198</td><td>$1230</td><td>$32</td><td>CRC</td><td></td><td>18 Jun</td><td>CASH</td><td></td></tr><tr><td>Brazil</td><td>SUPERSONIC</td><td>PPCP</td><td></td><td>J842N</td><td>45</td><td>$1560</td><td>$1590</td><td>$30</td><td>HYOSUNG</td><td></td><td>23-Jun</td><td>CASH</td><td></td></tr><tr><td>Brazil</td><td>SUPERSONIC</td><td>RANDOM</td><td></td><td>R901TN</td><td>45</td><td>$1670</td><td>$1700</td><td>$30</td><td>HYOSUNG</td><td></td><td>23-Jun</td><td>CASH</td><td></td></tr><tr><td>Brazil</td><td>SUPERSONIC</td><td>RANDOM</td><td></td><td>PPR-MT40</td><td>40</td><td>$1650</td><td>$1690</td><td>$40</td><td>JESSIE</td><td></td><td>23-Jun</td><td>CASH</td><td></td></tr>
       </tbody>
     </table>
     </div>
@@ -2129,11 +1642,6 @@
       <div class="e-label">USD/NGN (Official)</div>
       <div class="e-value">₦1,368.71</div>
       <div class="e-sub up">+0.13% day-on-day; parallel/black-market ~₦1,385–₦1,395</div>
-    </div>
-    <div class="energy-card">
-      <div class="e-label">Lagos FCL Freight (40ft)</div>
-      <div class="e-value">$3,150–$3,850</div>
-      <div class="e-sub flat">Unchanged, but new Maersk/CMA CGM surcharges add $500–$2,000/cntr</div>
     </div>
   </div>
 
@@ -2181,15 +1689,15 @@
   <div class="reference-grid">
     <div class="reference-card">
       <div class="r-title">PP (Polypropylene)</div>
-      <div class="r-body">Raffia, Homo, Copo and Random grades sourced mainly from China (CHN Energy, Jinneng/Baofeng, Oriental Energy). Used for woven bags, packaging film, injection molding. Currently $1,360–$1,560/MT CFR Apapa depending on grade and manufacturer.</div>
+      <div class="r-body">Raffia, Homo, Copo and Random grades sourced mainly from China (CHN Energy, Jinneng/Baofeng, Oriental Energy). Used for woven bags, packaging film, injection molding. Active price sheet PP range: $1,430–$1,550/MT (PP + PPCP grades); uploaded SHAD TOPWAY sheet shows a wider $1,360–$1,560/MT CFR Apapa across more grades.</div>
     </div>
     <div class="reference-card">
       <div class="r-title">PE (Polyethylene)</div>
-      <div class="r-body">LDPE, LLDPE, MLLDPE, HDPE (Injection/Blow/Film/Pipe Natural) cover the bulk of quoted grades. Used in film, blow-molded containers, pipe. Widest family range in current price sheet at $1,250–$1,705/MT CFR Apapa.</div>
+      <div class="r-body">LDPE, LLDPE, MLLDPE, HDPE (Injection/Blow/Film/Pipe Natural) cover the bulk of quoted grades. Used in film, blow-molded containers, pipe. Active price sheet PE range: $1,420–$1,915/MT; uploaded SHAD TOPWAY sheet shows $1,250–$1,705/MT CFR Apapa across more grades.</div>
     </div>
     <div class="reference-card">
       <div class="r-title">PVC (Polyvinyl Chloride)</div>
-      <div class="r-body">SG-5 and related suspension grades, used for pipe, profiles, cable insulation. 3 grades quoted at $895–$995/MT CFR Apapa on the SHAD TOPWAY PP PE PVC.xlsx sheet.</div>
+      <div class="r-body">SG-5 and related suspension grades, used for pipe, profiles, cable insulation. Active price sheet currently has only 1 priced PVC quote ($900/MT); the uploaded SHAD TOPWAY sheet shows 3 grades at $875–$975/MT CFR Apapa.</div>
     </div>
     <div class="reference-card">
       <div class="r-title">Payment Terms Glossary</div>
@@ -2252,18 +1760,40 @@
 
     var volumeCtx = document.getElementById('volumeChart');
     if (volumeCtx) {
+      var volumeTop3 = {
+        'Jan 26': [['SHIVLILA', 656.0], ['DANA PLAST', 224.0], ['STARPOINT', 160.0]],
+        'Feb 26': [['DASCO', 306.0], ['SONHART', 108.0], ['STARPOINT', 88.0]],
+        'Mar 26': [['ENGEE PET', 400.0], ['DANA PLAST', 224.0], ['DOSHI AND CO', 196.0]],
+        'Apr 26': [['SHIVLILA', 327.0], ['STAR POINT', 165.0], ['SUPER SONIC', 28.0]],
+        'May 26': [['DANA PLAST', 140.0], ['STAR POINT', 136.0], ['CHANDAR INVESTMENTS LIMITED.', 85.5]],
+        'Jun 26': [['DANA PLAST', 224.0]]
+      };
       new Chart(volumeCtx, {
         type: 'bar',
         data: {
-          labels: ['Jul 25', 'Aug 25', 'Sep 25', 'Oct 25', 'Nov 25', 'Dec 25', 'Jan 26', 'Feb 26', 'Mar 26', 'Apr 26', 'May 26', 'Jun 26'],
+          labels: ['Jan 26', 'Feb 26', 'Mar 26', 'Apr 26', 'May 26', 'Jun 26'],
           datasets: [{
             label: 'Volume Booked (MT)',
-            data: [0, 0, 0, 0, 0, 0, 1180.0, 698.9, 1386.3, 520.0, 412.0, 224.0],
+            data: [1180.0, 698.9, 1386.2, 520.0, 412.0, 224.0],
             backgroundColor: '#c98a2c'
           }]
         },
         options: {
-          plugins: { legend: { display: false } },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                afterBody: function(items) {
+                  var month = items[0].label;
+                  var top3 = volumeTop3[month] || [];
+                  if (!top3.length) return [];
+                  var lines = ['Top customers:'];
+                  top3.forEach(function(c) { lines.push('  ' + c[0] + ': ' + c[1] + ' MT'); });
+                  return lines;
+                }
+              }
+            }
+          },
           scales: { y: { ticks: { callback: function(v){ return v + ' MT'; } } } }
         }
       });
