@@ -268,8 +268,8 @@
         <canvas id="buyerChart" height="220"></canvas>
       </div>
       <div class="chart-box">
-        <h3>Margin $/MT — Top Orders</h3>
-        <canvas id="marginChart" height="220"></canvas>
+        <h3>Total Volume Booked (MT) — Last 12 Months</h3>
+        <canvas id="volumeChart" height="220"></canvas>
       </div>
     </div>
 
@@ -2250,21 +2250,21 @@
       });
     }
 
-    var marginCtx = document.getElementById('marginChart');
-    if (marginCtx) {
-      new Chart(marginCtx, {
+    var volumeCtx = document.getElementById('volumeChart');
+    if (volumeCtx) {
+      new Chart(volumeCtx, {
         type: 'bar',
         data: {
-          labels: ['REF1368 IDDO PLASTICS', 'REF1395 DANA PLAST', 'REF1394 DANA PLAST', 'REF1397 CHANDAR INV.', 'REF1376 DOSHI AND CO', 'REF1396 CHANDAR INV.', 'REF1401 SUPER SONIC', 'REF1400 SARSOLI', 'REF1391 SUPER SONIC', 'REF1375 SARSOLI', 'REF1359 SARSOLI', 'REF1381 STAR POINT'],
+          labels: ['Jul 25', 'Aug 25', 'Sep 25', 'Oct 25', 'Nov 25', 'Dec 25', 'Jan 26', 'Feb 26', 'Mar 26', 'Apr 26', 'May 26', 'Jun 26'],
           datasets: [{
-            label: 'Margin $/MT',
-            data: [297, 60, 60, 50, 50, 40, 40, 40, 40, 40, 40, 40],
+            label: 'Volume Booked (MT)',
+            data: [0, 0, 0, 0, 0, 0, 1180.0, 698.9, 1386.3, 520.0, 412.0, 224.0],
             backgroundColor: '#c98a2c'
           }]
         },
         options: {
           plugins: { legend: { display: false } },
-          scales: { y: { ticks: { callback: function(v){ return '$' + v; } } } }
+          scales: { y: { ticks: { callback: function(v){ return v + ' MT'; } } } }
         }
       });
     }
