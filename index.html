@@ -343,153 +343,163 @@
     </div>
   </div>
 
-    <h2 class="section-title">Action Items (sorted by urgency)</h2>
+    <h2 class="section-title" id="actionItemsTitle">Action Items (sorted by urgency)</h2>
+    <div style="display:flex;align-items:center;gap:8px;margin:-6px 0 12px;">
+      <label for="actionSort" style="font-size:12px;color:var(--text-light);">Sort by:</label>
+      <select id="actionSort" onchange="sortActionItems(this.value)" style="font-size:12px;padding:4px 8px;border:1px solid var(--border,#ddd);border-radius:6px;background:#fff;">
+        <option value="urgency">Urgency (default)</option>
+        <option value="oldest">Oldest → Newest</option>
+        <option value="newest">Newest → Oldest</option>
+        <option value="customer">Customer (A–Z)</option>
+        <option value="ref">Reference #</option>
+      </select>
+    </div>
   <div class="action-list">
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1349" data-customer="STARPOINT" data-days="87">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1349 — STARPOINT (CR8816, 88 MT)</strong><span>Past due 87d · Supplier: CRC · DA-60 · Due date 28th March 2026</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1351" data-customer="STARPOINT" data-days="61">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1351 — STARPOINT (PPCP BJ550, 72 MT)</strong><span>Past due 61d · Supplier: HANWHA · DA-60 · Due date 23rd April 2026.</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1350" data-customer="IDDO PLASTICS" data-days="59">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1350 — IDDO PLASTICS (PVC DG1000S, 140 MT)</strong><span>Past due 59d · Supplier: HK TOPWAY · DA-90 · Due date 25th April 2026</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1360" data-customer="DASCO" data-days="47">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1360 — DASCO (HDPE blow HB3556B, 306 MT)</strong><span>Past due 47d · Supplier: ITOCHU · DA-60 · Due date 7th May</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1359" data-customer="SARSOLI" data-days="40">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1359 — SARSOLI (CALMIN -80, 22.5 MT)</strong><span>Past due 40d · Supplier: CALMIN · DA-60 · Due date 14th May</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1353" data-customer="DANA PLAST" data-days="40">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1353 — DANA PLAST (PPCP RANDOM R1001N, 84 MT)</strong><span>Past due 40d · Supplier: HYOSUNG · DA-80 · Due date 14th May 2026.</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1352" data-customer="DANA PLAST" data-days="40">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1352 — DANA PLAST (PPCP J1145T, 140 MT)</strong><span>Past due 40d · Supplier: HYOSUNG · DA-80 · Due date 14th May 2026.</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1361" data-customer="STARPOINT" data-days="35">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1361 — STARPOINT (CR8816 ROUND SHAPE, 88 MT)</strong><span>Past due 35d · Supplier: CRC · DA-60 · Due date 19th May</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1357" data-customer="SHIVLILA" data-days="34">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1357 — SHIVLILA (CIPLAS LLDPE LL1019BP, 51 MT)</strong><span>Past due 34d · Supplier: ITOCHU · DA-60 · Due date 20th May 2026.</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1356" data-customer="SHIVLILA" data-days="28">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1356 — SHIVLILA (BCPP AW564, 99 MT)</strong><span>Past due 28d · Supplier: ITOCHU · DA-60 · Due date 26th May 2026.</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1391" data-customer="SUPER SONIC" data-days="25">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1391 — SUPER SONIC (HDPE HD5502S, 28 MT)</strong><span>Past due 25d · Supplier: HK TOPWAY · 20% adv and 80% on bl copy · 21/05. ETD 29th May 2026.Draft Awaiting Payment to releae the origianls and surrender the BL.</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1373" data-customer="DANA PLAST" data-days="18">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1373 — DANA PLAST (PPCP RANDOM R1001N, 84 MT)</strong><span>Past due 18d · Supplier: HYOSUNG · DA-80 · Due date 5th June 2026.</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1355" data-customer="SHIVLILA" data-days="12">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1355 — SHIVLILA (PP RANDOM R392Y AND R365Y, 140 MT)</strong><span>Past due 12d · Supplier: PIAT INTL · DA-60 · Due date 11th June 2026</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1365" data-customer="DANA PLAST" data-days="11">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1365 — DANA PLAST (PPCP RANDOM R1001N, 84 MT)</strong><span>Past due 11d · Supplier: HYOSUNG · DA-80 · Due date 12th June</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1385" data-customer="SHIVLILA" data-days="9">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1385 — SHIVLILA (PPHP Y26, 84 MT)</strong><span>Past due 9d · Supplier: HK TOPWAY · DA-60 · 22/06. ETD 14th June 2026. Draft docs confirmed. Awaiting origianls to be delievered to our office.</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1369" data-customer="SONHART" data-days="9">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1369 — SONHART (PPCP EP548R, 108 MT)</strong><span>Past due 9d · Supplier: HK TOPWAY · DA-60 · 22/06. ETD 14th June 2026. Draft docs confirmed. Awaiting origianls to be delievered to our office.</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1363" data-customer="SHIVLILA" data-days="5">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1363 — SHIVLILA (HDPE H5604F, 28.125 MT)</strong><span>Past due 5d · Supplier: SCG · DA-60 · Due date 18th June 2026</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1362" data-customer="SHIVLILA" data-days="5">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1362 — SHIVLILA (PPCP 840J, 56.25 MT)</strong><span>Past due 5d · Supplier: SCG · DA-60 · Due date 18th June 2026</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1371" data-customer="STARPOINT" data-days="3">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1371 — STARPOINT (CR8816, 88 MT)</strong><span>Past due 3d · Supplier: CRC · DA-60 · Due date 20th June 2026.</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1358" data-customer="SHIVLILA" data-days="3">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1358 — SHIVLILA (CIPLAS LLDPE LL1019FP, 51 MT)</strong><span>Past due 3d · Supplier: ITOCHU · DA-60 · Due date 20th June 2026</span></div>
     </div>
-    <div class="action-item today">
+    <div class="action-item today" data-ref="1396" data-customer="CHANDAR INVESTMENTS LIMITED." data-days="2">
       <span class="action-badge red">PAST DUE</span>
       <div class="action-text"><strong>REF 1396 — CHANDAR INVESTMENTS LIMITED. (HDPE 7000, 49.5 MT)</strong><span>Past due 2d · Supplier: MONTACHEM · CAD · 09/06. ETD 21st June 2026. Sent draft bl for chekcing and approval.</span></div>
     </div>
-    <div class="action-item this-week">
+    <div class="action-item this-week" data-ref="1395" data-customer="DANA PLAST" data-days="-3">
       <span class="action-badge amber">THIS WEEK</span>
       <div class="action-text"><strong>REF 1395 — DANA PLAST (PPRCP R1001N, 56 MT)</strong><span>Due in 3d · Supplier: HYOSUNG · DA-90 · 10/06. ETD 26th June 2026.</span></div>
     </div>
-    <div class="action-item this-week">
+    <div class="action-item this-week" data-ref="1375" data-customer="SARSOLI" data-days="-3">
       <span class="action-badge amber">THIS WEEK</span>
       <div class="action-text"><strong>REF 1375 — SARSOLI (CALMIN -80, 22.5 MT)</strong><span>Due in 3d · Supplier: CALMIN · DA-90 · Due date 26th June 2026.</span></div>
     </div>
-    <div class="action-item this-week">
+    <div class="action-item this-week" data-ref="1370" data-customer="SHIV LILA" data-days="-5">
       <span class="action-badge amber">THIS WEEK</span>
       <div class="action-text"><strong>REF 1370 — SHIV LILA (HDPE 7302, 108 MT)</strong><span>Due in 5d · Supplier: PIAT INTL · DA-60 · Due date 28th June 2026</span></div>
     </div>
-    <div class="action-item this-week">
+    <div class="action-item this-week" data-ref="1354" data-customer="SHIVLILA" data-days="-5">
       <span class="action-badge amber">THIS WEEK</span>
       <div class="action-text"><strong>REF 1354 — SHIVLILA (PP RANDOM R520Y AND R380Y, 315 MT)</strong><span>Due in 5d · Supplier: PIAT INTL · DA-60 · Due date 28th June 2026</span></div>
     </div>
-    <div class="action-item this-week">
+    <div class="action-item this-week" data-ref="1398" data-customer="STAR POINT" data-days="-6">
       <span class="action-badge amber">THIS WEEK</span>
       <div class="action-text"><strong>REF 1398 — STAR POINT (PPCP B350F, 48 MT)</strong><span>Due in 6d · Supplier: REPET ONE · DA-60 · 10/06. ETD 29th June 2026.</span></div>
     </div>
-    <div class="action-item this-week">
+    <div class="action-item this-week" data-ref="1397" data-customer="CHANDAR INVESTMENTS LIMITED." data-days="-6">
       <span class="action-badge amber">THIS WEEK</span>
       <div class="action-text"><strong>REF 1397 — CHANDAR INVESTMENTS LIMITED. (HDPE 8000, 36 MT)</strong><span>Due in 6d · Supplier: REPET ONE · CAD · 09/06. ETD 29th June 2026.</span></div>
     </div>
-    <div class="action-item this-week">
+    <div class="action-item this-week" data-ref="1381" data-customer="STAR POINT" data-days="-6">
       <span class="action-badge amber">THIS WEEK</span>
       <div class="action-text"><strong>REF 1381 — STAR POINT (PET BILLION BRAND BH-801, 55 MT)</strong><span>Due in 6d · Supplier: HK TOPWAY · DA-60 · Due date 29th June 2026.</span></div>
     </div>
-    <div class="action-item upcoming">
+    <div class="action-item upcoming" data-ref="1387" data-customer="STAR POINT" data-days="-13">
       <span class="action-badge blue">UPCOMING</span>
       <div class="action-text"><strong>REF 1387 — STAR POINT (PET BILLION BRAND BH-801, 110 MT)</strong><span>Due in 13d · Supplier: HK TOPWAY · DA-60 · Due date 6th July 2026.</span></div>
     </div>
-    <div class="action-item upcoming">
+    <div class="action-item upcoming" data-ref="1378" data-customer="SHIVLILA" data-days="-16">
       <span class="action-badge blue">UPCOMING</span>
       <div class="action-text"><strong>REF 1378 — SHIVLILA (HDPE-7000, 123.75 MT)</strong><span>Due in 16d · Supplier: MONTACHEM · DA-60 · Due date 9th July 2026.</span></div>
     </div>
-    <div class="action-item upcoming">
+    <div class="action-item upcoming" data-ref="1372" data-customer="DANA PLAST" data-days="-16">
       <span class="action-badge blue">UPCOMING</span>
       <div class="action-text"><strong>REF 1372 — DANA PLAST (PPCP J1145T, 140 MT)</strong><span>Due in 16d · Supplier: HYOSUNG · DA-80 · Due date 9TH July 2026.</span></div>
     </div>
-    <div class="action-item upcoming">
+    <div class="action-item upcoming" data-ref="1384" data-customer="SHIVLILA" data-days="-21">
       <span class="action-badge blue">UPCOMING</span>
       <div class="action-text"><strong>REF 1384 — SHIVLILA (HDPE TR144, 81 MT)</strong><span>Due in 21d · Supplier: HK TOPWAY · DA-60 · Due date 14th July 2026.</span></div>
     </div>
-    <div class="action-item upcoming">
+    <div class="action-item upcoming" data-ref="1383" data-customer="SHIVLILA" data-days="-21">
       <span class="action-badge blue">UPCOMING</span>
       <div class="action-text"><strong>REF 1383 — SHIVLILA (LLDPE LLD-7050, 81 MT)</strong><span>Due in 21d · Supplier: HK TOPWAY · DA-60 · Due date 14th July 2026.</span></div>
     </div>
-    <div class="action-item upcoming">
+    <div class="action-item upcoming" data-ref="1382" data-customer="SHIVLILA" data-days="-21">
       <span class="action-badge blue">UPCOMING</span>
       <div class="action-text"><strong>REF 1382 — SHIVLILA (HDPE TR144, 81 MT)</strong><span>Due in 21d · Supplier: HK TOPWAY · DA-60 · Due date 14th July 2026.</span></div>
     </div>
-    <div class="action-item upcoming">
+    <div class="action-item upcoming" data-ref="1376" data-customer="DOSHI AND CO" data-days="-22">
       <span class="action-badge blue">UPCOMING</span>
       <div class="action-text"><strong>REF 1376 — DOSHI AND CO (HDPE Yanchang 23050, 196 MT)</strong><span>Due in 22d · Supplier: HK TOPWAY · LC 90 DAYS · Due date 15th July 2026.</span></div>
     </div>
-    <div class="action-item upcoming">
+    <div class="action-item upcoming" data-ref="1380" data-customer="HART" data-days="-24">
       <span class="action-badge blue">UPCOMING</span>
       <div class="action-text"><strong>REF 1380 — HART (LLDPE 7149U, 84 MT)</strong><span>Due in 24d · Supplier: HK TOPWAY · DA-60 · Due date 17th July 2026.</span></div>
     </div>
-    <div class="action-item upcoming">
+    <div class="action-item upcoming" data-ref="1379" data-customer="SONHART" data-days="-24">
       <span class="action-badge blue">UPCOMING</span>
       <div class="action-text"><strong>REF 1379 — SONHART (LLDPE 7149U, 140 MT)</strong><span>Due in 24d · Supplier: HK TOPWAY · DA-60 · Due date 17th July 2026.</span></div>
     </div>
@@ -1735,6 +1745,37 @@
     document.querySelectorAll('.tab-btn').forEach(function(el) { el.classList.remove('active'); });
     document.getElementById('tab-' + name).classList.add('active');
     btn.classList.add('active');
+  }
+
+  function sortActionItems(mode) {
+    var list = document.querySelector('.action-list');
+    var title = document.getElementById('actionItemsTitle');
+    if (!list) return;
+    var items = Array.prototype.slice.call(list.querySelectorAll('.action-item'));
+    var tierOrder = { 'today': 0, 'this-week': 1, 'upcoming': 2 };
+    items.sort(function(a, b) {
+      if (mode === 'oldest') {
+        return parseFloat(b.dataset.days) - parseFloat(a.dataset.days);
+      }
+      if (mode === 'newest') {
+        return parseFloat(a.dataset.days) - parseFloat(b.dataset.days);
+      }
+      if (mode === 'customer') {
+        return a.dataset.customer.localeCompare(b.dataset.customer);
+      }
+      if (mode === 'ref') {
+        return parseInt(a.dataset.ref, 10) - parseInt(b.dataset.ref, 10);
+      }
+      var ta = tierOrder[a.classList.contains('today') ? 'today' : a.classList.contains('this-week') ? 'this-week' : 'upcoming'];
+      var tb = tierOrder[b.classList.contains('today') ? 'today' : b.classList.contains('this-week') ? 'this-week' : 'upcoming'];
+      if (ta !== tb) return ta - tb;
+      return parseFloat(b.dataset.days) - parseFloat(a.dataset.days);
+    });
+    items.forEach(function(item) { list.appendChild(item); });
+    if (title) {
+      var labels = { urgency: 'sorted by urgency', oldest: 'oldest to newest', newest: 'newest to oldest', customer: 'sorted by customer', ref: 'sorted by reference #' };
+      title.textContent = 'Action Items (' + (labels[mode] || 'sorted by urgency') + ')';
+    }
   }
 
   document.getElementById('footer-text').textContent =
