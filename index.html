@@ -226,8 +226,9 @@
   </div>
   <h2 class="section-title">Charts</h2>
   <div class="chart-grid">
+    <div class="chart-box" style="grid-column: 1 / -1;"><canvas id="monthlyOrdersChart"></canvas></div>
     <div class="chart-box"><canvas id="buyerChart"></canvas></div>
-    <div class="chart-box"><canvas id="marginChart"></canvas></div>
+    <div class="chart-box"><canvas id="supplierChart"></canvas></div>
   </div>
   <h2 class="section-title">Materials in Pipeline (2026)</h2>
   <div class="pills">
@@ -1692,22 +1693,41 @@ PPRANDOM, China, Oriental — MN70, MI 70, FOB 1330, POL Ningbo, CFR 1555</pre>
       });
     }
 
-    var marginCtx = document.getElementById('marginChart');
-    if (marginCtx) {
-      new Chart(marginCtx, {
+    var monthlyCtx = document.getElementById('monthlyOrdersChart');
+    if (monthlyCtx) {
+      new Chart(monthlyCtx, {
         type: 'bar',
         data: {
-          labels: ["1368 IDDO PLASTICS", "1395 DANA PLAST", "1394 DANA PLAST", "1397 CHANDAR INVESTMENTS LIMITED.", "1376 DOSHI AND CO", "1401 SUPER SONIC", "1400 SARSOLI", "1396 CHANDAR INVESTMENTS LIMITED.", "1391 SUPER SONIC", "1381 STAR POINT", "1375 SARSOLI", "1359 SARSOLI", "1403 DANA PLAST", "1402 DANA PLAST", "1399 STAR POINT"],
+          labels: ["Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026", "May 2026", "Jun 2026"],
           datasets: [{
-            label: 'Margin $/MT',
-            data: [297.0, 60.0, 60.0, 50.0, 50.0, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 40.0, 35.0, 35.0, 30.0],
+            label: 'Orders Booked (MT)',
+            data: [1041.00, 392.87, 1442.25, 1476.04, 693.25, 224.00],
+            backgroundColor: '#1a7550'
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false }, title: { display: true, text: 'Monthly Orders Booked (MT) — Jan–Jun 2026 (by PFI date; Jun partial)' } },
+          scales: { y: { ticks: { callback: function(v){ return v + ' MT'; } } } }
+        }
+      });
+    }
+
+    var supplierCtx = document.getElementById('supplierChart');
+    if (supplierCtx) {
+      new Chart(supplierCtx, {
+        type: 'bar',
+        data: {
+          labels: ["HK TOPWAY", "HYOSUNG", "PIAT INTL", "INDORMA", "SCG", "DRAGON", "CRC", "MONTACHEM", "ITOCHU", "REPET ONE", "HANWHA", "CALMIN", "AN THANH", "JB INDUSTRIES INDIA"],
+          datasets: [{
+            label: 'Volume Booked (MT), 2026 orders',
+            data: [1265.50, 896.00, 671.00, 598.04, 478.12, 400.00, 352.00, 173.25, 150.00, 84.00, 72.00, 67.50, 56.00, 6.00],
             backgroundColor: '#c98a2c'
           }]
         },
         options: {
           indexAxis: 'y',
-          plugins: { legend: { display: false }, title: { display: true, text: 'Top 15 Orders by Margin $/MT' } },
-          scales: { x: { ticks: { callback: function(v){ return '$' + v; } } } }
+          plugins: { legend: { display: false }, title: { display: true, text: 'Volume Booked by Supplier (MT), 2026 orders' } },
+          scales: { x: { ticks: { callback: function(v){ return v + ' MT'; } } } }
         }
       });
     }
