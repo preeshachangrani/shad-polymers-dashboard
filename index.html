@@ -98,10 +98,6 @@
 
     table { width: 100%; border-collapse: collapse; font-size: 12px; background: var(--card-bg); }
     th { background: var(--navy); color: #fff; text-align: left; padding: 8px 10px; font-size: 11px; text-transform: uppercase; position: sticky; top: 0; }
-    th.sortable { cursor: pointer; user-select: none; }
-    th.sortable:hover { background: #16395e; }
-    th.sortable .sort-arrow { font-size: 9px; margin-left: 4px; opacity: 0.55; }
-    th.sortable.sort-active .sort-arrow { opacity: 1; }
     td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
     tr:nth-child(even) td { background: #f7faf8; }
     .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; max-height: 560px; overflow-y: auto; }
@@ -329,12 +325,7 @@
   </div>
   <h2 class="section-title" id="actionItemsTitle">Action Items (sorted by urgency)</h2>
   <div style="margin:-8px 0 12px;">
-    <label style="font-size:12.5px;color:var(--text-light);">Filter: </label>
-    <select id="actionFilter" onchange="filterActionItems(this.value)">
-      <option value="all">All action items</option>
-      <option value="awaiting-payment">Awaiting Payments (Stage 5)</option>
-    </select>
-    <label style="font-size:12.5px;color:var(--text-light);margin-left:14px;">Sort by: </label>
+    <label style="font-size:12.5px;color:var(--text-light);">Sort by: </label>
     <select id="actionSort" onchange="sortActionItems(this.value)">
       <option value="urgency">Urgency</option>
       <option value="oldest">Oldest due date first</option>
@@ -342,150 +333,149 @@
       <option value="customer">Customer (A–Z)</option>
       <option value="ref">Reference #</option>
     </select>
-    <div id="actionFilterCount" style="font-size:11.5px;color:var(--text-light);margin-top:4px;"></div>
   </div>
   <div class="action-list">
-    <div class="action-item today" data-ref="1350" data-customer="IDDO PLASTICS" data-days="-61" data-stage="5">
+    <div class="action-item today" data-ref="1350" data-customer="IDDO PLASTICS" data-days="-61">
       <span class="action-badge today">61d PAST DUE</span>
       Ref 1350 — <strong>IDDO PLASTICS</strong> · PVC DG1000S · 140 MT · due 2026-04-25
     </div>
-    <div class="action-item today" data-ref="1351" data-customer="STAR POINT" data-days="-33" data-stage="5">
+    <div class="action-item today" data-ref="1351" data-customer="STAR POINT" data-days="-33">
       <span class="action-badge today">33d PAST DUE</span>
       Ref 1351 — <strong>STAR POINT</strong> · PPCP BJ550 · 72 MT · due 2026-05-23
     </div>
-    <div class="action-item today" data-ref="1353" data-customer="DANA PLAST" data-days="-32" data-stage="5">
+    <div class="action-item today" data-ref="1353" data-customer="DANA PLAST" data-days="-32">
       <span class="action-badge today">32d PAST DUE</span>
       Ref 1353 — <strong>DANA PLAST</strong> · PPCP RANDOM R1001N · 84 MT · due 2026-05-24
     </div>
-    <div class="action-item today" data-ref="1352" data-customer="DANA PLAST" data-days="-32" data-stage="5">
+    <div class="action-item today" data-ref="1352" data-customer="DANA PLAST" data-days="-32">
       <span class="action-badge today">32d PAST DUE</span>
       Ref 1352 — <strong>DANA PLAST</strong> · PPCP J1145T · 140 MT · due 2026-05-24
     </div>
-    <div class="action-item today" data-ref="1356" data-customer="SHIV LILA" data-days="-29" data-stage="5">
+    <div class="action-item today" data-ref="1356" data-customer="SHIV LILA" data-days="-29">
       <span class="action-badge today">29d PAST DUE</span>
       Ref 1356 — <strong>SHIV LILA</strong> · BCPP AW564 · 99 MT · due 2026-05-27
     </div>
-    <div class="action-item today" data-ref="1355" data-customer="SHIV LILA" data-days="-14" data-stage="5">
+    <div class="action-item today" data-ref="1355" data-customer="SHIV LILA" data-days="-14">
       <span class="action-badge today">14d PAST DUE</span>
       Ref 1355 — <strong>SHIV LILA</strong> · PP RANDOM R392Y AND R365Y · 140 MT · due 2026-06-11
     </div>
-    <div class="action-item today" data-ref="1359" data-customer="SARSOLI" data-days="-12" data-stage="5">
+    <div class="action-item today" data-ref="1359" data-customer="SARSOLI" data-days="-12">
       <span class="action-badge today">12d PAST DUE</span>
       Ref 1359 — <strong>SARSOLI</strong> · CALMIN -80 · 22.50 MT · due 2026-06-13
     </div>
-    <div class="action-item today" data-ref="1363" data-customer="SHIV LILA" data-days="-7" data-stage="5">
+    <div class="action-item today" data-ref="1363" data-customer="SHIV LILA" data-days="-7">
       <span class="action-badge today">7d PAST DUE</span>
       Ref 1363 — <strong>SHIV LILA</strong> · HDPE H5604F · 28.12 MT · due 2026-06-18
     </div>
-    <div class="action-item today" data-ref="1362" data-customer="SHIV LILA" data-days="-7" data-stage="5">
+    <div class="action-item today" data-ref="1362" data-customer="SHIV LILA" data-days="-7">
       <span class="action-badge today">7d PAST DUE</span>
       Ref 1362 — <strong>SHIV LILA</strong> · PPCP 840J · 56.25 MT · due 2026-06-18
     </div>
-    <div class="action-item today" data-ref="1361" data-customer="STAR POINT" data-days="-7" data-stage="5">
+    <div class="action-item today" data-ref="1361" data-customer="STAR POINT" data-days="-7">
       <span class="action-badge today">7d PAST DUE</span>
       Ref 1361 — <strong>STAR POINT</strong> · CR8816 ROUND SHAPE · 88 MT · due 2026-06-18
     </div>
-    <div class="action-item today" data-ref="1358" data-customer="SHIV LILA" data-days="-5" data-stage="5">
+    <div class="action-item today" data-ref="1358" data-customer="SHIV LILA" data-days="-5">
       <span class="action-badge today">5d PAST DUE</span>
       Ref 1358 — <strong>SHIV LILA</strong> · CIPLAS LLDPE LL1019FP · 51 MT · due 2026-06-20
     </div>
-    <div class="action-item today" data-ref="1365" data-customer="DANA PLAST" data-days="-3" data-stage="5">
+    <div class="action-item today" data-ref="1365" data-customer="DANA PLAST" data-days="-3">
       <span class="action-badge today">3d PAST DUE</span>
       Ref 1365 — <strong>DANA PLAST</strong> · PPCP RANDOM R1001N · 84 MT · due 2026-06-22
     </div>
-    <div class="action-item this-week" data-ref="1370" data-customer="SHIV LILA" data-days="2" data-stage="5">
+    <div class="action-item this-week" data-ref="1370" data-customer="SHIV LILA" data-days="2">
       <span class="action-badge this-week">due in 2d</span>
       Ref 1370 — <strong>SHIV LILA</strong> · HDPE 7302 · 108 MT · due 2026-06-27
     </div>
-    <div class="action-item this-week" data-ref="1354" data-customer="SHIV LILA" data-days="2" data-stage="5">
+    <div class="action-item this-week" data-ref="1354" data-customer="SHIV LILA" data-days="2">
       <span class="action-badge this-week">due in 2d</span>
       Ref 1354 — <strong>SHIV LILA</strong> · PP RANDOM R520Y AND R380Y · 315 MT · due 2026-06-27
     </div>
-    <div class="action-item upcoming" data-ref="1373" data-customer="DANA PLAST" data-days="10" data-stage="5">
+    <div class="action-item upcoming" data-ref="1373" data-customer="DANA PLAST" data-days="10">
       <span class="action-badge upcoming">due in 10d</span>
       Ref 1373 — <strong>DANA PLAST</strong> · PPCP RANDOM R1001N · 84 MT · due 2026-07-05
     </div>
-    <div class="action-item upcoming" data-ref="1376" data-customer="DOSHI AND CO" data-days="20" data-stage="5">
+    <div class="action-item upcoming" data-ref="1376" data-customer="DOSHI AND CO" data-days="20">
       <span class="action-badge upcoming">due in 20d</span>
       Ref 1376 — <strong>DOSHI AND CO</strong> · HDPE Yanchang 23050 · 196 MT · due 2026-07-15
     </div>
-    <div class="action-item upcoming" data-ref="1372" data-customer="DANA PLAST" data-days="24" data-stage="5">
+    <div class="action-item upcoming" data-ref="1372" data-customer="DANA PLAST" data-days="24">
       <span class="action-badge upcoming">due in 24d</span>
       Ref 1372 — <strong>DANA PLAST</strong> · PPCP J1145T · 140 MT · due 2026-07-19
     </div>
-    <div class="action-item upcoming" data-ref="1371" data-customer="STAR POINT" data-days="25" data-stage="5">
+    <div class="action-item upcoming" data-ref="1371" data-customer="STAR POINT" data-days="25">
       <span class="action-badge upcoming">due in 25d</span>
       Ref 1371 — <strong>STAR POINT</strong> · CR8816 · 88 MT · due 2026-07-20
     </div>
-    <div class="action-item upcoming" data-ref="1375" data-customer="SARSOLI" data-days="31" data-stage="5">
+    <div class="action-item upcoming" data-ref="1375" data-customer="SARSOLI" data-days="31">
       <span class="action-badge upcoming">due in 31d</span>
       Ref 1375 — <strong>SARSOLI</strong> · CALMIN -80 · 22.50 MT · due 2026-07-26
     </div>
-    <div class="action-item upcoming" data-ref="1368" data-customer="IDDO PLASTICS" data-days="32" data-stage="5">
+    <div class="action-item upcoming" data-ref="1368" data-customer="IDDO PLASTICS" data-days="32">
       <span class="action-badge upcoming">due in 32d</span>
       Ref 1368 — <strong>IDDO PLASTICS</strong> · AZODICARBONAMIDE-JB55 · 6 MT · due 2026-07-27
     </div>
-    <div class="action-item upcoming" data-ref="1381" data-customer="STAR POINT" data-days="34" data-stage="5">
+    <div class="action-item upcoming" data-ref="1381" data-customer="STAR POINT" data-days="34">
       <span class="action-badge upcoming">due in 34d</span>
       Ref 1381 — <strong>STAR POINT</strong> · PET BILLION BRAND BH-801 · 55 MT · due 2026-07-29
     </div>
-    <div class="action-item upcoming" data-ref="1387" data-customer="STAR POINT" data-days="41" data-stage="5">
+    <div class="action-item upcoming" data-ref="1387" data-customer="STAR POINT" data-days="41">
       <span class="action-badge upcoming">due in 41d</span>
       Ref 1387 — <strong>STAR POINT</strong> · PET BILLION BRAND BH-801 · 110 MT · due 2026-08-05
     </div>
-    <div class="action-item upcoming" data-ref="1374" data-customer="ENGEE PET" data-days="42" data-stage="5">
+    <div class="action-item upcoming" data-ref="1374" data-customer="ENGEE PET" data-days="42">
       <span class="action-badge upcoming">due in 42d</span>
       Ref 1374 — <strong>ENGEE PET</strong> · AMORPHOUS PET CHIPS · 400 MT · due 2026-08-06
     </div>
-    <div class="action-item upcoming" data-ref="1378" data-customer="SHIV LILA" data-days="44" data-stage="5">
+    <div class="action-item upcoming" data-ref="1378" data-customer="SHIV LILA" data-days="44">
       <span class="action-badge upcoming">due in 44d</span>
       Ref 1378 — <strong>SHIV LILA</strong> · HDPE-7000 · 123.75 MT · due 2026-08-08
     </div>
-    <div class="action-item upcoming" data-ref="1384" data-customer="SHIV LILA" data-days="49" data-stage="5">
+    <div class="action-item upcoming" data-ref="1384" data-customer="SHIV LILA" data-days="49">
       <span class="action-badge upcoming">due in 49d</span>
       Ref 1384 — <strong>SHIV LILA</strong> · HDPE TR144 · 81 MT · due 2026-08-13
     </div>
-    <div class="action-item upcoming" data-ref="1383" data-customer="SHIV LILA" data-days="49" data-stage="5">
+    <div class="action-item upcoming" data-ref="1383" data-customer="SHIV LILA" data-days="49">
       <span class="action-badge upcoming">due in 49d</span>
       Ref 1383 — <strong>SHIV LILA</strong> · LLDPE LLD-7050 · 81 MT · due 2026-08-13
     </div>
-    <div class="action-item upcoming" data-ref="1382" data-customer="SHIV LILA" data-days="49" data-stage="5">
+    <div class="action-item upcoming" data-ref="1382" data-customer="SHIV LILA" data-days="49">
       <span class="action-badge upcoming">due in 49d</span>
       Ref 1382 — <strong>SHIV LILA</strong> · HDPE TR144 · 81 MT · due 2026-08-13
     </div>
-    <div class="action-item upcoming" data-ref="1377" data-customer="SHIV LILA" data-days="50" data-stage="5">
+    <div class="action-item upcoming" data-ref="1377" data-customer="SHIV LILA" data-days="50">
       <span class="action-badge upcoming">due in 50d</span>
       Ref 1377 — <strong>SHIV LILA</strong> · Polypropylene PPR-MT60 · 56 MT · due 2026-08-14
     </div>
-    <div class="action-item upcoming" data-ref="1380" data-customer="HART" data-days="52" data-stage="5">
+    <div class="action-item upcoming" data-ref="1380" data-customer="HART" data-days="52">
       <span class="action-badge upcoming">due in 52d</span>
       Ref 1380 — <strong>HART</strong> · LLDPE 7149U · 84 MT · due 2026-08-16
     </div>
-    <div class="action-item upcoming" data-ref="1379" data-customer="SONHART" data-days="52" data-stage="5">
+    <div class="action-item upcoming" data-ref="1379" data-customer="SONHART" data-days="52">
       <span class="action-badge upcoming">due in 52d</span>
       Ref 1379 — <strong>SONHART</strong> · LLDPE 7149U · 140 MT · due 2026-08-16
     </div>
-    <div class="action-item upcoming" data-ref="1392" data-customer="STAR POINT" data-days="53" data-stage="5">
+    <div class="action-item upcoming" data-ref="1392" data-customer="STAR POINT" data-days="53">
       <span class="action-badge upcoming">due in 53d</span>
       Ref 1392 — <strong>STAR POINT</strong> · PET CRC 8816 · 88 MT · due 2026-08-17
     </div>
-    <div class="action-item upcoming" data-ref="1386" data-customer="SHIV LILA" data-days="54" data-stage="5">
+    <div class="action-item upcoming" data-ref="1386" data-customer="SHIV LILA" data-days="54">
       <span class="action-badge upcoming">due in 54d</span>
       Ref 1386 — <strong>SHIV LILA</strong> · LLDPE C4LL2018.AY//LL1002AY · 49.50 MT · due 2026-08-18
     </div>
-    <div class="action-item upcoming" data-ref="1389" data-customer="DANA PLAST" data-days="58" data-stage="5">
+    <div class="action-item upcoming" data-ref="1389" data-customer="DANA PLAST" data-days="58">
       <span class="action-badge upcoming">due in 58d</span>
       Ref 1389 — <strong>DANA PLAST</strong> · P945J · 112.50 MT · due 2026-08-22
     </div>
-    <div class="action-item upcoming" data-ref="1388" data-customer="SHIV LILA" data-days="63" data-stage="5">
+    <div class="action-item upcoming" data-ref="1388" data-customer="SHIV LILA" data-days="63">
       <span class="action-badge upcoming">due in 63d</span>
       Ref 1388 — <strong>SHIV LILA</strong> · HDPE 7302 · 108 MT · due 2026-08-27
     </div>
-    <div class="action-item upcoming" data-ref="1393" data-customer="SHIV LILA" data-days="72" data-stage="5">
+    <div class="action-item upcoming" data-ref="1393" data-customer="SHIV LILA" data-days="72">
       <span class="action-badge upcoming">due in 72d</span>
       Ref 1393 — <strong>SHIV LILA</strong> · PPCP P640J , P740J AND P840J · 281.25 MT · due 2026-09-05
     </div>
-    <div class="action-item upcoming" data-ref="1390" data-customer="ENGEE PET" data-days="93" data-stage="5">
+    <div class="action-item upcoming" data-ref="1390" data-customer="ENGEE PET" data-days="93">
       <span class="action-badge upcoming">due in 93d</span>
       Ref 1390 — <strong>ENGEE PET</strong> · AMORPHUS PET CHIPS · 598.04 MT · due 2026-09-26
     </div>
@@ -493,7 +483,7 @@
   <div class="table-wrap">
   <table>
     <thead>
-      <tr id="ordersHeaderRow"><th>Ref</th><th class="sortable" data-col="1" data-type="text" onclick="sortOrdersTable(this)">Buyer<span class="sort-arrow">⇕</span></th><th>Supplier</th><th>Material</th><th>MT</th><th>PFI Value</th><th>Sell/MT</th><th>Buy/MT</th><th>Margin/MT</th><th>Terms</th><th class="sortable" data-col="10" data-type="date" onclick="sortOrdersTable(this)">PFI Date<span class="sort-arrow">⇕</span></th><th class="sortable" data-col="11" data-type="stage" onclick="sortOrdersTable(this)">Stage<span class="sort-arrow">⇕</span></th><th>Notes</th></tr>
+      <tr><th>Ref</th><th>Buyer</th><th>Supplier</th><th>Material</th><th>MT</th><th>PFI Value</th><th>Sell/MT</th><th>Buy/MT</th><th>Margin/MT</th><th>Terms</th><th>PFI Date</th><th>Stage</th><th>Notes</th></tr>
     </thead>
     <tbody>
       <tr>
@@ -1699,76 +1689,101 @@ PPRANDOM, China, Oriental — MN70, MI 70, FOB 1330, POL Ningbo, CFR 1555</pre>
     items.forEach(function(item) { list.appendChild(item); });
     if (title) {
       var labels = { urgency: 'sorted by urgency', oldest: 'oldest due date first', newest: 'newest due date first', customer: 'sorted by customer', ref: 'sorted by reference #' };
-      var filterSel = document.getElementById('actionFilter');
-      var filterLabel = filterSel && filterSel.value === 'awaiting-payment' ? 'Awaiting Payments — ' : '';
-      title.textContent = 'Action Items (' + filterLabel + (labels[mode] || 'sorted by urgency') + ')';
+      title.textContent = 'Action Items (' + (labels[mode] || 'sorted by urgency') + ')';
     }
-  }
-
-  function filterActionItems(mode) {
-    var list = document.querySelector('.action-list');
-    var countEl = document.getElementById('actionFilterCount');
-    if (!list) return;
-    var items = Array.prototype.slice.call(list.querySelectorAll('.action-item'));
-    var shown = 0;
-    items.forEach(function(item) {
-      var match = (mode === 'all') || (mode === 'awaiting-payment' && item.dataset.stage === '5');
-      item.style.display = match ? '' : 'none';
-      if (match) shown++;
-    });
-    if (countEl) {
-      countEl.textContent = mode === 'awaiting-payment'
-        ? 'Showing ' + shown + ' order(s) awaiting payment (Stage 5 — PFI awaiting clearance/payment).'
-        : 'Showing all ' + shown + ' action item(s).';
-    }
-    var sortSel = document.getElementById('actionSort');
-    sortActionItems(sortSel ? sortSel.value : 'urgency');
-  }
-
-  function sortOrdersTable(th) {
-    var table = th.closest('table');
-    var tbody = table.querySelector('tbody');
-    var headerRow = th.parentElement;
-    var col = parseInt(th.dataset.col, 10);
-    var type = th.dataset.type;
-    var asc = th.dataset.dir !== 'asc';
-    Array.prototype.forEach.call(headerRow.querySelectorAll('th.sortable'), function(h) {
-      h.classList.remove('sort-active');
-      h.removeAttribute('data-dir');
-      var arrow = h.querySelector('.sort-arrow');
-      if (arrow) arrow.textContent = '⇕';
-    });
-    th.dataset.dir = asc ? 'asc' : 'desc';
-    th.classList.add('sort-active');
-    var arrowEl = th.querySelector('.sort-arrow');
-    if (arrowEl) arrowEl.textContent = asc ? '▲' : '▼';
-
-    function cellValue(row) {
-      var cell = row.children[col];
-      var text = cell ? cell.textContent.trim() : '';
-      if (type === 'date') {
-        var parts = text.split('/');
-        if (parts.length === 3) {
-          return new Date(parts[2], parts[1] - 1, parts[0]).getTime();
-        }
-        return 0;
-      }
-      if (type === 'stage') {
-        var m = text.match(/(\d+)/);
-        return m ? parseInt(m[1], 10) : 0;
-      }
-      return text.toLowerCase();
-    }
-
-    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
-    rows.sort(function(a, b) {
-      var va = cellValue(a), vb = cellValue(b);
-      if (va < vb) return asc ? -1 : 1;
-      if (va > vb) return asc ? 1 : -1;
-      return 0;
-    });
-    rows.forEach(function(row) { tbody.appendChild(row); });
   }
 
   document.getElementById('footer-text').textContent =
-    'Last refreshed: ' + new Date().toLocaleString() + ' / Data sourced from Google
+    'Last refreshed: ' + new Date().toLocaleString() + ' / Data sourced from Google Drive (June 2026 Tracker · Prices per-country subfolders · Market Info) · Regenerated by scheduled dashboard-refresh task';
+
+  var monthlyTopBuyers = {
+    "Jan 2026": [{name:"SHIV LILA", mt:605.00, pct:58.1}, {name:"DANA PLAST", mt:224.00, pct:21.5}, {name:"IDDO PLASTICS", mt:140.00, pct:13.4}],
+    "Feb 2026": [{name:"SONHART", mt:108.00, pct:27.5}, {name:"STAR POINT", mt:88.00, pct:22.4}, {name:"SHIV LILA", mt:84.37, pct:21.5}],
+    "Mar 2026": [{name:"ENGEE PET", mt:400.00, pct:27.7}, {name:"SHIV LILA", mt:287.75, pct:20.0}, {name:"DANA PLAST", mt:224.00, pct:15.5}],
+    "Apr 2026": [{name:"ENGEE PET", mt:598.04, pct:40.5}, {name:"SHIV LILA", mt:484.50, pct:32.8}, {name:"STAR POINT", mt:253.00, pct:17.1}],
+    "May 2026": [{name:"SHIV LILA", mt:281.25, pct:40.6}, {name:"DANA PLAST", mt:140.00, pct:20.2}, {name:"STAR POINT", mt:136.00, pct:19.6}],
+    "Jun 2026": [{name:"DANA PLAST", mt:224.00, pct:100.0}]
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var buyerCtx = document.getElementById('buyerChart');
+    if (buyerCtx) {
+      new Chart(buyerCtx, {
+        type: 'bar',
+        data: {
+          labels: ["SHIV LILA", "DANA PLAST", "ENGEE PET", "STAR POINT", "SONHART", "DOSHI AND CO", "IDDO PLASTICS", "CHANDAR INVESTMENTS LIMITED.", "HART", "SARSOLI", "SUPER SONIC"],
+          datasets: [{
+            label: 'Bookings (MT), 2026 orders',
+            data: [1742.88, 1008.5, 998.04, 637.0, 248.0, 196.0, 146.0, 85.5, 84.0, 67.5, 56.0],
+            backgroundColor: '#1d4e89'
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          plugins: { legend: { display: false }, title: { display: true, text: 'Top Buyers by Volume (MT)' } },
+          scales: { x: { ticks: { callback: function(v){ return v + ' MT'; } } } }
+        }
+      });
+    }
+
+    var monthlyCtx = document.getElementById('monthlyOrdersChart');
+    if (monthlyCtx) {
+      new Chart(monthlyCtx, {
+        type: 'bar',
+        data: {
+          labels: ["Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026", "May 2026", "Jun 2026"],
+          datasets: [{
+            label: 'Orders Booked (MT)',
+            data: [1041.00, 392.87, 1442.25, 1476.04, 693.25, 224.00],
+            backgroundColor: '#1a7550'
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            title: { display: true, text: 'Monthly Orders Booked (MT)' },
+            tooltip: {
+              callbacks: {
+                label: function(ctx){ return 'Total: ' + ctx.parsed.y.toLocaleString() + ' MT'; },
+                afterBody: function(items){
+                  var label = items[0].label;
+                  var top = monthlyTopBuyers[label] || [];
+                  var lines = ['', 'Top customers:'];
+                  top.forEach(function(b){ lines.push('  ' + b.name + ': ' + b.mt.toLocaleString() + ' MT (' + b.pct + '%)'); });
+                  return lines;
+                }
+              }
+            }
+          },
+          scales: { y: { ticks: { callback: function(v){ return v + ' MT'; } } } }
+        }
+      });
+    }
+
+    var supplierCtx = document.getElementById('supplierChart');
+    if (supplierCtx) {
+      new Chart(supplierCtx, {
+        type: 'bar',
+        data: {
+          labels: ["HK TOPWAY", "HYOSUNG", "PIAT INTL", "INDORMA", "SCG", "DRAGON", "CRC", "MONTACHEM", "ITOCHU", "REPET ONE", "HANWHA", "CALMIN", "AN THANH", "JB INDUSTRIES INDIA"],
+          datasets: [{
+            label: 'Volume Booked (MT), 2026 orders',
+            data: [1265.50, 896.00, 671.00, 598.04, 478.12, 400.00, 352.00, 173.25, 150.00, 84.00, 72.00, 67.50, 56.00, 6.00],
+            backgroundColor: '#c98a2c'
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          plugins: { legend: { display: false }, title: { display: true, text: 'Volume Booked by Supplier (MT), 2026 orders' } },
+          scales: { x: { ticks: { callback: function(v){ return v + ' MT'; } } } }
+        }
+      });
+    }
+  });
+</script>
+
+</body>
+</html>
