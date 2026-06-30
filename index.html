@@ -1444,45 +1444,53 @@
     </table>
     </div>
     <h3 style="font-size:14px;margin:18px 0 8px;color:var(--navy);">ATT Supplier Sheet — PP Copo / PP Random (source: ATT, scanned image)</h3>
-    <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">This file is a scanned image. OCR extraction scrambled the original row/column layout (Commodity, Application, Origin, Brand, Grade, MI, FOB, POL, CFR Apapa columns are jumbled across lines), so it is reproduced below as extracted text rather than a reconstructed table, to avoid misrepresenting figures. Verify against the original image in Drive before quoting.</p>
-    <pre style="font-size:11.5px;line-height:1.5;background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:14px;overflow-x:auto;white-space:pre-wrap;">Commodity / Application / Origin / Brand / Grade / MI / FOB / POL / APAPA (CFR) — OCR-extracted, raw order as scanned:
-LYONDELL BASELL, PPCOPO, China, ZPC — K8003, MI 2.5, FOB 1330, POL Ningbo, CFR Apapa 1555
-PPCOPO Injection, China, BAOFENG (coal) — K8003, MI 3, FOB 1330, POL Ningbo, CFR Apapa 1555
-PPCOPO, China, YANCHANG — EP300K-B, MI 14, FOB 1290, POL Qingdao, CFR Apapa 1515
-PPCOPO, China, EXXON — PP7032E3, MI 4.5, FOB 1560, POL Ningbo, CFR Apapa 1785
-LYONDELL BASELL, PPCOPO, China, SINOPEC — SP179N B, MI 18, FOB 1370, POL Dalian, CFR Apapa 1595
-PPCOPO, China, LYONDELL BASELL — SP179, MI 8, FOB 1400, POL Ningbo, CFR Apapa 1625
-PPCOPO, China, Oriental — EP300M B, MI 9, FOB 1340, POL Dalian, CFR Apapa 1565
-PPCOPO, China, SINOPEC — K8009, MI 19, FOB 1365, POL Ningbo, CFR Apapa 1590
-PPCOPO, China, Huizhou — PPB-M09, MI 19, FOB 1380, POL Ningbo, CFR Apapa 1605
-PPCOPO Injection, China, ZPC — PP7033E3, MI 19, FOB 1560, POL Ningbo, CFR Apapa 1785
-PPCOPO, China, Oriental — K8009 / PPB-MP16, MI 16 (FOB/POL/CFR not legible — recognition gap)
-PPCOPO, Taiwan, FORMOSA — ZH9017H / K8025A (MI/FOB/POL/CFR not legible — recognition gap)
-PPCOPO, China, Oriental — PPB-MP26, MI 26 (FOB/POL/CFR not legible — recognition gap)
-PPCOPO Injection, China, ZPC — K9928H, FOB 1340/1345/1480/1440/1350/1375 range (Ningbo), CFR Apapa range 1565-1705 (multiple grades on this line in source, exact pairing unclear from OCR)
-LYONDELL BASELL, PPCOPO, China — EP300R B, MI 30, FOB 1375, POL Ningbo, CFR Apapa 1600
-PPCOPO, China, FORMOSA 3350, MI 35, FOB 1485, POL Ningbo, CFR Apapa 1710
-PPCOPO, China, LYONDELL BASELL — EP648U, MI 70, FOB 1390, POL Dalian, CFR Apapa 1615
-PPCOPO Injection, China, FORMOSA [3854], MI 100, FOB 1485, POL Ningbo, CFR Apapa 1710
-PPCOPO Injection, Saudi, SUMITOMO HUANG PU — AV161, MI 5.5, FOB 1420, CFR 1645
-PPCOPO Injection, Saudi, SUMITOMO HUANG PU — AW564, MI 8, FOB 1440, CFR 1665
-PPCOPO Injection, Saudi, SUMITOMO — AZ564, MI 30, FOB 1420, POL Ningbo, CFR 1645
-PPCOPO Injection, Saudi, SUMITOMO — AR564, MI 25.5, FOB 1420, POL Ningbo, CFR 1645
-PPRANDOM, China, Chambroad — PA14D, MI 0.26, FOB 1445, POL Qingdao, CFR 1670
-PPRANDOM, China, Chambroad — M800E, FOB 1385, POL Qingdao, CFR 1610
-PPRANDOM, China, Dongguan Grand — PPR-MT10, MI 10, FOB 1400, POL Nansha, CFR 1625
-PPRANDOM, China, YANCHANG — YM12, MI 12, FOB 1410, POL Qingdao, CFR 1635
-PPRANDOM, China, Dongguan Grand — PPR-MT15, MI 15, FOB 1400, POL Nansha, CFR 1625
-PPRANDOM, China, FORMOSA — 5090T/5250T, MI 15/22, FOB 1530, POL Ningbo, CFR 1755
-PPRANDOM, China, Dongguan Grand — PPR-MT25, MI 25, FOB 1400, POL Nansha, CFR 1625
-PPRANDOM, China, Chambroad — RP340R, MI 28, FOB 1370, POL Qingdao, CFR 1595
-PPRANDOM, China, YANCHANG — MT400B, MI 35, FOB 1360, POL Qingdao, CFR 1585
-PPRANDOM, China, Dongguan Grand — PPR-MT40, MI 40, FOB 1400, POL Nansha, CFR 1625
-PPRANDOM, China, FORMOSA — 5450XT, MI 45, FOB 1530, POL Ningbo, CFR 1755
-PPRANDOM, China, Chambroad — MT50, MI 50, FOB 1370, POL Qingdao, CFR 1595
-PPRANDOM, China, Dongguan Grand — PPR-MT60, MI 60, FOB 1400, POL Nansha, CFR 1625
-PPRANDOM, China, FORMOSA — 5600XT, MI 60, FOB 1530, POL Ningbo, CFR 1755
-PPRANDOM, China, Oriental — MN70, MI 70, FOB 1330, POL Ningbo, CFR 1555</pre>
+    <p style="font-size:12px;color:var(--text-light);margin-bottom:10px;">Auto-extracted via OCR — verify against the original scanned image in Drive before quoting. Rows where OCR couldn't confidently read a field are marked "—" with detail in the Notes column.</p>
+    <div class="table-wrap">
+    <table class="price-table">
+      <thead><tr><th>Brand</th><th>Grade</th><th>Manufacturer</th><th>MI</th><th>Origin</th><th>FOB $/MT</th><th>POL</th><th>CFR Apapa $/MT</th><th>Notes</th></tr></thead>
+      <tbody>
+      <tr class="family-row"><td colspan="9">PP Copo (18 rows)</td></tr>
+      <tr><td>ZPC</td><td>K8003</td><td>—</td><td>2.5</td><td>China</td><td>$1,330</td><td>Ningbo</td><td>$1,555</td><td>Mfr: Lyondell Basell</td></tr>
+      <tr><td>BAOFENG (coal)</td><td>K8003</td><td>—</td><td>3</td><td>China</td><td>$1,330</td><td>Ningbo</td><td>$1,555</td><td>Application: PPCOPO Injection</td></tr>
+      <tr><td>YANCHANG</td><td>EP300K-B</td><td>—</td><td>14</td><td>China</td><td>$1,290</td><td>Qingdao</td><td>$1,515</td><td></td></tr>
+      <tr><td>EXXON</td><td>PP7032E3</td><td>—</td><td>4.5</td><td>China</td><td>$1,560</td><td>Ningbo</td><td>$1,785</td><td></td></tr>
+      <tr><td>SINOPEC</td><td>SP179N B</td><td>—</td><td>18</td><td>China</td><td>$1,370</td><td>Dalian</td><td>$1,595</td><td>Mfr: Lyondell Basell</td></tr>
+      <tr><td>LYONDELL BASELL</td><td>SP179</td><td>—</td><td>8</td><td>China</td><td>$1,400</td><td>Ningbo</td><td>$1,625</td><td></td></tr>
+      <tr><td>Oriental</td><td>EP300M B</td><td>—</td><td>9</td><td>China</td><td>$1,340</td><td>Dalian</td><td>$1,565</td><td></td></tr>
+      <tr><td>SINOPEC</td><td>K8009</td><td>—</td><td>19</td><td>China</td><td>$1,365</td><td>Ningbo</td><td>$1,590</td><td></td></tr>
+      <tr><td>Huizhou</td><td>PPB-M09</td><td>—</td><td>19</td><td>China</td><td>$1,380</td><td>Ningbo</td><td>$1,605</td><td></td></tr>
+      <tr><td>ZPC</td><td>PP7033E3</td><td>—</td><td>19</td><td>China</td><td>$1,560</td><td>Ningbo</td><td>$1,785</td><td>Application: PPCOPO Injection</td></tr>
+      <tr><td>Oriental</td><td>K8009 / PPB-MP16</td><td>—</td><td>16</td><td>China</td><td>—</td><td>—</td><td>—</td><td>FOB/POL/CFR not legible — recognition gap</td></tr>
+      <tr><td>FORMOSA</td><td>ZH9017H / K8025A</td><td>—</td><td>—</td><td>Taiwan</td><td>—</td><td>—</td><td>—</td><td>MI/FOB/POL/CFR not legible — recognition gap</td></tr>
+      <tr><td>Oriental</td><td>PPB-MP26</td><td>—</td><td>26</td><td>China</td><td>—</td><td>—</td><td>—</td><td>FOB/POL/CFR not legible — recognition gap</td></tr>
+      <tr><td>ZPC</td><td>K9928H</td><td>—</td><td>—</td><td>China</td><td>$1,340–1,375 (range)</td><td>Ningbo</td><td>$1,565–1,705 (range)</td><td>Application: PPCOPO Injection; multiple grades on this OCR line, exact pairing unclear</td></tr>
+      <tr><td>—</td><td>EP300R B</td><td>—</td><td>30</td><td>China</td><td>$1,375</td><td>Ningbo</td><td>$1,600</td><td>Mfr: Lyondell Basell; brand not legible</td></tr>
+      <tr><td>FORMOSA</td><td>3350</td><td>—</td><td>35</td><td>China</td><td>$1,485</td><td>Ningbo</td><td>$1,710</td><td></td></tr>
+      <tr><td>LYONDELL BASELL</td><td>EP648U</td><td>—</td><td>70</td><td>China</td><td>$1,390</td><td>Dalian</td><td>$1,615</td><td></td></tr>
+      <tr><td>FORMOSA</td><td>[3854]</td><td>—</td><td>100</td><td>China</td><td>$1,485</td><td>Ningbo</td><td>$1,710</td><td>Application: PPCOPO Injection</td></tr>
+      <tr><td>SUMITOMO HUANG PU</td><td>AV161</td><td>—</td><td>5.5</td><td>Saudi Arabia</td><td>$1,420</td><td>—</td><td>$1,645</td><td>Application: PPCOPO Injection; POL not legible</td></tr>
+      <tr><td>SUMITOMO HUANG PU</td><td>AW564</td><td>—</td><td>8</td><td>Saudi Arabia</td><td>$1,440</td><td>—</td><td>$1,665</td><td>Application: PPCOPO Injection; POL not legible</td></tr>
+      <tr><td>SUMITOMO</td><td>AZ564</td><td>—</td><td>30</td><td>Saudi Arabia</td><td>$1,420</td><td>Ningbo</td><td>$1,645</td><td>Application: PPCOPO Injection</td></tr>
+      <tr><td>SUMITOMO</td><td>AR564</td><td>—</td><td>25.5</td><td>Saudi Arabia</td><td>$1,420</td><td>Ningbo</td><td>$1,645</td><td>Application: PPCOPO Injection</td></tr>
+      <tr class="family-row"><td colspan="9">PP Random (15 rows)</td></tr>
+      <tr><td>Chambroad</td><td>PA14D</td><td>—</td><td>0.26</td><td>China</td><td>$1,445</td><td>Qingdao</td><td>$1,670</td><td></td></tr>
+      <tr><td>Chambroad</td><td>M800E</td><td>—</td><td>—</td><td>China</td><td>$1,385</td><td>Qingdao</td><td>$1,610</td><td>MI not legible</td></tr>
+      <tr><td>Dongguan Grand</td><td>PPR-MT10</td><td>—</td><td>10</td><td>China</td><td>$1,400</td><td>Nansha</td><td>$1,625</td><td></td></tr>
+      <tr><td>YANCHANG</td><td>YM12</td><td>—</td><td>12</td><td>China</td><td>$1,410</td><td>Qingdao</td><td>$1,635</td><td></td></tr>
+      <tr><td>Dongguan Grand</td><td>PPR-MT15</td><td>—</td><td>15</td><td>China</td><td>$1,400</td><td>Nansha</td><td>$1,625</td><td></td></tr>
+      <tr><td>FORMOSA</td><td>5090T/5250T</td><td>—</td><td>15/22</td><td>China</td><td>$1,530</td><td>Ningbo</td><td>$1,755</td><td></td></tr>
+      <tr><td>Dongguan Grand</td><td>PPR-MT25</td><td>—</td><td>25</td><td>China</td><td>$1,400</td><td>Nansha</td><td>$1,625</td><td></td></tr>
+      <tr><td>Chambroad</td><td>RP340R</td><td>—</td><td>28</td><td>China</td><td>$1,370</td><td>Qingdao</td><td>$1,595</td><td></td></tr>
+      <tr><td>YANCHANG</td><td>MT400B</td><td>—</td><td>35</td><td>China</td><td>$1,360</td><td>Qingdao</td><td>$1,585</td><td></td></tr>
+      <tr><td>Dongguan Grand</td><td>PPR-MT40</td><td>—</td><td>40</td><td>China</td><td>$1,400</td><td>Nansha</td><td>$1,625</td><td></td></tr>
+      <tr><td>FORMOSA</td><td>5450XT</td><td>—</td><td>45</td><td>China</td><td>$1,530</td><td>Ningbo</td><td>$1,755</td><td></td></tr>
+      <tr><td>Chambroad</td><td>MT50</td><td>—</td><td>50</td><td>China</td><td>$1,370</td><td>Qingdao</td><td>$1,595</td><td></td></tr>
+      <tr><td>Dongguan Grand</td><td>PPR-MT60</td><td>—</td><td>60</td><td>China</td><td>$1,400</td><td>Nansha</td><td>$1,625</td><td></td></tr>
+      <tr><td>FORMOSA</td><td>5600XT</td><td>—</td><td>60</td><td>China</td><td>$1,530</td><td>Ningbo</td><td>$1,755</td><td></td></tr>
+      <tr><td>Oriental</td><td>MN70</td><td>—</td><td>70</td><td>China</td><td>$1,330</td><td>Ningbo</td><td>$1,555</td><td></td></tr>
+      </tbody>
+    </table>
+    </div>
 
   </div>
   <div id="tab-srilanka" class="tab-content">
@@ -1905,4 +1913,4 @@ PPRANDOM, China, Oriental — MN70, MI 70, FOB 1330, POL Ningbo, CFR 1555</pre>
 
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
