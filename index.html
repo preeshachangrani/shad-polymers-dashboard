@@ -145,7 +145,7 @@
     <h2>Shad Polymers</h2>
     <p>Enter password to view dashboard</p>
     <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter') checkPW();">
-    <button onclick="checkPW()">Unlock</button>
+    <button id="unlock-btn" onclick="checkPW()">Unlock</button>
     <div id="pw-error">Incorrect password. Try again.</div>
   </div>
 </div>
@@ -1758,19 +1758,26 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var btn = document.getElementById('unlock-btn');
+    if (btn) { btn.addEventListener('click', checkPW); }
+  });
+
   function checkPW() {
     var input = document.getElementById('pw-input');
     if (input.value === 'SP2026') {
-      sessionStorage.setItem('sp_auth', 'yes');
+      try { sessionStorage.setItem('sp_auth', 'yes'); } catch (e) {}
       document.getElementById('auth-overlay').style.display = 'none';
     } else {
       document.getElementById('pw-error').style.display = 'block';
     }
   }
 
-  if (sessionStorage.getItem('sp_auth') === 'yes') {
-    document.getElementById('auth-overlay').style.display = 'none';
-  }
+  try {
+    if (sessionStorage.getItem('sp_auth') === 'yes') {
+      document.getElementById('auth-overlay').style.display = 'none';
+    }
+  } catch (e) {}
 
   function switchTab(name, btn) {
     document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.remove('active'); });
