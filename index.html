@@ -2275,35 +2275,50 @@
       });
     });
 
-    // Populate dropdowns (Feature: dropdowns for category + description)
+    // Build full category→descriptions map from ALL rows (before grade filtering)
+    var catToDescs = {};
+    allRows.forEach(function(r) {
+      if (!catToDescs[r.category]) catToDescs[r.category] = [];
+      var d = r.description && r.description !== '—' ? r.description : null;
+      if (d && catToDescs[r.category].indexOf(d) === -1) catToDescs[r.category].push(d);
+    });
+
+    // Populate category dropdown
     var catSelect  = document.getElementById('ng-cat-filter');
     var descSelect = document.getElementById('ng-desc-filter');
+    if (!catSelect || !descSelect) return;
 
-    var allDescs = [];
     sortedCats.forEach(function(cat) {
       var opt = document.createElement('option');
       opt.value = cat; opt.textContent = cat;
       catSelect.appendChild(opt);
-      byCategory[cat].forEach(function(r) {
-        if (r.description && r.description !== '—' && allDescs.indexOf(r.description) === -1) allDescs.push(r.description);
-      });
-    });
-    allDescs.sort().forEach(function(d) {
-      var opt = document.createElement('option');
-      opt.value = d; opt.textContent = d;
-      descSelect.appendChild(opt);
     });
 
+    // Helper: rebuild description dropdown for a given category (or all)
+    function rebuildDescDropdown(catVal, keepVal) {
+      descSelect.innerHTML = '<option value="">All Descriptions</option>';
+      var pool = catVal ? (catToDescs[catVal] || []) : Object.keys(catToDescs).reduce(function(acc, c) {
+        (catToDescs[c] || []).forEach(function(d) { if (acc.indexOf(d) === -1) acc.push(d); });
+        return acc;
+      }, []);
+      pool.slice().sort().forEach(function(d) {
+        var opt = document.createElement('option');
+        opt.value = d; opt.textContent = d;
+        if (d === keepVal) opt.selected = true;
+        descSelect.appendChild(opt);
+      });
+    }
+    rebuildDescDropdown('', '');
+
+    // Filter table rows
     window.nigeriaApplyFilters = function() {
       var catVal  = catSelect.value;
       var descVal = descSelect.value;
       var tbody2  = table.querySelector('tbody');
-      var lastCatHidden = false;
       Array.from(tbody2.querySelectorAll('tr')).forEach(function(tr) {
         if (tr.classList.contains('price-group-row')) {
           var catName = tr.querySelector('td').textContent.trim();
-          lastCatHidden = catVal && catVal !== catName;
-          tr.style.display = lastCatHidden ? 'none' : '';
+          tr.style.display = (catVal && catVal !== catName) ? 'none' : '';
         } else {
           var cells = tr.querySelectorAll('td');
           if (!cells.length) return;
@@ -2317,21 +2332,7 @@
     };
 
     catSelect.addEventListener('change', function() {
-      // When category changes, update description options
-      var catVal = catSelect.value;
-      var prevDesc = descSelect.value;
-      descSelect.innerHTML = '<option value="">All Descriptions</option>';
-      var descsForCat = [];
-      (catVal ? (byCategory[catVal] || []) : Object.values(byCategory).reduce(function(a,b){return a.concat(b);},[]))
-        .forEach(function(r) {
-          if (r.description && r.description !== '—' && descsForCat.indexOf(r.description) === -1) descsForCat.push(r.description);
-        });
-      descsForCat.sort().forEach(function(d) {
-        var opt = document.createElement('option');
-        opt.value = d; opt.textContent = d;
-        if (d === prevDesc) opt.selected = true;
-        descSelect.appendChild(opt);
-      });
+      rebuildDescDropdown(catSelect.value, '');
       window.nigeriaApplyFilters();
     });
     descSelect.addEventListener('change', window.nigeriaApplyFilters);
