@@ -552,6 +552,23 @@
 <div class="sub">Total rows in current price sheet</div>
 </div>
 </div>
+<div id="nigeria-filters" style="display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap;">
+  <div style="display:flex;flex-direction:column;gap:4px;">
+    <label style="font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:0.5px;">Category</label>
+    <select id="ng-cat-filter" style="padding:7px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;color:var(--text);background:#fff;min-width:160px;cursor:pointer;">
+      <option value="">All Categories</option>
+    </select>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:4px;">
+    <label style="font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:0.5px;">Description</label>
+    <select id="ng-desc-filter" style="padding:7px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;color:var(--text);background:#fff;min-width:200px;cursor:pointer;">
+      <option value="">All Descriptions</option>
+    </select>
+  </div>
+  <div style="display:flex;align-items:flex-end;">
+    <button onclick="document.getElementById('ng-cat-filter').value='';document.getElementById('ng-desc-filter').value='';nigeriaApplyFilters();" style="padding:7px 14px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#f5f9f6;color:var(--navy);cursor:pointer;font-weight:600;">✕ Clear</button>
+  </div>
+</div>
 <div class="table-wrap" id="nigeria-prices-wrap">
 <table id="nigeria-prices-table">
 <thead><tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th></tr></thead>
@@ -2257,6 +2274,67 @@
         tbody.appendChild(tr);
       });
     });
+
+    // Populate dropdowns (Feature: dropdowns for category + description)
+    var catSelect  = document.getElementById('ng-cat-filter');
+    var descSelect = document.getElementById('ng-desc-filter');
+
+    var allDescs = [];
+    sortedCats.forEach(function(cat) {
+      var opt = document.createElement('option');
+      opt.value = cat; opt.textContent = cat;
+      catSelect.appendChild(opt);
+      byCategory[cat].forEach(function(r) {
+        if (r.description && r.description !== '—' && allDescs.indexOf(r.description) === -1) allDescs.push(r.description);
+      });
+    });
+    allDescs.sort().forEach(function(d) {
+      var opt = document.createElement('option');
+      opt.value = d; opt.textContent = d;
+      descSelect.appendChild(opt);
+    });
+
+    window.nigeriaApplyFilters = function() {
+      var catVal  = catSelect.value;
+      var descVal = descSelect.value;
+      var tbody2  = table.querySelector('tbody');
+      var lastCatHidden = false;
+      Array.from(tbody2.querySelectorAll('tr')).forEach(function(tr) {
+        if (tr.classList.contains('price-group-row')) {
+          var catName = tr.querySelector('td').textContent.trim();
+          lastCatHidden = catVal && catVal !== catName;
+          tr.style.display = lastCatHidden ? 'none' : '';
+        } else {
+          var cells = tr.querySelectorAll('td');
+          if (!cells.length) return;
+          var rowCat  = cells[0].textContent.trim();
+          var rowDesc = cells[1].textContent.trim();
+          var catMatch  = !catVal  || rowCat  === catVal;
+          var descMatch = !descVal || rowDesc === descVal;
+          tr.style.display = (catMatch && descMatch) ? '' : 'none';
+        }
+      });
+    };
+
+    catSelect.addEventListener('change', function() {
+      // When category changes, update description options
+      var catVal = catSelect.value;
+      var prevDesc = descSelect.value;
+      descSelect.innerHTML = '<option value="">All Descriptions</option>';
+      var descsForCat = [];
+      (catVal ? (byCategory[catVal] || []) : Object.values(byCategory).reduce(function(a,b){return a.concat(b);},[]))
+        .forEach(function(r) {
+          if (r.description && r.description !== '—' && descsForCat.indexOf(r.description) === -1) descsForCat.push(r.description);
+        });
+      descsForCat.sort().forEach(function(d) {
+        var opt = document.createElement('option');
+        opt.value = d; opt.textContent = d;
+        if (d === prevDesc) opt.selected = true;
+        descSelect.appendChild(opt);
+      });
+      window.nigeriaApplyFilters();
+    });
+    descSelect.addEventListener('change', window.nigeriaApplyFilters);
 
     // Hover chart tooltip (Feature C)
     var tooltip = document.createElement('div');
