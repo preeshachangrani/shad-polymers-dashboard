@@ -1483,8 +1483,8 @@
       return '→';
     }
 
-    function makeSubChart(canvasId, title, cats, descFilter) {
-      // descFilter: array of desc values to include, or null for all
+    function makeTrendChart(canvasId, title, cats, descFilter) {
+      // Multi-line trend chart: one line per subcategory, X=date, Y=price
       var keys = Object.keys(subStats).filter(function(k) {
         return cats.indexOf(subStats[k].cat) > -1 &&
                (!descFilter || descFilter.indexOf(subStats[k].desc) > -1);
@@ -1495,37 +1495,59 @@
         if (ca !== cb) return ca < cb ? -1 : 1;
         return subStats[a].desc < subStats[b].desc ? -1 : 1;
       });
-      var labels = keys.map(function(k){ return subStats[k].cat + ' — ' + subStats[k].desc; });
-      var avgs   = keys.map(function(k){ return subAvg(k); });
-      var mins   = keys.map(function(k){ return Math.min.apply(null, subStats[k].prices); });
-      var maxs   = keys.map(function(k){ return Math.max.apply(null, subStats[k].prices); });
-      var colors = ['#1a7550','#c49a3c','#3182ce','#e53e3e','#805ad5','#f59e0b','#38a169','#dd6b20','#2b6cb0'];
-      var bgColors = keys.map(function(k,i){ return colors[i % colors.length]; });
+
+      // Collect all unique timestamps across all keys, sorted oldest→newest
+      var allDates = {};
+      keys.forEach(function(k) {
+        subStats[k].dates.forEach(function(d) { if (d) allDates[d] = true; });
+      });
+      var sortedTs = Object.keys(allDates).map(Number).sort(function(a,b){return a-b;});
+      var mnths = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var dateLabels = sortedTs.map(function(ts) {
+        var dt = new Date(ts); return dt.getDate() + ' ' + mnths[dt.getMonth()];
+      });
+
+      var palette = ['#1a7550','#c49a3c','#3182ce','#e53e3e','#805ad5','#f59e0b','#dd6b20','#2b6cb0','#38a169'];
+
+      var datasets = keys.map(function(k, i) {
+        var s = subStats[k];
+        var pairMap = {};
+        s.dates.forEach(function(d, j) { if (d) pairMap[d] = s.prices[j]; });
+        var data = sortedTs.map(function(ts) { return pairMap[ts] !== undefined ? pairMap[ts] : null; });
+        var col = palette[i % palette.length];
+        return {
+          label: s.desc + ' ' + trendArrow(k),
+          data: data,
+          borderColor: col,
+          backgroundColor: col + '22',
+          borderWidth: 2.5,
+          pointRadius: 5,
+          pointBackgroundColor: col,
+          tension: 0.3,
+          spanGaps: true
+        };
+      });
 
       var ctx = document.getElementById(canvasId);
       if (!ctx) return;
       new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [
-            { label: 'Min', data: mins, backgroundColor: 'rgba(26,117,80,0.35)', borderRadius: 3 },
-            { label: 'Avg', data: avgs, backgroundColor: bgColors.map(function(c){return c+'cc';}), borderRadius: 3 },
-            { label: 'Max', data: maxs, backgroundColor: 'rgba(49,130,206,0.35)', borderRadius: 3 }
-          ]
-        },
+        type: 'line',
+        data: { labels: dateLabels, datasets: datasets },
         options: {
-          plugins: { legend: { position: 'top', labels: { font: { size: 10 } } },
-            title: { display: true, text: title, font: { size: 12, weight: 'bold' }, color: '#12593b' } },
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { position: 'top', labels: { font: { size: 10 }, boxWidth: 12, padding: 8 } },
+            title: { display: true, text: title, font: { size: 12, weight: 'bold' }, color: '#12593b' }
+          },
           scales: {
-            x: { ticks: { font: { size: 10 }, maxRotation: 30 } },
-            y: { ticks: { callback: function(v){return '$'+v.toLocaleString();}, font:{size:10} }, beginAtZero: false }
+            x: { ticks: { font: { size: 9 }, maxRotation: 35 } },
+            y: { ticks: { callback: function(v){ return '$'+v.toLocaleString(); }, font: { size: 10 } }, beginAtZero: false }
           }
         }
       });
     }
 
-    // Build narrative per group
+    // Build narrative per group with market context
     function groupNarrative(cats, label) {
       var keys = Object.keys(subStats).filter(function(k){ return cats.indexOf(subStats[k].cat) > -1; });
       if (!keys.length) return '';
@@ -1533,12 +1555,23 @@
       var low  = keys.reduce(function(a,b){ return subAvg(a)<subAvg(b)?a:b; });
       var ups  = keys.filter(function(k){ return trendArrow(k)==='↑'; }).map(function(k){return subStats[k].desc;});
       var dns  = keys.filter(function(k){ return trendArrow(k)==='↓'; }).map(function(k){return subStats[k].desc;});
+      var flt  = keys.filter(function(k){ return trendArrow(k)==='→'; }).map(function(k){return subStats[k].desc;});
+      var mktCtx = '';
+      if (cats.length === 1 && cats[0] === 'HDPE')
+        mktCtx = ' <em style="color:#856d3d;">[Global: HDPE injection +41% vs pre-crisis; bottomed $1,248 on 26 Jun, +3% since. Strait of Hormuz still at 39% throughput — buy pressure persists.]</em>';
+      else if (cats.length === 1 && cats[0] === 'LDPE')
+        mktCtx = ' <em style="color:#856d3d;">[Global: LDPE is the coiled-spring grade — deepest retracement (-28% from peak) yet least substitutable. Liquid packaging supply scarcity expected to snap back sharply.]</em>';
+      else if (cats.length === 1 && cats[0] === 'LLDPE')
+        mktCtx = ' <em style="color:#856d3d;">[Global: LLDPE film grades tracking broader PE upward on Middle East feedstock tightness; enable/exceed grades under pressure from reduced MEG supply routes.]</em>';
+      else if (cats.indexOf('PP') > -1)
+        mktCtx = ' <em style="color:#856d3d;">[Global: PP bottomed $1,225 on 3 Jul; +1.6% in week to 10 Jul. Rising on cost not scarcity — China self-sufficient in PP, but propylene tight. BOPP converter spreads now negative.]</em>';
       return '<strong>' + label + ':</strong> ' +
         subStats[high].desc + ' leads at avg <strong>$' + subAvg(high).toLocaleString() + '/MT</strong>; ' +
         subStats[low].desc  + ' is lowest at <strong>$' + subAvg(low).toLocaleString()  + '/MT</strong>. ' +
-        (ups.length ? 'Rising grades: ' + ups.join(', ') + '. ' : '') +
-        (dns.length ? 'Easing grades: ' + dns.join(', ') + '. ' : '') +
-        'Price spread reflects application premium and supplier origin.';
+        (ups.length ? '<span style="color:#15803d;">↑ Rising: ' + ups.join(', ') + '.</span> ' : '') +
+        (flt.length ? '<span style="color:#92400e;">→ Stable: ' + flt.join(', ') + '.</span> ' : '') +
+        (dns.length ? '<span style="color:#991b1b;">↓ Easing: ' + dns.join(', ') + '.</span> ' : '') +
+        mktCtx;
     }
 
     var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][new Date().getMonth()];
@@ -1551,20 +1584,25 @@
 
       // HDPE
       '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:12px;">' +
-        '<canvas id="ng-hdpe-chart" height="80"></canvas></div>' +
+        '<canvas id="ng-hdpe-chart" height="130"></canvas></div>' +
       // LDPE
       '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:12px;">' +
-        '<canvas id="ng-ldpe-chart" height="80"></canvas></div>' +
+        '<canvas id="ng-ldpe-chart" height="130"></canvas></div>' +
       // LLDPE
       '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:12px;">' +
-        '<canvas id="ng-lldpe-chart" height="80"></canvas></div>' +
+        '<canvas id="ng-lldpe-chart" height="130"></canvas></div>' +
       // PP / PPCP / PPR
       '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:14px;">' +
-        '<canvas id="ng-pp-chart" height="80"></canvas></div>' +
+        '<canvas id="ng-pp-chart" height="130"></canvas></div>' +
 
       // Narrative
-      '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px 18px;font-size:12px;color:#15803d;line-height:1.9;margin-bottom:20px;">' +
-        '<strong>&#128221; Market Narrative — Nigeria CFR Apapa (' + mo + ' ' + yr + '):</strong><br>' +
+      '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px 18px;font-size:12px;color:#15803d;line-height:2;margin-bottom:20px;">' +
+        '<strong>&#128221; Market Narrative — Nigeria CFR Apapa (' + mo + ' ' + yr + '):</strong>' +
+        '<div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:8px 12px;margin:8px 0 10px;font-size:11px;color:#92400e;line-height:1.6;">' +
+        '&#9888; <strong>Global Context (Aug 2026):</strong> Strait of Hormuz disruptions (39% throughput) are driving polymer prices upward across all grades. ' +
+        'HDPE +41% vs pre-crisis levels; PP +1.6% w/w to 10 Jul; LDPE as coiled-spring grade expected to rebound sharply. ' +
+        'Source: ChemAnalyst China assessments, Jul 2026.' +
+        '</div>' +
         groupNarrative(['HDPE'], 'HDPE') + '<br>' +
         groupNarrative(['LDPE'], 'LDPE') + '<br>' +
         groupNarrative(['LLDPE'], 'LLDPE') + '<br>' +
@@ -1575,10 +1613,10 @@
     if (wrap && wrap.parentNode) wrap.parentNode.insertBefore(summaryDiv, wrap.nextSibling);
 
     setTimeout(function() {
-      makeSubChart('ng-hdpe-chart',  'HDPE — Price by Subcategory ($/MT)',  ['HDPE'],  null);
-      makeSubChart('ng-ldpe-chart',  'LDPE — Price by Subcategory ($/MT)',  ['LDPE'],  null);
-      makeSubChart('ng-lldpe-chart', 'LLDPE — Price by Subcategory ($/MT)', ['LLDPE'], null);
-      makeSubChart('ng-pp-chart',    'PP · PPCP · PPR — Injection, Raffia, Copolymer, Random ($/MT)', ['PP','PPCP','PPR'], null);
+      makeTrendChart('ng-hdpe-chart',  'HDPE — Price Trend by Subcategory ($/MT)',  ['HDPE'],  null);
+      makeTrendChart('ng-ldpe-chart',  'LDPE — Price Trend by Subcategory ($/MT)',  ['LDPE'],  null);
+      makeTrendChart('ng-lldpe-chart', 'LLDPE — Price Trend by Subcategory ($/MT)', ['LLDPE'], null);
+      makeTrendChart('ng-pp-chart',    'PP · PPCP · PPR — Price Trend by Grade ($/MT)', ['PP','PPCP','PPR'], null);
     }, 200);
 
   })();
