@@ -1456,67 +1456,131 @@
       tr.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
     });
 
-    // Category summary section (Feature D)
-    var catStats = {};
-    sortedCats.forEach(function(cat) {
-      var prices = byCategory[cat].map(function(r){return r.price;}).filter(function(p){return p>0;});
-      if (!prices.length) return;
-      catStats[cat] = {
-        avg: Math.round(prices.reduce(function(a,b){return a+b;},0) / prices.length),
-        min: Math.min.apply(null, prices),
-        max: Math.max.apply(null, prices),
-        count: prices.length
-      };
+    // ---- Feature D: Enhanced price trend charts ----
+
+    // Build (category, description) → stats from ALL rows
+    var subStats = {}; // key: "CAT||DESC"
+    allRows.forEach(function(r) {
+      if (!r.price) return;
+      var k = r.category + '||' + r.description;
+      if (!subStats[k]) subStats[k] = { cat: r.category, desc: r.description, prices: [], dates: [] };
+      subStats[k].prices.push(r.price);
+      subStats[k].dates.push(r.dateVal);
     });
-    var statCats = Object.keys(catStats);
-    if (statCats.length < 2) return;
-    var highCat = statCats.reduce(function(a,b){return catStats[a].avg > catStats[b].avg ? a : b;});
-    var lowCat  = statCats.reduce(function(a,b){return catStats[a].avg < catStats[b].avg ? a : b;});
-    var avgAll  = Math.round(statCats.reduce(function(s,c){return s+catStats[c].avg;},0) / statCats.length);
+
+    function subAvg(k) {
+      var p = subStats[k].prices;
+      return Math.round(p.reduce(function(a,b){return a+b;},0)/p.length);
+    }
+    function trendArrow(k) {
+      var s = subStats[k];
+      if (s.prices.length < 2) return '→';
+      // pair prices with dates, sort by date
+      var paired = s.prices.map(function(p,i){return {p:p,d:s.dates[i]};}).sort(function(a,b){return a.d-b.d;});
+      var first = paired[0].p, last = paired[paired.length-1].p;
+      if (last > first + 20) return '↑';
+      if (last < first - 20) return '↓';
+      return '→';
+    }
+
+    function makeSubChart(canvasId, title, cats, descFilter) {
+      // descFilter: array of desc values to include, or null for all
+      var keys = Object.keys(subStats).filter(function(k) {
+        return cats.indexOf(subStats[k].cat) > -1 &&
+               (!descFilter || descFilter.indexOf(subStats[k].desc) > -1);
+      });
+      if (!keys.length) return;
+      keys.sort(function(a,b) {
+        var ca = subStats[a].cat, cb = subStats[b].cat;
+        if (ca !== cb) return ca < cb ? -1 : 1;
+        return subStats[a].desc < subStats[b].desc ? -1 : 1;
+      });
+      var labels = keys.map(function(k){ return subStats[k].cat + ' — ' + subStats[k].desc; });
+      var avgs   = keys.map(function(k){ return subAvg(k); });
+      var mins   = keys.map(function(k){ return Math.min.apply(null, subStats[k].prices); });
+      var maxs   = keys.map(function(k){ return Math.max.apply(null, subStats[k].prices); });
+      var colors = ['#1a7550','#c49a3c','#3182ce','#e53e3e','#805ad5','#f59e0b','#38a169','#dd6b20','#2b6cb0'];
+      var bgColors = keys.map(function(k,i){ return colors[i % colors.length]; });
+
+      var ctx = document.getElementById(canvasId);
+      if (!ctx) return;
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            { label: 'Min', data: mins, backgroundColor: 'rgba(26,117,80,0.35)', borderRadius: 3 },
+            { label: 'Avg', data: avgs, backgroundColor: bgColors.map(function(c){return c+'cc';}), borderRadius: 3 },
+            { label: 'Max', data: maxs, backgroundColor: 'rgba(49,130,206,0.35)', borderRadius: 3 }
+          ]
+        },
+        options: {
+          plugins: { legend: { position: 'top', labels: { font: { size: 10 } } },
+            title: { display: true, text: title, font: { size: 12, weight: 'bold' }, color: '#12593b' } },
+          scales: {
+            x: { ticks: { font: { size: 10 }, maxRotation: 30 } },
+            y: { ticks: { callback: function(v){return '$'+v.toLocaleString();}, font:{size:10} }, beginAtZero: false }
+          }
+        }
+      });
+    }
+
+    // Build narrative per group
+    function groupNarrative(cats, label) {
+      var keys = Object.keys(subStats).filter(function(k){ return cats.indexOf(subStats[k].cat) > -1; });
+      if (!keys.length) return '';
+      var high = keys.reduce(function(a,b){ return subAvg(a)>subAvg(b)?a:b; });
+      var low  = keys.reduce(function(a,b){ return subAvg(a)<subAvg(b)?a:b; });
+      var ups  = keys.filter(function(k){ return trendArrow(k)==='↑'; }).map(function(k){return subStats[k].desc;});
+      var dns  = keys.filter(function(k){ return trendArrow(k)==='↓'; }).map(function(k){return subStats[k].desc;});
+      return '<strong>' + label + ':</strong> ' +
+        subStats[high].desc + ' leads at avg <strong>$' + subAvg(high).toLocaleString() + '/MT</strong>; ' +
+        subStats[low].desc  + ' is lowest at <strong>$' + subAvg(low).toLocaleString()  + '/MT</strong>. ' +
+        (ups.length ? 'Rising grades: ' + ups.join(', ') + '. ' : '') +
+        (dns.length ? 'Easing grades: ' + dns.join(', ') + '. ' : '') +
+        'Price spread reflects application premium and supplier origin.';
+    }
+
     var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][new Date().getMonth()];
     var yr = new Date().getFullYear();
 
     var summaryDiv = document.createElement('div');
     summaryDiv.style.marginTop = '28px';
     summaryDiv.innerHTML =
-      '<div class="section-title" style="margin-top:0;">&#128202; Nigeria Polymer Price Trends by Category</div>' +
-      '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:14px;"><canvas id="nigeria-cat-chart" height="75"></canvas></div>' +
-      '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px 18px;font-size:13px;color:#15803d;line-height:1.8;margin-bottom:20px;">' +
-        '<strong>&#128221; Market Narrative &mdash; Nigeria CFR Apapa (' + mo + ' ' + yr + '):</strong><br>' +
-        'Across <strong>' + statCats.length + ' polymer categories</strong>, average CFR Apapa prices range from ' +
-        '<strong>$' + catStats[lowCat].min.toLocaleString() + ' &ndash; $' + catStats[lowCat].max.toLocaleString() + '/MT (' + lowCat + ')</strong> at the low end to ' +
-        '<strong>$' + catStats[highCat].min.toLocaleString() + ' &ndash; $' + catStats[highCat].max.toLocaleString() + '/MT (' + highCat + ')</strong> at the high end. ' +
-        'The blended average across all categories is <strong>$' + avgAll.toLocaleString() + '/MT</strong>. ' +
-        highCat + ' commands the highest average at <strong>$' + catStats[highCat].avg.toLocaleString() + '/MT</strong>, ' +
-        'while ' + lowCat + ' is the most price-accessible at <strong>$' + catStats[lowCat].avg.toLocaleString() + '/MT</strong>. ' +
-        'Price spreads within categories reflect grade differentiation, supplier origin premiums, and shipment timing.' +
+      '<div class="section-title" style="margin-top:0;">&#128202; Nigeria Polymer Price Trends — ' + mo + ' ' + yr + '</div>' +
+
+      // HDPE
+      '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:12px;">' +
+        '<canvas id="ng-hdpe-chart" height="80"></canvas></div>' +
+      // LDPE
+      '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:12px;">' +
+        '<canvas id="ng-ldpe-chart" height="80"></canvas></div>' +
+      // LLDPE
+      '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:12px;">' +
+        '<canvas id="ng-lldpe-chart" height="80"></canvas></div>' +
+      // PP / PPCP / PPR
+      '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:14px;">' +
+        '<canvas id="ng-pp-chart" height="80"></canvas></div>' +
+
+      // Narrative
+      '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px 18px;font-size:12px;color:#15803d;line-height:1.9;margin-bottom:20px;">' +
+        '<strong>&#128221; Market Narrative — Nigeria CFR Apapa (' + mo + ' ' + yr + '):</strong><br>' +
+        groupNarrative(['HDPE'], 'HDPE') + '<br>' +
+        groupNarrative(['LDPE'], 'LDPE') + '<br>' +
+        groupNarrative(['LLDPE'], 'LLDPE') + '<br>' +
+        groupNarrative(['PP','PPCP','PPR'], 'PP / PPCP / PPR') +
       '</div>';
 
     var wrap = document.getElementById('nigeria-prices-wrap');
     if (wrap && wrap.parentNode) wrap.parentNode.insertBefore(summaryDiv, wrap.nextSibling);
 
     setTimeout(function() {
-      var ctx2 = document.getElementById('nigeria-cat-chart');
-      if (!ctx2) return;
-      new Chart(ctx2, {
-        type: 'bar',
-        data: {
-          labels: statCats,
-          datasets: [
-            { label: 'Min $/MT', data: statCats.map(function(c){return catStats[c].min;}), backgroundColor: 'rgba(26,117,80,0.5)', borderRadius: 4 },
-            { label: 'Avg $/MT', data: statCats.map(function(c){return catStats[c].avg;}), backgroundColor: 'rgba(196,154,60,0.8)', borderRadius: 4 },
-            { label: 'Max $/MT', data: statCats.map(function(c){return catStats[c].max;}), backgroundColor: 'rgba(49,130,206,0.5)', borderRadius: 4 }
-          ]
-        },
-        options: {
-          plugins: { legend: { position: 'top', labels: { font: { size: 11 } } } },
-          scales: {
-            x: { ticks: { font: { size: 11 } } },
-            y: { ticks: { callback: function(v){return '$'+v.toLocaleString();} }, beginAtZero: false }
-          }
-        }
-      });
+      makeSubChart('ng-hdpe-chart',  'HDPE — Price by Subcategory ($/MT)',  ['HDPE'],  null);
+      makeSubChart('ng-ldpe-chart',  'LDPE — Price by Subcategory ($/MT)',  ['LDPE'],  null);
+      makeSubChart('ng-lldpe-chart', 'LLDPE — Price by Subcategory ($/MT)', ['LLDPE'], null);
+      makeSubChart('ng-pp-chart',    'PP · PPCP · PPR — Injection, Raffia, Copolymer, Random ($/MT)', ['PP','PPCP','PPR'], null);
     }, 200);
+
   })();
   // ===== END NIGERIA PRICES ENHANCEMENTS =====
 
