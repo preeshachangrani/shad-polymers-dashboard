@@ -552,8 +552,8 @@
 <div class="sub">Total rows in current price sheet</div>
 </div>
 </div>
-<div class="table-wrap">
-<table>
+<div class="table-wrap" id="nigeria-prices-wrap">
+<table id="nigeria-prices-table">
 <thead><tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th></tr></thead>
 <tbody><tr>
 <td>LLDPE</td>
@@ -2180,6 +2180,186 @@
     }
 
   });
+
+  // ===== NIGERIA PRICES ENHANCEMENTS =====
+  (function() {
+    var table = document.getElementById('nigeria-prices-table');
+    if (!table) return;
+
+    function parseDate(s) {
+      if (!s || s === '—') return 0;
+      var mo = {jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+      s = s.trim().toLowerCase();
+      var m = s.match(/(\d+)[\s\-]([a-z]{3})/);
+      if (m) return (mo[m[2]]||0)*100 + parseInt(m[1]);
+      m = s.match(/([a-z]{3,})[\s\-](\d+)/);
+      if (m) return (mo[m[1].substring(0,3)]||0)*100 + parseInt(m[2]);
+      m = s.match(/([a-z]{3})/);
+      if (m) return (mo[m[1]]||0)*100;
+      return 0;
+    }
+
+    // Collect all rows
+    var allRows = [];
+    table.querySelectorAll('tbody tr').forEach(function(tr) {
+      var cells = tr.querySelectorAll('td');
+      if (cells.length < 8) return;
+      var priceRaw = cells[4].textContent.replace(/[$,]/g,'').trim();
+      allRows.push({
+        category: cells[0].textContent.trim(),
+        description: cells[1].textContent.trim(),
+        grade: cells[2].textContent.trim(),
+        mfi: cells[3].textContent.trim(),
+        price: parseFloat(priceRaw) || 0,
+        priceText: cells[4].textContent.trim(),
+        supplier: cells[5].textContent.trim(),
+        brand: cells[6].textContent.trim(),
+        dateText: cells[7].textContent.trim(),
+        dateVal: parseDate(cells[7].textContent.trim()),
+        payment: cells[8] ? cells[8].textContent.trim() : ''
+      });
+    });
+
+    // Group by grade, keep last 3 by date; store full history for hover
+    var gradeHistory = {}, gradeFiltered = {};
+    allRows.forEach(function(r) {
+      var k = r.grade.toLowerCase();
+      if (!gradeHistory[k]) gradeHistory[k] = [];
+      gradeHistory[k].push(r);
+    });
+    Object.keys(gradeHistory).forEach(function(k) {
+      gradeHistory[k].sort(function(a,b){return b.dateVal - a.dateVal;});
+      gradeFiltered[k] = gradeHistory[k].slice(0,3);
+    });
+
+    // Group filtered rows by category, sort categories A-Z
+    var byCategory = {};
+    Object.values(gradeFiltered).forEach(function(rows) {
+      rows.forEach(function(r) {
+        if (!byCategory[r.category]) byCategory[r.category] = [];
+        byCategory[r.category].push(r);
+      });
+    });
+    var sortedCats = Object.keys(byCategory).sort();
+
+    // Rebuild tbody with category headers
+    var tbody = table.querySelector('tbody');
+    tbody.innerHTML = '';
+    sortedCats.forEach(function(cat) {
+      var hr = document.createElement('tr');
+      hr.className = 'price-group-row';
+      hr.innerHTML = '<td colspan="9">' + cat + '</td>';
+      tbody.appendChild(hr);
+      byCategory[cat].forEach(function(r) {
+        var tr = document.createElement('tr');
+        tr.dataset.gradeKey = r.grade.toLowerCase();
+        tr.innerHTML = '<td>'+r.category+'</td><td>'+r.description+'</td><td><strong>'+r.grade+'</strong></td><td>'+r.mfi+'</td><td class="price-val">'+r.priceText+'</td><td>'+r.supplier+'</td><td>'+r.brand+'</td><td>'+r.dateText+'</td><td>'+r.payment+'</td>';
+        tbody.appendChild(tr);
+      });
+    });
+
+    // Hover chart tooltip (Feature C)
+    var tooltip = document.createElement('div');
+    tooltip.style.cssText = 'position:fixed;display:none;background:#0a3d28;border:1px solid #1a7550;border-radius:10px;padding:12px 16px;z-index:9999;width:250px;box-shadow:0 4px 20px rgba(0,0,0,0.4);pointer-events:none;';
+    document.body.appendChild(tooltip);
+    var hovChart = null;
+
+    table.querySelectorAll('tbody tr:not(.price-group-row)').forEach(function(tr) {
+      tr.addEventListener('mouseenter', function(e) {
+        var k = this.dataset.gradeKey;
+        var hist = gradeHistory[k] || [];
+        if (hist.length < 2) return;
+        var sorted = hist.slice().reverse();
+        var labels = sorted.map(function(r){return r.dateText;});
+        var prices = sorted.map(function(r){return r.price;});
+        var grade = hist[0].grade;
+        tooltip.innerHTML = '<div style="color:#e0b050;font-weight:700;font-size:12px;margin-bottom:8px;">' + grade + ' — Price History</div><canvas id="tip-chart" width="220" height="110"></canvas>';
+        tooltip.style.display = 'block';
+        var left = Math.min(e.clientX + 18, window.innerWidth - 270);
+        var top = Math.max(e.clientY - 60, 10);
+        tooltip.style.left = left + 'px';
+        tooltip.style.top = top + 'px';
+        if (hovChart) { hovChart.destroy(); hovChart = null; }
+        var ctx = document.getElementById('tip-chart');
+        if (ctx) {
+          hovChart = new Chart(ctx, {
+            type: 'line',
+            data: { labels: labels, datasets: [{ data: prices, borderColor: '#c49a3c', backgroundColor: 'rgba(196,154,60,0.12)', pointBackgroundColor: '#c49a3c', tension: 0.3, pointRadius: 4, borderWidth: 2 }] },
+            options: { animation: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8db89e', font: { size: 9 } }, grid: { color: '#1a755044' } }, y: { ticks: { color: '#8db89e', font: { size: 9 }, callback: function(v){return '$'+v;} }, grid: { color: '#1a755044' }, beginAtZero: false } } }
+          });
+        }
+      });
+      tr.addEventListener('mousemove', function(e) {
+        if (tooltip.style.display === 'none') return;
+        tooltip.style.left = Math.min(e.clientX + 18, window.innerWidth - 270) + 'px';
+        tooltip.style.top = Math.max(e.clientY - 60, 10) + 'px';
+      });
+      tr.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+    });
+
+    // Category summary section (Feature D)
+    var catStats = {};
+    sortedCats.forEach(function(cat) {
+      var prices = byCategory[cat].map(function(r){return r.price;}).filter(function(p){return p>0;});
+      if (!prices.length) return;
+      catStats[cat] = {
+        avg: Math.round(prices.reduce(function(a,b){return a+b;},0) / prices.length),
+        min: Math.min.apply(null, prices),
+        max: Math.max.apply(null, prices),
+        count: prices.length
+      };
+    });
+    var statCats = Object.keys(catStats);
+    if (statCats.length < 2) return;
+    var highCat = statCats.reduce(function(a,b){return catStats[a].avg > catStats[b].avg ? a : b;});
+    var lowCat  = statCats.reduce(function(a,b){return catStats[a].avg < catStats[b].avg ? a : b;});
+    var avgAll  = Math.round(statCats.reduce(function(s,c){return s+catStats[c].avg;},0) / statCats.length);
+    var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][new Date().getMonth()];
+    var yr = new Date().getFullYear();
+
+    var summaryDiv = document.createElement('div');
+    summaryDiv.style.marginTop = '28px';
+    summaryDiv.innerHTML =
+      '<div class="section-title" style="margin-top:0;">&#128202; Nigeria Polymer Price Trends by Category</div>' +
+      '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:14px;"><canvas id="nigeria-cat-chart" height="75"></canvas></div>' +
+      '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px 18px;font-size:13px;color:#15803d;line-height:1.8;margin-bottom:20px;">' +
+        '<strong>&#128221; Market Narrative &mdash; Nigeria CFR Apapa (' + mo + ' ' + yr + '):</strong><br>' +
+        'Across <strong>' + statCats.length + ' polymer categories</strong>, average CFR Apapa prices range from ' +
+        '<strong>$' + catStats[lowCat].min.toLocaleString() + ' &ndash; $' + catStats[lowCat].max.toLocaleString() + '/MT (' + lowCat + ')</strong> at the low end to ' +
+        '<strong>$' + catStats[highCat].min.toLocaleString() + ' &ndash; $' + catStats[highCat].max.toLocaleString() + '/MT (' + highCat + ')</strong> at the high end. ' +
+        'The blended average across all categories is <strong>$' + avgAll.toLocaleString() + '/MT</strong>. ' +
+        highCat + ' commands the highest average at <strong>$' + catStats[highCat].avg.toLocaleString() + '/MT</strong>, ' +
+        'while ' + lowCat + ' is the most price-accessible at <strong>$' + catStats[lowCat].avg.toLocaleString() + '/MT</strong>. ' +
+        'Price spreads within categories reflect grade differentiation, supplier origin premiums, and shipment timing.' +
+      '</div>';
+
+    var wrap = document.getElementById('nigeria-prices-wrap');
+    if (wrap && wrap.parentNode) wrap.parentNode.insertBefore(summaryDiv, wrap.nextSibling);
+
+    setTimeout(function() {
+      var ctx2 = document.getElementById('nigeria-cat-chart');
+      if (!ctx2) return;
+      new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: statCats,
+          datasets: [
+            { label: 'Min $/MT', data: statCats.map(function(c){return catStats[c].min;}), backgroundColor: 'rgba(26,117,80,0.5)', borderRadius: 4 },
+            { label: 'Avg $/MT', data: statCats.map(function(c){return catStats[c].avg;}), backgroundColor: 'rgba(196,154,60,0.8)', borderRadius: 4 },
+            { label: 'Max $/MT', data: statCats.map(function(c){return catStats[c].max;}), backgroundColor: 'rgba(49,130,206,0.5)', borderRadius: 4 }
+          ]
+        },
+        options: {
+          plugins: { legend: { position: 'top', labels: { font: { size: 11 } } } },
+          scales: {
+            x: { ticks: { font: { size: 11 } } },
+            y: { ticks: { callback: function(v){return '$'+v.toLocaleString();} }, beginAtZero: false }
+          }
+        }
+      });
+    }, 200);
+  })();
+  // ===== END NIGERIA PRICES ENHANCEMENTS =====
 
 </script>
 
