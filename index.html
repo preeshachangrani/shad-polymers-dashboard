@@ -1262,10 +1262,12 @@
     summaryDiv.style.marginTop='28px';
     summaryDiv.innerHTML=
       '<div class="section-title" style="margin-top:0;">&#128202; Nigeria Polymer Price Trends — '+mo+' '+yr+'</div>'+
-      '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:12px;"><canvas id="ng-hdpe-chart" height="130"></canvas></div>'+
-      '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:12px;"><canvas id="ng-ldpe-chart" height="130"></canvas></div>'+
-      '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:12px;"><canvas id="ng-lldpe-chart" height="130"></canvas></div>'+
-      '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:14px;"><canvas id="ng-pp-chart" height="130"></canvas></div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">'+
+        '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><canvas id="ng-hdpe-chart" height="160"></canvas></div>'+
+        '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><canvas id="ng-ldpe-chart" height="160"></canvas></div>'+
+        '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><canvas id="ng-lldpe-chart" height="160"></canvas></div>'+
+        '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><canvas id="ng-pp-chart" height="160"></canvas></div>'+
+      '</div>'+
       '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px 18px;font-size:12px;color:#15803d;line-height:2;margin-bottom:20px;">'+
         '<strong>&#128221; Market Narrative — Nigeria CFR Apapa ('+mo+' '+yr+'):</strong>'+
         '<div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:8px 12px;margin:8px 0 10px;font-size:11px;color:#92400e;line-height:1.6;">'+
