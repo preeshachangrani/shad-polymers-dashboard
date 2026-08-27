@@ -257,8 +257,13 @@
 <div class="sub">Total rows in current price sheet</div>
 </div>
 </div>
-<div class="table-wrap">
-<table>
+<div id="nigeria-filters" style="display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+<select id="ng-cat-filter" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;min-width:130px;"><option value="">All Categories</option></select>
+<select id="ng-desc-filter" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;min-width:150px;"><option value="">All Descriptions</option></select>
+<button onclick="(function(){document.getElementById('ng-cat-filter').value='';document.getElementById('ng-desc-filter').value='';if(typeof nigeriaApplyFilters==='function')nigeriaApplyFilters();})()" style="padding:6px 12px;background:var(--border);border:1px solid #aaa;border-radius:6px;font-size:12px;cursor:pointer;">✕ Clear</button>
+</div>
+<div id="nigeria-prices-wrap" class="table-wrap">
+<table id="nigeria-prices-table">
 <thead><tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th></tr></thead>
 <tbody><tr><td>LLDPE</td><td>Enable</td><td>ENABLE 2XXX SERIES</td><td>—</td><td>$1,360</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LLDPE</td><td>Enable</td><td>4002/4009</td><td>—</td><td>$1,380</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LLDPE</td><td>Enable</td><td>Enable</td><td>1</td><td>$1,680</td><td>Emeraude</td><td>Exxon</td><td>1-Jun</td><td>Credit</td></tr><tr><td>LLDPE</td><td>Exact</td><td>3XXX SERIES</td><td>—</td><td>$2,380</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LLDPE</td><td>Exceed</td><td>1327/1015</td><td>—</td><td>$1,410</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LLDPE</td><td>Exceed</td><td>XP 8 SERIES</td><td>—</td><td>$1,450</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LLDPE</td><td>Exceed</td><td>S 9 SERIES</td><td>—</td><td>$1,450</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LLDPE</td><td>Exceed</td><td>EXCEED 1012/3812</td><td>—</td><td>$1,500</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LLDPE</td><td>Exceed</td><td>Exceed</td><td>1</td><td>$1,490</td><td>Emeraude</td><td>—</td><td>1-Jun</td><td>Credit</td></tr><tr><td>LLDPE</td><td>Exceed</td><td>Exceed</td><td>1</td><td>$1,710</td><td>Emeraude</td><td>—</td><td>1-Jun</td><td>Credit</td></tr><tr><td>LLDPE</td><td>Film</td><td>non slip</td><td>—</td><td>$1,160</td><td>Snetor</td><td>trader bags</td><td>21-August</td><td>Credit</td></tr><tr><td>LLDPE</td><td>Film</td><td>slip</td><td>—</td><td>$1,160</td><td>emeraude</td><td>exxon</td><td>20 - Aug</td><td>credit</td></tr><tr><td>LLDPE</td><td>Film</td><td>0118AB</td><td>—</td><td>$1,163.50</td><td>Snetor</td><td>—</td><td>18-Aug</td><td>Credit 90d</td></tr><tr><td>LLDPE</td><td>Film</td><td>GEN PURPOSE FILM</td><td>—</td><td>$1,180</td><td>EMERAUDE</td><td>—</td><td>4 August</td><td>—</td></tr><tr><td>LLDPE</td><td>Film</td><td>118WJ</td><td>1</td><td>$1,110</td><td>Manuchar</td><td>sabic</td><td>23 July</td><td>Credit</td></tr><tr><td>LLDPE</td><td>Film</td><td>—</td><td>1</td><td>$1,500</td><td>Montachem</td><td>Exelene</td><td>4-Jun</td><td>Credit</td></tr><tr><td>LLDPE</td><td>Film</td><td>1018N</td><td>1</td><td>$1,510</td><td>Emeraude</td><td>—</td><td>27-May</td><td>Credit</td></tr><tr><td>LLDPE</td><td>Film</td><td>DFDC 7080H</td><td>1</td><td>$1,510</td><td>Snetor</td><td>—</td><td>22-May</td><td>Credit</td></tr><tr><td>LLDPE</td><td>Special</td><td>S SERIES</td><td>—</td><td>$2,430</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LDPE</td><td>EVA</td><td>364HE/EVA 00328</td><td>—</td><td>$2,380</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LDPE</td><td>Exceed</td><td>EXCEED 4536PA UV</td><td>—</td><td>$1,380</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LDPE</td><td>Exceed</td><td>BASE (MK/MA/MB/CB)</td><td>—</td><td>$1,380</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LDPE</td><td>Film</td><td>FD0274</td><td>2</td><td>$1,360</td><td>Snetor</td><td>Lotrene</td><td>20-Aug</td><td>Credit</td></tr><tr><td>LDPE</td><td>Film</td><td>FD0274</td><td>—</td><td>$1,374.16</td><td>Snetor</td><td>LOTRENE</td><td>17 August</td><td>CREDIT/ 90D</td></tr><tr><td>LDPE</td><td>Film</td><td>LD160AT/100AC</td><td>—</td><td>$1,480</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LDPE</td><td>Film</td><td>BW/165BW1</td><td>—</td><td>$1,480</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LDPE</td><td>Film</td><td>LD251/258/259</td><td>—</td><td>$1,680</td><td>EMERAUDE</td><td>exxon</td><td>4 August</td><td>—</td></tr><tr><td>LDPE</td><td>Film</td><td>FD0474</td><td>4</td><td>$1,520</td><td>Snetor</td><td>Lotrene</td><td>1-July</td><td>Credit</td></tr><tr><td>LDPE</td><td>Film</td><td>100AC</td><td>2</td><td>$1,650</td><td>Emeraude</td><td>Exxon</td><td>3-Jun</td><td>Credit</td></tr><tr><td>LDPE</td><td>Film</td><td>4</td><td>4</td><td>$1,700</td><td>Snetor</td><td>—</td><td>29-May</td><td>Credit</td></tr><tr><td>LDPE</td><td>Film</td><td>2022AC</td><td>2</td><td>$1,810</td><td>Emeraude</td><td>—</td><td>27-May</td><td>Credit</td></tr><tr><td>LDPE</td><td>Shrink</td><td>LO600</td><td>0.75</td><td>$1,330</td><td>tricon</td><td>Velogy basell</td><td>1-Aug</td><td>credit</td></tr><tr><td>LDPE</td><td>Shrink</td><td>—</td><td>—</td><td>$1,360</td><td>Tricon</td><td>Repsol</td><td>1-July</td><td>Credit</td></tr><tr><td>LDPE</td><td>Shrink</td><td>FE8000</td><td>0.8</td><td>$1,480</td><td>Snetor</td><td>total</td><td>25-June</td><td>Credit</td></tr><tr><td>LDPE</td><td>Shrink</td><td>0.3</td><td>0.3</td><td>$1,720</td><td>Snetor</td><td>—</td><td>29-May</td><td>Credit</td></tr><tr><td>HDPE</td><td>Blow</td><td>50100</td><td>0.1</td><td>$1,180</td><td>Emeraude</td><td>—</td><td>20-Aug</td><td>credit</td></tr><tr><td>HDPE</td><td>Blow</td><td>HYA600</td><td>0.35</td><td>$1,160</td><td>emeraude</td><td>exxon</td><td>20-Aug</td><td>credit</td></tr><tr><td>HDPE</td><td>Blow</td><td>5502</td><td>0.35</td><td>$1,240</td><td>Elaine</td><td>China</td><td>14-Aug</td><td>30/70</td></tr><tr><td>HDPE</td><td>Blow</td><td>5502</td><td>0.35</td><td>$1,340</td><td>Snetor</td><td>Snetor</td><td>14-Aug</td><td>Cash</td></tr><tr><td>HDPE</td><td>Blow</td><td>HYA600</td><td>—</td><td>$1,230</td><td>Emeraude</td><td>—</td><td>4 August</td><td>—</td></tr><tr><td>HDPE</td><td>Blow</td><td>HPA020 HD5</td><td>—</td><td>$1,250</td><td>Emeraude</td><td>—</td><td>4 August</td><td>—</td></tr><tr><td>HDPE</td><td>Blow</td><td>TR571</td><td>—</td><td>$1,385</td><td>Manuchar</td><td>GS Caltex</td><td>23 July</td><td>Credit</td></tr><tr><td>HDPE</td><td>Blow</td><td>50100</td><td>—</td><td>$1,355</td><td>manuchar</td><td>GS caltex</td><td>23 July</td><td>Credit</td></tr><tr><td>HDPE</td><td>Blow</td><td>5502</td><td>0.35</td><td>$1,040</td><td>Snetor</td><td>Marlex</td><td>3-July</td><td>Credit</td></tr><tr><td>HDPE</td><td>Blow</td><td>50100</td><td>10</td><td>$1,630</td><td>Snetor</td><td>—</td><td>9-Jun</td><td>Credit</td></tr><tr><td>HDPE</td><td>Caps CSD</td><td>MB5568</td><td>—</td><td>$1,440</td><td>Somochem</td><td>Borealis</td><td>15-Aug</td><td>Credit</td></tr><tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1,830</td><td>Lotte</td><td>—</td><td>11-Jun</td><td>Cash</td></tr><tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1,800</td><td>Lotte</td><td>—</td><td>10-Jun</td><td>Cash</td></tr><tr><td>HDPE</td><td>Caps CSD</td><td>CL9010</td><td>1</td><td>$1,840</td><td>Tricon</td><td>Lotte</td><td>9-Jun</td><td>Credit</td></tr><tr><td>HDPE</td><td>Film</td><td>USA</td><td>—</td><td>$1,245</td><td>Snetor</td><td>trader bags</td><td>20-August</td><td>Credit</td></tr><tr><td>HDPE</td><td>Film</td><td>FL7000</td><td>0.3</td><td>$1,360</td><td>tricon</td><td>lotte</td><td>20-Aug</td><td>—</td></tr><tr><td>HDPE</td><td>Film</td><td>HTA001</td><td>0.32</td><td>$1,180</td><td>emeraude</td><td>exxon</td><td>20-Aug</td><td>credit</td></tr><tr><td>HDPE</td><td>Film</td><td>FL7000 B25KG</td><td>—</td><td>$1,382</td><td>SNETOR</td><td>—</td><td>5 August</td><td>—</td></tr><tr><td>HDPE</td><td>Film</td><td>HTA001/002</td><td>—</td><td>$1,250</td><td>Emeraude</td><td>—</td><td>4 August</td><td>—</td></tr><tr><td>HDPE</td><td>Film</td><td>Tr144</td><td>0.18</td><td>$1,550</td><td>snetor</td><td>—</td><td>9-Jun</td><td>Credit</td></tr><tr><td>HDPE</td><td>Film</td><td>7000</td><td>2.13</td><td>$1,440</td><td>Montachem</td><td>Exelene</td><td>4-Jun</td><td>Credit</td></tr><tr><td>HDPE</td><td>Injection</td><td>DNDB 7147</td><td>50</td><td>$1,190</td><td>polymed</td><td>dow</td><td>20-Aug</td><td>credit</td></tr><tr><td>HDPE</td><td>Injection</td><td>HMA 018</td><td>30</td><td>$1,160</td><td>emeraude</td><td>exxon</td><td>20-Aug</td><td>credit</td></tr><tr><td>HDPE</td><td>Injection</td><td>HMA 035</td><td>8</td><td>$1,200</td><td>emeraude</td><td>exxon</td><td>20-Aug</td><td>credit</td></tr><tr><td>HDPE</td><td>Injection</td><td>HMA016/018</td><td>—</td><td>$1,230</td><td>Emeraude</td><td>—</td><td>4 August</td><td>—</td></tr><tr><td>HDPE</td><td>Injection</td><td>HMA014/035</td><td>—</td><td>$1,270</td><td>Emeraude</td><td>—</td><td>4 August</td><td>—</td></tr><tr><td>HDPE</td><td>Injection</td><td>—</td><td>8</td><td>$1,410</td><td>SABIC</td><td>—</td><td>1-Aug</td><td>30/70</td></tr><tr><td>HDPE</td><td>Injection</td><td>—</td><td>30</td><td>$1,440</td><td>DOW</td><td>—</td><td>1-Aug</td><td>30/70</td></tr><tr><td>HDPE</td><td>Injection</td><td>8000UV</td><td>8</td><td>$1,420</td><td>Montachem</td><td>—</td><td>9-Jun</td><td>Credit</td></tr><tr><td>HDPE</td><td>Shrink</td><td>FE8000</td><td>0.8</td><td>$1,220</td><td>Snetor</td><td>Total</td><td>6-July</td><td>Credit</td></tr><tr><td>PPCP</td><td>Copolymer</td><td>—</td><td>70</td><td>$1,290</td><td>Montachem</td><td>Sahara</td><td>3-Aug</td><td>Against BL</td></tr><tr><td>PPCP</td><td>Copolymer</td><td>J1145T</td><td>60</td><td>$1,410</td><td>Hyosung</td><td>—</td><td>25-Jul</td><td>AGAINST BL</td></tr><tr><td>PPCP</td><td>Copolymer</td><td>—</td><td>44</td><td>$1,200</td><td>tricon</td><td>sabic/ basell</td><td>23 July</td><td>Credit</td></tr><tr><td>PPCP</td><td>Copolymer</td><td>—</td><td>70</td><td>$1,200</td><td>tricon</td><td>sabic/ basell</td><td>23 July</td><td>Credit</td></tr><tr><td>PPCP</td><td>Copolymer</td><td>10712</td><td>40</td><td>$1,140</td><td>Emeraude</td><td>total</td><td>29-Jun</td><td>Credit</td></tr><tr><td>PPCP</td><td>Copolymer</td><td>10642</td><td>44</td><td>$1,140</td><td>Emeraude</td><td>total</td><td>29-Jun</td><td>Credit</td></tr><tr><td>PPCP</td><td>Copolymer</td><td>12712</td><td>70</td><td>$1,140</td><td>Emeraude</td><td>total</td><td>29-Jun</td><td>Credit</td></tr><tr><td>PPCP</td><td>Copolymer</td><td>12642</td><td>70</td><td>$1,150</td><td>Montachem</td><td>TOTAL</td><td>29-Jun</td><td>CASH</td></tr><tr><td>PPCP</td><td>Copolymer</td><td>12642</td><td>70</td><td>$1,140</td><td>Emeraude</td><td>total</td><td>29-Jun</td><td>Credit</td></tr><tr><td>PPCP</td><td>Injection</td><td>P840J</td><td>43</td><td>$1,505</td><td>SCG</td><td>—</td><td>4 Jun</td><td>30/70</td></tr><tr><td>PP</td><td>Injection</td><td>HNR100</td><td>—</td><td>$1,180</td><td>Sasol</td><td>—</td><td>14 August</td><td>Credit / 30d</td></tr><tr><td>PP</td><td>Injection</td><td>HKR102</td><td>—</td><td>$1,170</td><td>Sasol</td><td>—</td><td>14 August</td><td>Credit / 30d</td></tr><tr><td>PP</td><td>Injection</td><td>HRV140</td><td>—</td><td>$1,217</td><td>Snetor</td><td>Sasol</td><td>14 August</td><td>Credit/90 d</td></tr><tr><td>PP</td><td>Injection</td><td>HLR102</td><td>—</td><td>$1,212</td><td>Snetor</td><td>Sasol</td><td>13 August</td><td>Credit/90 d</td></tr><tr><td>PP</td><td>Injection</td><td>HKR102</td><td>—</td><td>$1,212</td><td>Snetor</td><td>Sasol</td><td>13 August</td><td>Credit/90 d</td></tr><tr><td>PP</td><td>Injection</td><td>PP1304E5 YAN BG 25KGX55</td><td>—</td><td>$1,230</td><td>Emeraude</td><td>—</td><td>4 August</td><td>—</td></tr><tr><td>PP</td><td>Injection</td><td>PP5032E5 YAN BG 25KGX55</td><td>—</td><td>$1,230</td><td>Emeraude</td><td>—</td><td>4 August</td><td>—</td></tr><tr><td>PP</td><td>Injection</td><td>—</td><td>12</td><td>$1,380</td><td>china</td><td>—</td><td>1-Aug</td><td>30/70</td></tr><tr><td>PP</td><td>Injection</td><td>HYOSUNG</td><td>12</td><td>$1,400</td><td>HYOSUNG</td><td>—</td><td>1-Aug</td><td>Against BL</td></tr><tr><td>PP</td><td>Injection</td><td>551A</td><td>25</td><td>$1,200</td><td>tricon</td><td>sabic</td><td>22 July</td><td>Credit</td></tr><tr><td>PP</td><td>Injection</td><td>—</td><td>12</td><td>$1,250</td><td>Snetor</td><td>China</td><td>26-June</td><td>Credit</td></tr><tr><td>PP</td><td>Injection</td><td>B350F</td><td>9</td><td>$1,550</td><td>SK GLOBAL</td><td>—</td><td>17 Jun</td><td>CASH</td></tr><tr><td>PP</td><td>Injection</td><td>Y26</td><td>26</td><td>$1,530</td><td>Snetor</td><td>—</td><td>8-Jun</td><td>Credit</td></tr><tr><td>PP</td><td>Injection</td><td>HNR100</td><td>12</td><td>$1,500</td><td>Snetor</td><td>—</td><td>29-May</td><td>Credit</td></tr><tr><td>PP</td><td>Injection</td><td>1100N</td><td>12</td><td>$1,430</td><td>Emeraude</td><td>—</td><td>28-May</td><td>Credit</td></tr><tr><td>PP</td><td>Injection</td><td>HNR100</td><td>12</td><td>$1,180</td><td>Sasol</td><td>sasol</td><td>—</td><td>—</td></tr><tr><td>PP</td><td>Lamination</td><td>HRV140</td><td>25</td><td>$1,215</td><td>Snetor</td><td>sasol</td><td>20-Aug</td><td>credit</td></tr><tr><td>PP</td><td>Raffia</td><td>exxon</td><td>3.2</td><td>$1,430</td><td>Emeraude</td><td>—</td><td>4-Jun</td><td>—</td></tr><tr><td>PVC</td><td>Raffia</td><td>HKR102</td><td>3.5</td><td>$1,170</td><td>Sasol</td><td>sasol</td><td>—</td><td>—</td></tr><tr><td>PET</td><td>Bottle grade</td><td>CR8816</td><td>0.8</td><td>$1,198</td><td>CRC</td><td>—</td><td>18 Jun</td><td>CASH</td></tr><tr><td>PET</td><td>Bottle grade</td><td>CZ302</td><td>0.8</td><td>$1,290</td><td>ELAINE</td><td>—</td><td>17 Jun</td><td>CASH</td></tr><tr><td>CAL STEARATE</td><td>CaO 9-10.5%</td><td>x</td><td>x</td><td>$1,794</td><td>Prakash</td><td>Prakash</td><td>3-Aug</td><td>CASH</td></tr><tr><td>PPR</td><td>Random</td><td>—</td><td>45</td><td>$1,410</td><td>tricon</td><td>Hanwha</td><td>14-Aug</td><td>credit</td></tr><tr><td>PPR</td><td>Random</td><td>—</td><td>70</td><td>$1,410</td><td>tricon</td><td>Hanwha</td><td>14-Aug</td><td>credit</td></tr><tr><td>PPR</td><td>Random</td><td>R1001N</td><td>70</td><td>$1,510</td><td>Hyosung</td><td>—</td><td>1-Aug</td><td>30/70</td></tr><tr><td>PPR</td><td>Random</td><td>—</td><td>70</td><td>$1,570</td><td>BOROUGE</td><td>—</td><td>1-Aug</td><td>30/70</td></tr><tr><td>PPR</td><td>Random</td><td>—</td><td>12</td><td>$1,710</td><td>BOROUGE</td><td>—</td><td>1-Aug</td><td>30/70</td></tr><tr><td>PPR</td><td>Random</td><td>R1001N</td><td>70</td><td>$1,510</td><td>Hyosung</td><td>—</td><td>25-Jul</td><td>AGAINST BL</td></tr></tbody>
 </table>
@@ -520,8 +525,13 @@
 <div class="sub">Total rows in current price sheet</div>
 </div>
 </div>
-<div class="table-wrap">
-<table>
+<div id="sl-filters" style="display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap;align-items:center;">
+<select id="sl-cat-filter" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;min-width:130px;"><option value="">All Categories</option></select>
+<select id="sl-desc-filter" style="padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;min-width:150px;"><option value="">All Descriptions</option></select>
+<button onclick="(function(){document.getElementById('sl-cat-filter').value='';document.getElementById('sl-desc-filter').value='';if(typeof srilankaApplyFilters==='function')srilankaApplyFilters();})()" style="padding:6px 12px;background:var(--border);border:1px solid #aaa;border-radius:6px;font-size:12px;cursor:pointer;">✕ Clear</button>
+</div>
+<div id="srilanka-prices-wrap" class="table-wrap">
+<table id="srilanka-prices-table">
 <thead><tr><th>Category</th><th>Description</th><th>Grade</th><th>MFI</th><th>Price $/MT</th><th>Supplier</th><th>Brand</th><th>Date</th><th>Payment</th></tr></thead>
 <tbody><tr><td>LLDPE</td><td>CIPLAS FILM W/ADDIT</td><td>LL1119F</td><td>1</td><td>$1,220</td><td>ITOCHU</td><td>—</td><td>25-Aug</td><td>CASH</td></tr><tr><td>LLDPE</td><td>LOTRENE</td><td>1018N</td><td>—</td><td>$1,400</td><td>ANDY/CHEMDO</td><td>—</td><td>25-Aug</td><td>CASH</td></tr><tr><td>LLDPE</td><td>SABIC</td><td>118NJ</td><td>—</td><td>$1,410</td><td>ANDY/CHEMDO</td><td>—</td><td>25-Aug</td><td>CASH</td></tr><tr><td>LDPE</td><td>LOTRENE</td><td>274</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>LDPE</td><td>LOTRENE</td><td>5026</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>LDPE</td><td>LOTRENE</td><td>8000</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>LDPE</td><td>TASNEE</td><td>1925</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr><tr><td>LDPE</td><td>ZPC</td><td>2624H</td><td>—</td><td>$1,580</td><td>ANDY/CHEMDO</td><td>—</td><td>25-Aug</td><td>CASH</td></tr><tr><td>HDPE</td><td>INEOS BLOW</td><td>B53-35H-011</td><td>0.35</td><td>$1,240</td><td>ITOCHU</td><td>—</td><td>28-May</td><td>CASH</td></tr><tr><td>HDPE</td><td>LOTRENE. BLOW</td><td>Q5502BN</td><td>5.5</td><td>$905</td><td>ROSHAN</td><td>—</td><td>18-Mar</td><td>CASH</td></tr><tr><td>HDPE</td><td>MARLEX</td><td>Q5502BN</td><td>5.5</td><td>$1,445</td><td>ANDY CHENDO</td><td>—</td><td>25-Aug</td><td>CASH</td></tr><tr><td>HDPE</td><td>MARLEX</td><td>5502BN</td><td>5.5</td><td>$1,450</td><td>Stavian Vietnam</td><td>—</td><td>21-Aug</td><td>CASH</td></tr><tr><td>HDPE</td><td>STAVIAN</td><td>5502BN</td><td>5.5</td><td>$1,300</td><td>Stavian Vietnam</td><td>—</td><td>21-Aug</td><td>CASH</td></tr><tr><td>PET</td><td>CSD GRADE</td><td>CR8828</td><td>—</td><td>$1,187</td><td>CRC</td><td>—</td><td>21-Aug</td><td>CASH</td></tr><tr><td>PET</td><td>CSD GRADE</td><td>CR8828</td><td>—</td><td>$1,120</td><td>CRC</td><td>—</td><td>15-Jul</td><td>CASH</td></tr><tr><td>PET</td><td>WATER GRADE</td><td>CR8816</td><td>0.8</td><td>$1,182</td><td>CRC</td><td>—</td><td>21-Aug</td><td>CASH</td></tr><tr><td>PET</td><td>WATER GRADE</td><td>CR8816</td><td>0.8</td><td>$1,080</td><td>CRC</td><td>—</td><td>6-Jul</td><td>CASH</td></tr><tr><td>PET</td><td>WATER GRADE</td><td>CR8816</td><td>0.8</td><td>$1,185</td><td>CRC</td><td>—</td><td>18 Jun</td><td>CASH</td></tr><tr><td>PET</td><td>WATER GRADE</td><td>CR8816</td><td>0.8</td><td>$1,288</td><td>CRC</td><td>—</td><td>18-May</td><td>CASH</td></tr></tbody>
 </table>
@@ -737,6 +747,363 @@
     }
 
   });
+
+  // ===== NIGERIA PRICES ENHANCEMENTS =====
+  (function() {
+    var table = document.getElementById('nigeria-prices-table');
+    if (!table) return;
+
+    function parseDate(s) {
+      if (!s || s === '—') return 0;
+      var mo = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+      s = s.trim().toLowerCase();
+      var yr = new Date().getFullYear();
+      var day, month;
+      var m = s.match(/(\d+)[\s\-]([a-z]{3})/);
+      if (m) { day = parseInt(m[1]); month = mo[m[2]]; }
+      if (day === undefined) {
+        m = s.match(/([a-z]+)[\s ](\d+)/);
+        if (m) { month = mo[m[1].substring(0,3)]; day = parseInt(m[2]); }
+      }
+      if (day === undefined) {
+        m = s.match(/([a-z]{3})/);
+        if (m) { month = mo[m[1]]; day = 1; }
+      }
+      if (day === undefined || month === undefined) return 0;
+      return new Date(yr, month, day).getTime();
+    }
+
+    var allRows = [];
+    table.querySelectorAll('tbody tr').forEach(function(tr) {
+      var cells = tr.querySelectorAll('td');
+      if (cells.length < 8) return;
+      var priceRaw = cells[4].textContent.replace(/[$,]/g,'').trim();
+      allRows.push({
+        category: cells[0].textContent.trim(),
+        description: cells[1].textContent.trim(),
+        grade: cells[2].textContent.trim(),
+        mfi: cells[3].textContent.trim(),
+        price: parseFloat(priceRaw) || 0,
+        priceText: cells[4].textContent.trim(),
+        supplier: cells[5].textContent.trim(),
+        brand: cells[6].textContent.trim(),
+        dateText: cells[7].textContent.trim(),
+        dateVal: parseDate(cells[7].textContent.trim()),
+        payment: cells[8] ? cells[8].textContent.trim() : ''
+      });
+    });
+
+    // Feature B: last 3 per grade by date
+    var gradeHistory = {}, gradeFiltered = {};
+    allRows.forEach(function(r) {
+      var k = r.grade.toLowerCase().trim();
+      if (!gradeHistory[k]) gradeHistory[k] = [];
+      gradeHistory[k].push(r);
+    });
+    Object.keys(gradeHistory).forEach(function(k) {
+      gradeHistory[k].sort(function(a,b){return b.dateVal - a.dateVal;});
+      gradeFiltered[k] = gradeHistory[k].slice(0,3);
+    });
+
+    // Feature A: rebuild tbody alphabetically, last 3 per grade
+    var byCategory = {};
+    allRows.forEach(function(r) {
+      var cat = r.category;
+      if (!byCategory[cat]) byCategory[cat] = [];
+      var k = r.grade.toLowerCase().trim();
+      if (gradeFiltered[k] && gradeFiltered[k].indexOf(r) > -1) {
+        byCategory[cat].push(r);
+      }
+    });
+    var sortedCats = Object.keys(byCategory).sort();
+    var tbody = table.querySelector('tbody');
+    tbody.innerHTML = '';
+    sortedCats.forEach(function(cat) {
+      var hdr = document.createElement('tr');
+      hdr.innerHTML = '<td colspan="9" style="background:var(--navy);color:#fff;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:6px 10px;">' + cat + '</td>';
+      tbody.appendChild(hdr);
+      byCategory[cat].forEach(function(r) {
+        var tr = document.createElement('tr');
+        tr.dataset.gradeKey = r.grade.toLowerCase();
+        tr.dataset.cat = r.category;
+        tr.dataset.desc = r.description;
+        tr.innerHTML = '<td>'+r.category+'</td><td>'+r.description+'</td><td><strong>'+r.grade+'</strong></td><td>'+r.mfi+'</td><td class="price-val">'+r.priceText+'</td><td>'+r.supplier+'</td><td>'+r.brand+'</td><td>'+r.dateText+'</td><td>'+r.payment+'</td>';
+        tbody.appendChild(tr);
+      });
+    });
+
+    // Populate dropdowns from allRows (full set)
+    var catSelect = document.getElementById('ng-cat-filter');
+    var descSelect = document.getElementById('ng-desc-filter');
+    var catToDescs = {}, allDescs = {};
+    allRows.forEach(function(r) {
+      if (!catToDescs[r.category]) catToDescs[r.category] = {};
+      catToDescs[r.category][r.description] = true;
+      allDescs[r.description] = true;
+    });
+    if (catSelect) {
+      sortedCats.forEach(function(c) {
+        var opt = document.createElement('option');
+        opt.value = c; opt.textContent = c;
+        catSelect.appendChild(opt);
+      });
+    }
+    if (descSelect) {
+      Object.keys(allDescs).sort().forEach(function(d) {
+        var opt = document.createElement('option');
+        opt.value = d; opt.textContent = d;
+        descSelect.appendChild(opt);
+      });
+    }
+    function rebuildDescDropdown(catVal) {
+      if (!descSelect) return;
+      var current = descSelect.value;
+      descSelect.innerHTML = '<option value="">All Descriptions</option>';
+      var descs = catVal ? Object.keys(catToDescs[catVal] || {}).sort() : Object.keys(allDescs).sort();
+      descs.forEach(function(d) {
+        var opt = document.createElement('option'); opt.value = d; opt.textContent = d;
+        descSelect.appendChild(opt);
+      });
+      descSelect.value = (descs.indexOf(current) > -1) ? current : '';
+    }
+    if (catSelect) catSelect.addEventListener('change', function() { rebuildDescDropdown(catSelect.value); nigeriaApplyFilters(); });
+    if (descSelect) descSelect.addEventListener('change', function() { nigeriaApplyFilters(); });
+
+    window.nigeriaApplyFilters = function() {
+      var catVal = catSelect ? catSelect.value : '';
+      var descVal = descSelect ? descSelect.value : '';
+      var hdrMap = {};
+      tbody.querySelectorAll('tr').forEach(function(tr) {
+        if (tr.querySelector('td[colspan]')) { hdrMap[tr.querySelector('td').textContent.trim()] = tr; return; }
+        var cat = tr.dataset.cat || '', desc = tr.dataset.desc || '';
+        tr.style.display = ((!catVal || cat === catVal) && (!descVal || desc === descVal)) ? '' : 'none';
+      });
+      Object.keys(hdrMap).forEach(function(cat) {
+        var siblings = tbody.querySelectorAll('tr[data-cat="' + cat + '"]');
+        var anyVisible = false;
+        siblings.forEach(function(s) { if (s.style.display !== 'none') anyVisible = true; });
+        hdrMap[cat].style.display = anyVisible ? '' : 'none';
+      });
+    };
+
+    // Feature C: hover sparkline
+    var tooltip = document.createElement('div');
+    tooltip.style.cssText = 'position:fixed;z-index:9999;background:#0a3d28;border:1px solid #1a7550;border-radius:8px;padding:12px;display:none;pointer-events:none;min-width:260px;';
+    document.body.appendChild(tooltip);
+    var hovChart = null;
+    tbody.addEventListener('mouseover', function(e) {
+      var tr = e.target.closest('tr[data-grade-key]');
+      if (!tr) return;
+      var k = tr.dataset.gradeKey;
+      var hist = gradeHistory[k] || [];
+      if (hist.length < 2) return;
+      var sorted = hist.slice().filter(function(r){return r.dateVal;}).sort(function(a,b){return a.dateVal-b.dateVal;});
+      if (sorted.length < 2) return;
+      var labels = sorted.map(function(r){return r.dateText;});
+      var prices = sorted.map(function(r){return r.price;});
+      tooltip.innerHTML = '<div style="color:#e0b050;font-weight:700;font-size:12px;margin-bottom:8px;">' + hist[0].grade + ' — Price History</div><canvas id="tip-chart" width="220" height="110"></canvas>';
+      tooltip.style.display = 'block';
+      tooltip.style.left = Math.min(e.clientX+18, window.innerWidth-270)+'px';
+      tooltip.style.top = Math.max(e.clientY-60, 10)+'px';
+      if (hovChart) { hovChart.destroy(); hovChart = null; }
+      var ctx = document.getElementById('tip-chart');
+      if (ctx) hovChart = new Chart(ctx, { type:'line', data:{ labels:labels, datasets:[{ data:prices, borderColor:'#c49a3c', backgroundColor:'rgba(196,154,60,0.12)', pointBackgroundColor:'#c49a3c', tension:0.3, pointRadius:4, borderWidth:2 }] }, options:{ animation:false, plugins:{ legend:{display:false} }, scales:{ x:{ ticks:{color:'#8db89e',font:{size:9}}, grid:{color:'#1a755044'} }, y:{ ticks:{color:'#8db89e',font:{size:9},callback:function(v){return '$'+v;}}, grid:{color:'#1a755044'}, beginAtZero:false } } } });
+    });
+    tbody.addEventListener('mousemove', function(e) {
+      if (tooltip.style.display==='none') return;
+      tooltip.style.left = Math.min(e.clientX+18, window.innerWidth-270)+'px';
+      tooltip.style.top = Math.max(e.clientY-60, 10)+'px';
+    });
+    tbody.addEventListener('mouseleave', function() { tooltip.style.display='none'; if(hovChart){hovChart.destroy();hovChart=null;} });
+
+    // Feature D: trend charts
+    var subStats = {};
+    allRows.forEach(function(r) {
+      if (!r.price) return;
+      var k = r.category+'||'+r.description;
+      if (!subStats[k]) subStats[k] = {cat:r.category,desc:r.description,prices:[],dates:[]};
+      subStats[k].prices.push(r.price);
+      subStats[k].dates.push(r.dateVal);
+    });
+    function subAvg(k) { var p=subStats[k].prices; return Math.round(p.reduce(function(a,b){return a+b;},0)/p.length); }
+    function trendArrow(k) {
+      var s=subStats[k];
+      var paired=s.prices.map(function(p,i){return {p:p,d:s.dates[i]};}).filter(function(x){return x.d;}).sort(function(a,b){return a.d-b.d;});
+      if (paired.length<2) return '→';
+      var first=paired[0].p, last=paired[paired.length-1].p;
+      return last>first+20?'↑':last<first-20?'↓':'→';
+    }
+    function makeTrendChart(canvasId, title, cats) {
+      var keys=Object.keys(subStats).filter(function(k){return cats.indexOf(subStats[k].cat)>-1;});
+      if (!keys.length) return;
+      keys.sort(function(a,b){ var ca=subStats[a].cat,cb=subStats[b].cat; if(ca!==cb)return ca<cb?-1:1; return subStats[a].desc<subStats[b].desc?-1:1; });
+      var allDates={};
+      keys.forEach(function(k){subStats[k].dates.forEach(function(d){if(d)allDates[d]=true;});});
+      var sortedTs=Object.keys(allDates).map(Number).sort(function(a,b){return a-b;});
+      var mnths=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var dateLabels=sortedTs.map(function(ts){var dt=new Date(ts);return dt.getDate()+' '+mnths[dt.getMonth()];});
+      var palette=['#1a7550','#c49a3c','#3182ce','#e53e3e','#805ad5','#f59e0b','#dd6b20','#2b6cb0','#38a169'];
+      var datasets=keys.map(function(k,i){
+        var s=subStats[k],pairMap={},col=palette[i%palette.length];
+        s.dates.forEach(function(d,j){if(d)pairMap[d]=s.prices[j];});
+        return { label:s.desc+' '+trendArrow(k), data:sortedTs.map(function(ts){return pairMap[ts]!==undefined?pairMap[ts]:null;}), borderColor:col, backgroundColor:col+'22', borderWidth:2.5, pointRadius:5, pointBackgroundColor:col, tension:0.3, spanGaps:true };
+      });
+      var ctx=document.getElementById(canvasId); if(!ctx) return;
+      new Chart(ctx,{ type:'line', data:{labels:dateLabels,datasets:datasets}, options:{ interaction:{mode:'index',intersect:false}, plugins:{ legend:{position:'top',labels:{font:{size:10},boxWidth:12,padding:8}}, title:{display:true,text:title,font:{size:12,weight:'bold'},color:'#12593b'} }, scales:{ x:{ticks:{font:{size:9},maxRotation:35}}, y:{ticks:{callback:function(v){return '$'+v.toLocaleString();},font:{size:10}},beginAtZero:false} } } });
+    }
+    function groupNarrative(cats, label) {
+      var keys=Object.keys(subStats).filter(function(k){return cats.indexOf(subStats[k].cat)>-1;});
+      if (!keys.length) return '';
+      var high=keys.reduce(function(a,b){return subAvg(a)>subAvg(b)?a:b;});
+      var low=keys.reduce(function(a,b){return subAvg(a)<subAvg(b)?a:b;});
+      var ups=keys.filter(function(k){return trendArrow(k)==='↑';}).map(function(k){return subStats[k].desc;});
+      var dns=keys.filter(function(k){return trendArrow(k)==='↓';}).map(function(k){return subStats[k].desc;});
+      var flt=keys.filter(function(k){return trendArrow(k)==='→';}).map(function(k){return subStats[k].desc;});
+      var mktCtx='';
+      if (cats.length===1&&cats[0]==='HDPE') mktCtx=' <em style="color:#856d3d;">[Global: HDPE +41% vs pre-crisis; bottomed $1,248 on 26 Jun, +3% since. Strait of Hormuz still at 39% throughput.]</em>';
+      else if (cats.length===1&&cats[0]==='LDPE') mktCtx=' <em style="color:#856d3d;">[Global: LDPE coiled-spring grade — deepest retracement yet least substitutable. Sharp rebound expected.]</em>';
+      else if (cats.length===1&&cats[0]==='LLDPE') mktCtx=' <em style="color:#856d3d;">[Global: LLDPE film grades tracking broader PE upward on Middle East feedstock tightness.]</em>';
+      else if (cats.indexOf('PP')>-1) mktCtx=' <em style="color:#856d3d;">[Global: PP bottomed $1,225 on 3 Jul; +1.6% w/w to 10 Jul. Rising on cost; BOPP converter spreads now negative.]</em>';
+      return '<strong>'+label+':</strong> '+subStats[high].desc+' leads at avg <strong>$'+subAvg(high).toLocaleString()+'/MT</strong>; '+subStats[low].desc+' lowest at <strong>$'+subAvg(low).toLocaleString()+'/MT</strong>. '+(ups.length?'<span style="color:#15803d;">↑ Rising: '+ups.join(', ')+'.</span> ':'')+( flt.length?'<span style="color:#92400e;">→ Stable: '+flt.join(', ')+'.</span> ':'')+( dns.length?'<span style="color:#991b1b;">↓ Easing: '+dns.join(', ')+'.</span> ':'')+mktCtx;
+    }
+
+    var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][new Date().getMonth()];
+    var yr=new Date().getFullYear();
+    var summaryDiv=document.createElement('div');
+    summaryDiv.style.marginTop='28px';
+    summaryDiv.innerHTML=
+      '<div class="section-title" style="margin-top:0;">&#128202; Nigeria Polymer Price Trends — '+mo+' '+yr+'</div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">'+
+        '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><canvas id="ng-hdpe-chart" height="160"></canvas></div>'+
+        '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><canvas id="ng-ldpe-chart" height="160"></canvas></div>'+
+        '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><canvas id="ng-lldpe-chart" height="160"></canvas></div>'+
+        '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><canvas id="ng-pp-chart" height="160"></canvas></div>'+
+      '</div>'+
+      '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:14px 18px;font-size:12px;color:#15803d;line-height:2;margin-bottom:20px;">'+
+        '<strong>&#128221; Market Narrative — Nigeria CFR Apapa ('+mo+' '+yr+'):</strong>'+
+        '<div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:8px 12px;margin:8px 0 10px;font-size:11px;color:#92400e;line-height:1.6;">'+
+        '&#9888; <strong>Global Context (Aug 2026):</strong> Strait of Hormuz disruptions (39% throughput) driving polymer prices up across all grades. '+
+        'HDPE +41% vs pre-crisis; PP +1.6% w/w to 10 Jul; LDPE coiled-spring effect expected. Source: ChemAnalyst, Jul 2026.'+
+        '</div>'+
+        groupNarrative(['HDPE'],'HDPE')+'<br>'+
+        groupNarrative(['LDPE'],'LDPE')+'<br>'+
+        groupNarrative(['LLDPE'],'LLDPE')+'<br>'+
+        groupNarrative(['PP','PPCP','PPR'],'PP / PPCP / PPR')+
+      '</div>';
+    var wrap=document.getElementById('nigeria-prices-wrap');
+    if (wrap&&wrap.parentNode) wrap.parentNode.insertBefore(summaryDiv, wrap.nextSibling);
+    setTimeout(function(){
+      makeTrendChart('ng-hdpe-chart','HDPE — Price Trend by Subcategory ($/MT)',['HDPE']);
+      makeTrendChart('ng-ldpe-chart','LDPE — Price Trend by Subcategory ($/MT)',['LDPE']);
+      makeTrendChart('ng-lldpe-chart','LLDPE — Price Trend by Subcategory ($/MT)',['LLDPE']);
+      makeTrendChart('ng-pp-chart','PP · PPCP · PPR — Price Trend by Grade ($/MT)',['PP','PPCP','PPR']);
+    },200);
+  })();
+  // ===== END NIGERIA PRICES ENHANCEMENTS =====
+
+  // ===== SRI LANKA PRICES ENHANCEMENTS =====
+  (function() {
+    var table = document.getElementById('srilanka-prices-table');
+    if (!table) return;
+
+    function parseDate(s) {
+      if (!s || s === '—') return 0;
+      var mo = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+      s = s.trim().toLowerCase();
+      var yr = new Date().getFullYear();
+      var day, month, m;
+      m = s.match(/(\d+)[\s\-]([a-z]{3})/);
+      if (m) { day = parseInt(m[1]); month = mo[m[2]]; }
+      if (day === undefined) { m = s.match(/([a-z]+)[\s ](\d+)/); if (m) { month = mo[m[1].substring(0,3)]; day = parseInt(m[2]); } }
+      if (day === undefined) { m = s.match(/([a-z]{3})/); if (m) { month = mo[m[1]]; day = 1; } }
+      if (day === undefined || month === undefined) return 0;
+      return new Date(yr, month, day).getTime();
+    }
+
+    var allRows = [];
+    table.querySelectorAll('tbody tr').forEach(function(tr) {
+      var cells = tr.querySelectorAll('td');
+      if (cells.length < 8) return;
+      var priceRaw = cells[4].textContent.replace(/[$,]/g,'').trim();
+      allRows.push({ category:cells[0].textContent.trim(), description:cells[1].textContent.trim(), grade:cells[2].textContent.trim(), mfi:cells[3].textContent.trim(), price:parseFloat(priceRaw)||0, priceText:cells[4].textContent.trim(), supplier:cells[5].textContent.trim(), brand:cells[6].textContent.trim(), dateText:cells[7].textContent.trim(), dateVal:parseDate(cells[7].textContent.trim()), payment:cells[8]?cells[8].textContent.trim():'' });
+    });
+
+    var gradeHistory={}, gradeFiltered={};
+    allRows.forEach(function(r){ var k=r.grade.toLowerCase().trim(); if(!gradeHistory[k])gradeHistory[k]=[]; gradeHistory[k].push(r); });
+    Object.keys(gradeHistory).forEach(function(k){ gradeHistory[k].sort(function(a,b){return b.dateVal-a.dateVal;}); gradeFiltered[k]=gradeHistory[k].slice(0,3); });
+
+    var byCategory={};
+    allRows.forEach(function(r){ if(!byCategory[r.category])byCategory[r.category]=[]; var k=r.grade.toLowerCase().trim(); if(gradeFiltered[k]&&gradeFiltered[k].indexOf(r)>-1)byCategory[r.category].push(r); });
+    var sortedCats=Object.keys(byCategory).sort();
+    var tbody=table.querySelector('tbody');
+    tbody.innerHTML='';
+    sortedCats.forEach(function(cat){
+      var hdr=document.createElement('tr');
+      hdr.innerHTML='<td colspan="9" style="background:var(--navy);color:#fff;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.05em;padding:6px 10px;">'+cat+'</td>';
+      tbody.appendChild(hdr);
+      byCategory[cat].forEach(function(r){ var tr=document.createElement('tr'); tr.dataset.gradeKey=r.grade.toLowerCase(); tr.dataset.cat=r.category; tr.dataset.desc=r.description; tr.innerHTML='<td>'+r.category+'</td><td>'+r.description+'</td><td><strong>'+r.grade+'</strong></td><td>'+r.mfi+'</td><td class="price-val">'+r.priceText+'</td><td>'+r.supplier+'</td><td>'+r.brand+'</td><td>'+r.dateText+'</td><td>'+r.payment+'</td>'; tbody.appendChild(tr); });
+    });
+
+    var catSelect=document.getElementById('sl-cat-filter'), descSelect=document.getElementById('sl-desc-filter');
+    var catToDescs={}, allDescs={};
+    allRows.forEach(function(r){ if(!catToDescs[r.category])catToDescs[r.category]={}; catToDescs[r.category][r.description]=true; allDescs[r.description]=true; });
+    if(catSelect) sortedCats.forEach(function(c){ var o=document.createElement('option'); o.value=c; o.textContent=c; catSelect.appendChild(o); });
+    if(descSelect) Object.keys(allDescs).sort().forEach(function(d){ var o=document.createElement('option'); o.value=d; o.textContent=d; descSelect.appendChild(o); });
+    function rebuildSlDesc(catVal){ if(!descSelect)return; var cur=descSelect.value; descSelect.innerHTML='<option value="">All Descriptions</option>'; var descs=catVal?Object.keys(catToDescs[catVal]||{}).sort():Object.keys(allDescs).sort(); descs.forEach(function(d){var o=document.createElement('option');o.value=d;o.textContent=d;descSelect.appendChild(o);}); descSelect.value=descs.indexOf(cur)>-1?cur:''; }
+    if(catSelect) catSelect.addEventListener('change',function(){rebuildSlDesc(catSelect.value);srilankaApplyFilters();});
+    if(descSelect) descSelect.addEventListener('change',function(){srilankaApplyFilters();});
+
+    window.srilankaApplyFilters=function(){
+      var catVal=catSelect?catSelect.value:'', descVal=descSelect?descSelect.value:'', hdrMap={};
+      tbody.querySelectorAll('tr').forEach(function(tr){ if(tr.querySelector('td[colspan]')){hdrMap[tr.querySelector('td').textContent.trim()]=tr;return;} tr.style.display=((!catVal||tr.dataset.cat===catVal)&&(!descVal||tr.dataset.desc===descVal))?'':'none'; });
+      Object.keys(hdrMap).forEach(function(cat){ var siblings=tbody.querySelectorAll('tr[data-cat="'+cat+'"]'),any=false; siblings.forEach(function(s){if(s.style.display!=='none')any=true;}); hdrMap[cat].style.display=any?'':'none'; });
+    };
+
+    var tooltip=document.createElement('div');
+    tooltip.style.cssText='position:fixed;z-index:9999;background:#0a3d28;border:1px solid #1a7550;border-radius:8px;padding:12px;display:none;pointer-events:none;min-width:260px;';
+    document.body.appendChild(tooltip);
+    var hovChart=null;
+    tbody.addEventListener('mouseover',function(e){ var tr=e.target.closest('tr[data-grade-key]'); if(!tr)return; var k=tr.dataset.gradeKey,hist=gradeHistory[k]||[]; if(hist.length<2)return; var sorted=hist.slice().filter(function(r){return r.dateVal;}).sort(function(a,b){return a.dateVal-b.dateVal;}); if(sorted.length<2)return; tooltip.innerHTML='<div style="color:#e0b050;font-weight:700;font-size:12px;margin-bottom:8px;">'+hist[0].grade+' — Price History</div><canvas id="sl-tip-chart" width="220" height="110"></canvas>'; tooltip.style.display='block'; tooltip.style.left=Math.min(e.clientX+18,window.innerWidth-270)+'px'; tooltip.style.top=Math.max(e.clientY-60,10)+'px'; if(hovChart){hovChart.destroy();hovChart=null;} var ctx=document.getElementById('sl-tip-chart'); if(ctx) hovChart=new Chart(ctx,{type:'line',data:{labels:sorted.map(function(r){return r.dateText;}),datasets:[{data:sorted.map(function(r){return r.price;}),borderColor:'#c49a3c',backgroundColor:'rgba(196,154,60,0.12)',pointBackgroundColor:'#c49a3c',tension:0.3,pointRadius:4,borderWidth:2}]},options:{animation:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#8db89e',font:{size:9}},grid:{color:'#1a755044'}},y:{ticks:{color:'#8db89e',font:{size:9},callback:function(v){return '$'+v;}},grid:{color:'#1a755044'},beginAtZero:false}}}}); });
+    tbody.addEventListener('mousemove',function(e){ if(tooltip.style.display==='none')return; tooltip.style.left=Math.min(e.clientX+18,window.innerWidth-270)+'px'; tooltip.style.top=Math.max(e.clientY-60,10)+'px'; });
+    tbody.addEventListener('mouseleave',function(){ tooltip.style.display='none'; if(hovChart){hovChart.destroy();hovChart=null;} });
+
+    var subStats={};
+    allRows.forEach(function(r){ if(!r.price)return; var k=r.category+'||'+r.description; if(!subStats[k])subStats[k]={cat:r.category,desc:r.description,prices:[],dates:[]}; subStats[k].prices.push(r.price); subStats[k].dates.push(r.dateVal); });
+    function subAvg(k){var p=subStats[k].prices;return Math.round(p.reduce(function(a,b){return a+b;},0)/p.length);}
+    function trendArrow(k){var s=subStats[k],paired=s.prices.map(function(p,i){return{p:p,d:s.dates[i]};}).filter(function(x){return x.d;}).sort(function(a,b){return a.d-b.d;});if(paired.length<2)return '→';var f=paired[0].p,l=paired[paired.length-1].p;return l>f+20?'↑':l<f-20?'↓':'→';}
+    function makeTrendChart(canvasId,title,cats){
+      var keys=Object.keys(subStats).filter(function(k){return cats.indexOf(subStats[k].cat)>-1;});
+      if(!keys.length)return;
+      keys.sort(function(a,b){var ca=subStats[a].cat,cb=subStats[b].cat;if(ca!==cb)return ca<cb?-1:1;return subStats[a].desc<subStats[b].desc?-1:1;});
+      var allDates={};
+      keys.forEach(function(k){subStats[k].dates.forEach(function(d){if(d)allDates[d]=true;});});
+      var sortedTs=Object.keys(allDates).map(Number).sort(function(a,b){return a-b;});
+      var mnths=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      var dateLabels=sortedTs.map(function(ts){var dt=new Date(ts);return dt.getDate()+' '+mnths[dt.getMonth()];});
+      var palette=['#1a7550','#c49a3c','#3182ce','#e53e3e','#805ad5','#f59e0b','#dd6b20','#2b6cb0','#38a169'];
+      var datasets=keys.map(function(k,i){var s=subStats[k],pm={},col=palette[i%palette.length];s.dates.forEach(function(d,j){if(d)pm[d]=s.prices[j];});return{label:s.desc+' '+trendArrow(k),data:sortedTs.map(function(ts){return pm[ts]!==undefined?pm[ts]:null;}),borderColor:col,backgroundColor:col+'22',borderWidth:2.5,pointRadius:5,pointBackgroundColor:col,tension:0.3,spanGaps:true};});
+      var ctx=document.getElementById(canvasId);if(!ctx)return;
+      new Chart(ctx,{type:'line',data:{labels:dateLabels,datasets:datasets},options:{interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{font:{size:10},boxWidth:12,padding:8}},title:{display:true,text:title,font:{size:12,weight:'bold'},color:'#12593b'}},scales:{x:{ticks:{font:{size:9},maxRotation:35}},y:{ticks:{callback:function(v){return '$'+v.toLocaleString();},font:{size:10}},beginAtZero:false}}}});
+    }
+
+    var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][new Date().getMonth()];
+    var yr=new Date().getFullYear();
+    var summaryDiv=document.createElement('div');
+    summaryDiv.style.marginTop='28px';
+    summaryDiv.innerHTML=
+      '<div class="section-title" style="margin-top:0;">&#128202; Sri Lanka Polymer Price Trends — '+mo+' '+yr+'</div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">'+
+        '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><canvas id="sl-hdpe-chart" height="160"></canvas></div>'+
+        '<div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px;"><canvas id="sl-pet-chart" height="160"></canvas></div>'+
+      '</div>';
+    var wrap=document.getElementById('srilanka-prices-wrap');
+    if(wrap&&wrap.parentNode) wrap.parentNode.insertBefore(summaryDiv,wrap.nextSibling);
+    setTimeout(function(){
+      makeTrendChart('sl-hdpe-chart','HDPE — Price Trend by Grade ($/MT)',['HDPE']);
+      makeTrendChart('sl-pet-chart','PET — Price Trend by Grade ($/MT)',['PET']);
+    },200);
+  })();
+  // ===== END SRI LANKA PRICES ENHANCEMENTS =====
 
 </script>
 </body>
