@@ -415,6 +415,22 @@
       tr.dataset.gradeKey = row.grade.toLowerCase();
     });
 
+    // self-healing: keep the visible table rows grouped alphabetically by category
+    // even if a future data refresh re-emits them in a different order (2026-09-02 fix)
+    (function() {
+      var tbody = table.querySelector('tbody');
+      if (!tbody) return;
+      var trs = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+      trs.sort(function(a, b) {
+        var ca = (a.dataset.cat || '').toUpperCase();
+        var cb = (b.dataset.cat || '').toUpperCase();
+        if (ca < cb) return -1;
+        if (ca > cb) return 1;
+        return 0;
+      });
+      trs.forEach(function(tr) { tbody.appendChild(tr); });
+    })();
+
     var gradeHistory = {};
     allRows.forEach(function(r) {
       var k = r.grade.toLowerCase().trim();
@@ -596,6 +612,22 @@
       tr.dataset.gradeKey = row.grade.toLowerCase();
     });
 
+    // self-healing: keep the visible table rows grouped alphabetically by category
+    // even if a future data refresh re-emits them in a different order (2026-09-02 fix)
+    (function() {
+      var tbody = table.querySelector('tbody');
+      if (!tbody) return;
+      var trs = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+      trs.sort(function(a, b) {
+        var ca = (a.dataset.cat || '').toUpperCase();
+        var cb = (b.dataset.cat || '').toUpperCase();
+        if (ca < cb) return -1;
+        if (ca > cb) return 1;
+        return 0;
+      });
+      trs.forEach(function(tr) { tbody.appendChild(tr); });
+    })();
+
     var gradeHistory = {};
     allRows.forEach(function(r) {
       var k = r.grade.toLowerCase().trim();
@@ -773,6 +805,22 @@
       tr.dataset.gradeKey = row.grade.toLowerCase();
     });
 
+    // self-healing: keep the visible table rows grouped alphabetically by category
+    // even if a future data refresh re-emits them in a different order (2026-09-02 fix)
+    (function() {
+      var tbody = table.querySelector('tbody');
+      if (!tbody) return;
+      var trs = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+      trs.sort(function(a, b) {
+        var ca = (a.dataset.cat || '').toUpperCase();
+        var cb = (b.dataset.cat || '').toUpperCase();
+        if (ca < cb) return -1;
+        if (ca > cb) return 1;
+        return 0;
+      });
+      trs.forEach(function(tr) { tbody.appendChild(tr); });
+    })();
+
     var gradeHistory = {};
     allRows.forEach(function(r) {
       var k = r.grade.toLowerCase().trim();
@@ -905,6 +953,22 @@
       tr.dataset.desc = row.description;
       tr.dataset.gradeKey = row.grade.toLowerCase();
     });
+
+    // self-healing: keep the visible table rows grouped alphabetically by category
+    // even if a future data refresh re-emits them in a different order (2026-09-02 fix)
+    (function() {
+      var tbody = table.querySelector('tbody');
+      if (!tbody) return;
+      var trs = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+      trs.sort(function(a, b) {
+        var ca = (a.dataset.cat || '').toUpperCase();
+        var cb = (b.dataset.cat || '').toUpperCase();
+        if (ca < cb) return -1;
+        if (ca > cb) return 1;
+        return 0;
+      });
+      trs.forEach(function(tr) { tbody.appendChild(tr); });
+    })();
 
     var gradeHistory = {};
     allRows.forEach(function(r) {
@@ -1039,6 +1103,22 @@
       tr.dataset.gradeKey = row.grade.toLowerCase();
     });
 
+    // self-healing: keep the visible table rows grouped alphabetically by category
+    // even if a future data refresh re-emits them in a different order (2026-09-02 fix)
+    (function() {
+      var tbody = table.querySelector('tbody');
+      if (!tbody) return;
+      var trs = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+      trs.sort(function(a, b) {
+        var ca = (a.dataset.cat || '').toUpperCase();
+        var cb = (b.dataset.cat || '').toUpperCase();
+        if (ca < cb) return -1;
+        if (ca > cb) return 1;
+        return 0;
+      });
+      trs.forEach(function(tr) { tbody.appendChild(tr); });
+    })();
+
     var gradeHistory = {};
     allRows.forEach(function(r) {
       var k = r.grade.toLowerCase().trim();
@@ -1171,6 +1251,22 @@
       tr.dataset.desc = row.description;
       tr.dataset.gradeKey = row.grade.toLowerCase();
     });
+
+    // self-healing: keep the visible table rows grouped alphabetically by category
+    // even if a future data refresh re-emits them in a different order (2026-09-02 fix)
+    (function() {
+      var tbody = table.querySelector('tbody');
+      if (!tbody) return;
+      var trs = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+      trs.sort(function(a, b) {
+        var ca = (a.dataset.cat || '').toUpperCase();
+        var cb = (b.dataset.cat || '').toUpperCase();
+        if (ca < cb) return -1;
+        if (ca > cb) return 1;
+        return 0;
+      });
+      trs.forEach(function(tr) { tbody.appendChild(tr); });
+    })();
 
     var gradeHistory = {};
     allRows.forEach(function(r) {
