@@ -397,10 +397,19 @@
     btn.classList.add('active');
   }
 
-  document.getElementById('footer-text').textContent =
-    'Last refreshed: 11 September 2026 / Data sourced from Google Drive (June 2026 Tracker \u00b7 Prices (per-country subfolders) \u00b7 Materials \u00b7 Market Info) \u00b7 Auto-refreshed daily';
-
   document.addEventListener('DOMContentLoaded', function () {
+    // guarded + moved inside DOMContentLoaded (2026-09-14 fix): this used to run as a bare
+    // top-level statement BEFORE this listener was even registered, and #footer-text doesn't
+    // exist in the current markup, so getElementById returned null and .textContent threw \u2014
+    // which aborted the whole script before this addEventListener call ever ran. That silently
+    // killed EVERY enhancement below (all 6 countries' filters, trend charts, tooltips, self-sort)
+    // for as long as this bug has been live. Null-guarded now so a missing element can never
+    // do that again.
+    var footerTextEl = document.getElementById('footer-text');
+    if (footerTextEl) {
+      footerTextEl.textContent =
+        'Last refreshed: 11 September 2026 / Data sourced from Google Drive (June 2026 Tracker \u00b7 Prices (per-country subfolders) \u00b7 Materials \u00b7 Market Info) \u00b7 Auto-refreshed daily';
+    }
     var buyerCtx = document.getElementById('buyerChart');
     if (buyerCtx) {
       new Chart(buyerCtx, {
@@ -1411,5 +1420,6 @@
   // ===== END COTONOU PRICE TABLE ENHANCEMENTS =====
 
 </script>
+<div id="footer-text" style="text-align:center;font-size:11px;color:var(--text-light);padding:14px 28px 24px;"></div>
 </body>
 </html>
