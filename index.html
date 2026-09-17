@@ -1423,6 +1423,137 @@
   })();
   // ===== END COTONOU PRICE TABLE ENHANCEMENTS =====
 
+
+  // ===== PERIOD (DATE-RANGE) FILTER — all countries, non-destructive =====
+  // Adds an "Up to date / Current month / Last 2 months / Last 3 months" button group to
+  // every country's price-table filter bar. It composes with the existing category and
+  // description dropdowns rather than replacing them: each country's ApplyFilters is
+  // wrapped, so the two filters intersect and neither clobbers the other. Periods are
+  // calendar months counted back from today (current month = this month only; last 2 =
+  // this month plus the previous one; last 3 = this month plus the previous two).
+  // Rows whose Date cell is blank or unparseable appear only under "Up to date".
+  // Rows are only ever hidden/shown — never reordered or removed.
+  (function() {
+    var PREFIXES = ['nigeria','srilanka','saudi','india','brazil','cotonou'];
+    var PERIODS = [
+      { key:'all', label:'Up to date',    back:null },
+      { key:'m1',  label:'Current month', back:0 },
+      { key:'m2',  label:'Last 2 months', back:1 },
+      { key:'m3',  label:'Last 3 months', back:2 }
+    ];
+
+    function parseDate(s) {
+      if (!s || s === '—' || s === '-') return 0;
+      var mo = {jan:0,feb:1,mar:2,apr:3,may:4,jun:5,jul:6,aug:7,sep:8,oct:9,nov:10,dec:11};
+      s = s.trim().toLowerCase();
+      var yr = 2026, day, month, m;
+      m = s.match(/(\d+)[\s\-]+([a-z]{3})/);
+      if (m) { day = parseInt(m[1]); month = mo[m[2]]; }
+      if (day === undefined) {
+        m = s.match(/([a-z]+)[\s]+(\d+)/);
+        if (m) { month = mo[m[1].substring(0,3)]; day = parseInt(m[2]); }
+      }
+      if (day === undefined || month === undefined) return 0;
+      return new Date(yr, month, day).getTime();
+    }
+
+    // Date(y, m - back, 1) rolls the year back correctly when m - back goes negative.
+    function cutoffFor(back) {
+      if (back === null) return null;
+      var now = new Date();
+      return new Date(now.getFullYear(), now.getMonth() - back, 1).getTime();
+    }
+
+    var BTN_BASE = 'padding:6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:#fff;color:var(--text);cursor:pointer;';
+    var BTN_ON   = 'padding:6px 12px;border:1px solid var(--navy);border-radius:6px;font-size:12px;background:var(--navy);color:#fff;font-weight:600;cursor:pointer;';
+
+    PREFIXES.forEach(function(prefix) {
+      var table   = document.getElementById(prefix + '-prices-table');
+      var filters = document.getElementById(prefix + '-filters');
+      if (!table || !filters) return;
+
+      var rows = Array.prototype.slice.call(table.querySelectorAll('tbody tr'));
+      rows.forEach(function(tr) {
+        var cells = tr.querySelectorAll('td');
+        tr.dataset.periodTs = String(cells.length >= 9 ? parseDate(cells[7].textContent.trim()) : 0);
+      });
+
+      var state = 'all';
+      var buttons = {};
+
+      var group = document.createElement('div');
+      group.id = prefix + '-period-filter';
+      group.style.cssText = 'display:flex;gap:6px;align-items:center;flex-wrap:wrap;';
+
+      var caption = document.createElement('span');
+      caption.textContent = 'Period:';
+      caption.style.cssText = 'font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:.03em;';
+      group.appendChild(caption);
+
+      PERIODS.forEach(function(p) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.id = prefix + '-period-' + p.key;
+        b.textContent = p.label;
+        b.style.cssText = BTN_BASE;
+        b.addEventListener('click', function() { state = p.key; repaint(); applyAll(); });
+        buttons[p.key] = b;
+        group.appendChild(b);
+      });
+
+      var count = document.createElement('span');
+      count.id = prefix + '-period-count';
+      count.style.cssText = 'font-size:11px;color:var(--text-light);margin-left:4px;';
+      group.appendChild(count);
+
+      filters.appendChild(group);
+
+      function repaint() {
+        PERIODS.forEach(function(p) {
+          buttons[p.key].style.cssText = (p.key === state) ? BTN_ON : BTN_BASE;
+        });
+      }
+
+      function currentCutoff() {
+        for (var i = 0; i < PERIODS.length; i++) {
+          if (PERIODS[i].key === state) return cutoffFor(PERIODS[i].back);
+        }
+        return null;
+      }
+
+      // Wrap, don't replace: the category/description filter still runs first, then the
+      // period filter narrows whatever it left visible.
+      var baseApply = window[prefix + 'ApplyFilters'];
+
+      function applyAll() {
+        if (typeof baseApply === 'function') {
+          baseApply();
+        } else {
+          rows.forEach(function(tr) { tr.style.display = ''; });
+        }
+        var cut = currentCutoff();
+        var shown = 0;
+        rows.forEach(function(tr) {
+          if (tr.style.display === 'none') return;
+          if (cut !== null) {
+            var ts = parseFloat(tr.dataset.periodTs || '0');
+            if (!ts || ts < cut) { tr.style.display = 'none'; return; }
+          }
+          shown++;
+        });
+        count.textContent = 'Showing ' + shown + ' of ' + rows.length + ' rows';
+      }
+
+      // Re-point the global so the existing dropdown listeners and the Clear button
+      // re-apply the period filter too.
+      window[prefix + 'ApplyFilters'] = applyAll;
+
+      repaint();
+      applyAll();
+    });
+  })();
+  // ===== END PERIOD (DATE-RANGE) FILTER =====
+
 </script>
 <div id="footer-text" style="text-align:center;font-size:11px;color:var(--text-light);padding:14px 28px 24px;"></div>
 </body>
