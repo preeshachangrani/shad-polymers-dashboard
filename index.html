@@ -370,6 +370,11 @@
 
   function checkPW() {
     var input = document.getElementById('pw-input');
+    if (input.value === 'SL2026') {
+      try { sessionStorage.setItem('sl_auth', 'yes'); } catch (e) {}
+      window.location.replace('restricted.html');
+      return;
+    }
     if (input.value === 'SP2026') {
       try { sessionStorage.setItem('sp_auth', 'yes'); } catch (e) {}
       document.getElementById('auth-overlay').style.display = 'none';
